@@ -1,18 +1,29 @@
+
+import React, { Fragment } from 'react';
+import { Menu, Transition } from '@headlessui/react';
+import { ChevronDownIcon } from '@heroicons/react/solid';
 import { useShoppingCart } from "use-shopping-cart";
+
 import Image from "next/image";
 import Link from "next/link";
-import ShoppingCart from "./ShoppingCart";
+import ShoppingCart from "@/components/ShoppingCart";
+import SearchBox from '@/components/SearchBox';
+import Dropdown from '@/components/Dropdown';
 
 export default function NavBar() {
   const { handleCartClick, cartCount } = useShoppingCart();
   return (
-    <nav className="py-5 px-12 flex justify-between">
+    <nav className="flex-no-wrap relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md shadow-black/5 dark:bg-neutral-600 dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4">
+      <div class="flex w-full flex-wrap items-center justify-between px-3">
       <Link href="/">
         <p className="bg-white text-3xl font-bold underline underline-offset-4 decoration-wavy decoration-2 decoration-emerald-500">
           The Card Company
         </p>
       </Link>
-      <button className="relative" onClick={() => handleCartClick()}>
+      
+      {/* <SearchBox /> */}
+      <div class="relative flex items-center">
+      <button  className="relative" onClick={() => handleCartClick()}>
         <Image
           src="./cart.svg"
           width={40}
@@ -24,6 +35,64 @@ export default function NavBar() {
         </div>
       </button>
       <ShoppingCart />
+      <Dropdown />
+      </div>
+          
+      {/* <div onClick={userService.isSessionActive() ?  signOut : signIn} className="link">
+                        <p>
+                            {userService.isSessionActive() ? `Sign Out`:`Sign In`}
+                        </p>
+                        <p>
+                            {userService.isSessionActive() ? `Hello, ${userService.userData.username}`:`Hello`}
+                        </p>
+                        {/* <p className="font-extrabold md:text-sm">Account</p> */}
+                    {/* </div>  */}
+
+                    {/* <div className="flex gap-8 items-center text-white">
+        {menuItems.map((item) => {
+          return item.hasOwnProperty("children") ? (
+            <Dropdown item={item} key={item.title} />
+            // <li key="{item}">{item}</li>
+          ) : (
+            <Link className="hover:text-blue-500" href={item?.route || ""}>
+              {item.title}
+            </Link>
+          );
+        })}
+      </div> */}
+      {/* {data ? (
+        <NavDropdown title={data.name} id="username">
+          <Link href="/profile" passHref>
+            <NavDropdown.Item>Profile</NavDropdown.Item>
+          </Link>
+          <NavDropdown.Item onClick={() => logout()}>
+            Logout
+          </NavDropdown.Item>
+        </NavDropdown>
+      ) : (
+        <Link href="/login" passHref>
+          <Nav.Link>
+            <i className="fas fa-user"></i> Sign In
+          </Nav.Link>
+        </Link>
+      )} */}
+
+      {/* {data && data.isAdmin && (
+        <NavDropdown title="Admin" id="username">
+          <Link href="/admin/users" passHref>
+            <NavDropdown.Item>Users</NavDropdown.Item>
+          </Link>
+          <Link href="/admin/products" passHref>
+            <NavDropdown.Item>Products</NavDropdown.Item>
+          </Link>
+          <Link href="/admin/orders" passHref>
+            <NavDropdown.Item>Orders</NavDropdown.Item>
+          </Link>
+        </NavDropdown>
+      )} */}
+      
+        
+      </div>
     </nav>
   );
 }

@@ -29,8 +29,8 @@ export default function CheckoutButton() {
       <div className="text-red-700 text-xs mb-3 h-5 text-center">
         {totalPrice && totalPrice < 30
           ? "You must have at least $0.30 in your basket"
-          : cartCount && cartCount > 3
-          ? "You cannot have more than 3 items"
+          // : cartCount && cartCount > 50
+          // ? "You cannot have more than 3 items"
           : status === "redirect-error"
           ? "Unable to redirect to Stripe checkout page"
           : status === "no-items"

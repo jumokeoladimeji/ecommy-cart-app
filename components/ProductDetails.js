@@ -1,13 +1,15 @@
 import { useState } from "react";
+import { useRouter } from 'next/router'
 import { formatCurrencyString } from "use-shopping-cart";
 import { useShoppingCart } from "use-shopping-cart";
-import Link from "next/link";
 
-export default function Product({ product }) {
+
+export default function ProductDetails () {
   const { addItem } = useShoppingCart();
+  const router = useRouter();
+  const product = router.query;
   const { name, price, img_url, id } = product;
   const [quantity, setQuantity] = useState(1);
-  const cardPage = '/cards/'+id
 
   const decreaseQuantity = () => {
     if (quantity > 1) {
@@ -24,22 +26,17 @@ export default function Product({ product }) {
     setQuantity(1);
   };
 
+
   return (
+    <div className="relative">
     <article className="flex flex-col gap-3 bg-white p-8 rounded-xl shadow-md text-center mb-6">
-      {/* <div className="text-8xl cursor-default">{emoji}</div> */}
       <div className="text-lg">{name}</div>
       <div className="text-2xl font-semibold mt-auto">
-      <Link
-        href={{
-          pathname: cardPage,
-          query: product // the data
-        }}
-      >
       <img
         src={img_url}
-        class="h-auto max-w-full rounded-lg"
+        class="h-auto max-w-sm rounded-lg"
+        // h-auto max-w-full rounded-lg shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30
         alt="" />
-        </Link>
         {formatCurrencyString({ value: price, currency: "USD" })}
       </div>
       <div className="flex justify-around items-center mt-4 mb-2 ">
@@ -64,5 +61,6 @@ export default function Product({ product }) {
         Add to cart
       </button>
     </article>
+    </div>
   );
 }
