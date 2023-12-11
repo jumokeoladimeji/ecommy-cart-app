@@ -8,7 +8,7 @@ function classNames(...classes) {
 
 const Dropdown = () => {
   return (
-    <div className='py-5 px-12 flex justify-between items-center'>
+    <div className='flex justify-between items-center px-8'>
       <ul className='flex items-center'>
         <li className='p-4'>
           <Menu as='div' className='relative inline-block text-left'>

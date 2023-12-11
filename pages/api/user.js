@@ -3,7 +3,7 @@ const backendUrl = process.env.BACKEND_URL || "http://localhost:8000";
 console.log( process.env.BACKEND_URL)
 
 export const signup = async (userDetails) => {
-    console.log(process.env)
+    // console.log(process.env)
     const response = await axios.post(`${backendUrl}/api/v1/users/signup`, userDetails);
     return response.data;    
 };

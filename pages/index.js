@@ -4,10 +4,10 @@ import CarouselList from "@/components/Carousel";
 
 
 export default function Home({ categories }) {
-  console.log('before', categories)
-  var result = categories.map(category =>
-    category.cards.map(card => ({ parentId: category.id, ...card }))
-  ).flat();
+  // console.log('orv=====2', process.env)
+  // var result = categories.map(category =>
+  //   category.cards.map(card => ({ parentId: category.id, ...card }))
+  // ).flat();
 
   return (
    <div className="bg-white">
@@ -22,6 +22,6 @@ export default function Home({ categories }) {
 }
 
 export async function getServerSideProps(ctx) {
-  const categories = await getCategories();
+  const categories = await getCategories(process.env);
   return { props: { categories } };
 }
