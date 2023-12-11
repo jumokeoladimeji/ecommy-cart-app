@@ -32,16 +32,17 @@ export default function Product({ product }) {
       {/* <div className="text-8xl cursor-default">{emoji}</div> */}
       	<div className="text-lg">{name}</div>
       <div className="text-2xl font-semibold mt-auto">
-          <Link
-			href={card_id}
-          >
-            <img
-              src={img_url}
-              className="h-auto max-w-full rounded-lg"
-              alt="" />
-                <p className="text-gray-500 text-sm text-left line-clamp-3 hidden md:block">
-                    {description}
-                </p>
+			<Link
+				href={{ pathname: cardPage, query: product}}
+				as={cardPage}
+				passHref>
+				<img
+				src={img_url}
+				className="h-auto max-w-full rounded-lg"
+				alt="" />
+				<p className="text-gray-500 text-sm text-left line-clamp-3 hidden md:block">
+					{description}
+				</p>
             </Link>
         {formatCurrencyString({ value: price, currency: "USD" })}
       </div>

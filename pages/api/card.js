@@ -7,9 +7,9 @@ export const getCards = async () => {
   return response;
 };
 
-export const getOneCard = async () => {   
+export const getOneCard = async (cardId) => {   
   const response = await axios.post(`${backendUrl}/cards/:cardId`);
-  return response.data;
+  return response.data.data;
 }
 
 export const createCard = async (cardData) => {   
