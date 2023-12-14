@@ -11,7 +11,6 @@ import { signin } from "@/pages/api/user";
 // import loginImg from '@/assets/login.jpeg'
 
 export default function Login() {
-    // const router = useRouter();
        // form validation rules 
     const validationSchema = Yup.object().shape({
         email: Yup.string().required('Email is required'),
@@ -24,7 +23,6 @@ export default function Login() {
 
 
     async function onSubmit(user) {
-        ev.preventDefault();
         const signInUser = await signin(user)
         Router.push('/')
     }
