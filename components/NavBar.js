@@ -13,33 +13,38 @@ import Dropdown from '@/components/Dropdown';
 export default function NavBar() {
   const { handleCartClick, cartCount } = useShoppingCart();
   return (
+		<nav className="flex w-full pl-4 items-center py-2 lg:justify-start shadow-md fixed top-0 z-50 bg-white">
+			<div className="flex w-full items-center justify-between px-0">
+				<Link href="/">
+					<p
+						style={{ fontFamily: 'Lobster Two' }}
+						className="bg-white text-xl md:text-2xl font-bold decoration-2 decoration-emerald-500"
+					>
+						The Card Company
+					</p>
+				</Link>
 
-    <nav className="flex w-full items-center py-2 lg:justify-start">
-      <div className="flex w-full flex-wrap items-center justify-between px-3">
-      <Link href="/">
-        <p className="bg-white text-3xl font-bold underline underline-offset-4 decoration-wavy decoration-2 decoration-emerald-500">
-          The Card Company
-        </p>
-      </Link>
-      
-      {/* <SearchBox /> */}
-      <div className="relative flex items-center">
-      <button className="relative" onClick={() => handleCartClick()}>
-        <Image
-          src="./cart.svg"
-          width={40}
-          height={40}
-          alt="shopping cart icon"
-        />
-        <div className="rounded-full flex justify-center items-center bg-emerald-500 text-xs text-white absolute w-6 h-5 bottom-6 -right-1">
-          {cartCount}
-        </div>
-      </button>
-      <ShoppingCart />
-      <Dropdown />
-      </div>
-          
-      {/* <div onClick={userService.isSessionActive() ?  signOut : signIn} className="link">
+				{/* <SearchBox /> */}
+				<div className="flex items-center">
+					<button
+						className="relative"
+						onClick={() => handleCartClick()}
+					>
+						<Image
+							src="./cart.svg"
+							width={30}
+							height={30}
+							alt="shopping cart icon"
+						/>
+						<div className="rounded-full flex justify-center items-center bg-emerald-500 text-xs text-white absolute w-6 h-5 bottom-6 -right-1">
+							{cartCount}
+						</div>
+					</button>
+					<ShoppingCart />
+					<Dropdown />
+				</div>
+
+				{/* <div onClick={userService.isSessionActive() ?  signOut : signIn} className="link">
                         <p>
                             {userService.isSessionActive() ? `Sign Out`:`Sign In`}
                         </p>
@@ -47,9 +52,9 @@ export default function NavBar() {
                             {userService.isSessionActive() ? `Hello, ${userService.userData.username}`:`Hello`}
                         </p>
                         {/* <p className="font-extrabold md:text-sm">Account</p> */}
-                    {/* </div>  */}
+				{/* </div>  */}
 
-                    {/* <div className="flex gap-8 items-center text-white">
+				{/* <div className="flex gap-8 items-center text-white">
         {menuItems.map((item) => {
           return item.hasOwnProperty("children") ? (
             <Dropdown item={item} key={item.title} />
@@ -61,7 +66,7 @@ export default function NavBar() {
           );
         })}
       </div> */}
-      {/* {data ? (
+				{/* {data ? (
         <NavDropdown title={data.name} id="username">
           <Link href="/profile" passHref>
             <NavDropdown.Item>Profile</NavDropdown.Item>
@@ -78,7 +83,7 @@ export default function NavBar() {
         </Link>
       )} */}
 
-      {/* {data && data.isAdmin && (
+				{/* {data && data.isAdmin && (
         <NavDropdown title="Admin" id="username">
           <Link href="/admin/users" passHref>
             <NavDropdown.Item>Users</NavDropdown.Item>
@@ -91,9 +96,7 @@ export default function NavBar() {
           </Link>
         </NavDropdown>
       )} */}
-      
-        
-      </div>
-    </nav>
-  );
+			</div>
+		</nav>
+	);
 }

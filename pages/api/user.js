@@ -15,15 +15,21 @@ export const verifyUserToken = async (token) => {
 
 export const signin = async (userDetails) => {
     try {
-        console.log(process.env) 
-        const response = await axios.post(`${backendUrl}/api/v1/users/signin`, userDetails);
-        console.log('logged in user', response.data)
-        const loggedInUser = response.data
-        cookies.set("token", loggedInUser.token)
-        localStorage.setItem('accessToken', loggedInUser.token);
-        return response.data;   
-    } catch (error) {
-        console.log('error log in user', error.response.data)
+			// console.log(process.env);
+			const response = await axios.post(
+				`${backendUrl}/api/v1/users/signin`,
+				userDetails,
+			);
+			console.log('logged in user', response.data);
+			const loggedInUser = response.data;
+			cookies.set('token', loggedInUser.token);
+			localStorage.setItem(
+				'accessToken',
+				loggedInUser.token,
+			);
+			return response.data;
+		} catch (error) {
+        console.log('error log in user', error);
         // return NextResponse.json({ error: err, success: false }, { status: 500 })
     }
 };
