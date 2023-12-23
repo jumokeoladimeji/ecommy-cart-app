@@ -3,14 +3,23 @@ const backendUrl = process.env.BACKEND_URL || "http://localhost:8000";
 console.log( process.env.BACKEND_URL)
 
 export const signup = async (userDetails) => {
-    // console.log(process.env)
-    const response = await axios.post(`${backendUrl}/api/v1/users/signup`, userDetails);
-    return response.data;    
+    try {
+        const response = await axios.post(`${backendUrl}/api/v1/users/signup`, userDetails);
+        console.log('signed up user', response)
+        return response.data;   
+    } catch (error) {
+        console.log('error registering in user', error.response.data) 
+    } 
 };
 
 export const verifyUserToken = async (token) => {
-    const response = await axios.get(`${backendUrl}/api/v1/users/verify/:token`, token);
-    return response.data;
+    try {
+        const response = await axios.get(`${backendUrl}/api/v1/users/verify/:token`, token);
+        return response.data;
+    } catch (error) {
+        console.log('error verying user', error.response.data) 
+    }
+
 };
 
 export const signin = async (userDetails) => {
@@ -22,7 +31,6 @@ export const signin = async (userDetails) => {
 			);
 			console.log('logged in user', response.data);
 			const loggedInUser = response.data;
-			cookies.set('token', loggedInUser.token);
 			localStorage.setItem(
 				'accessToken',
 				loggedInUser.token,
