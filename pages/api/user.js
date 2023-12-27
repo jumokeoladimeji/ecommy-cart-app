@@ -1,6 +1,6 @@
 import axios from 'axios';
 const backendUrl = process.env.BACKEND_URL || "http://localhost:8000";
-console.log( process.env.BACKEND_URL)
+console.log('process.env.BACKEND_URL', process.env.BACKEND_URL)
 
 export const signup = async (userDetails) => {
     try {
@@ -24,20 +24,20 @@ export const verifyUserToken = async (token) => {
 
 export const signin = async (userDetails) => {
     try {
-			// console.log(process.env);
-			const response = await axios.post(
-				`${backendUrl}/api/v1/users/signin`,
-				userDetails,
-			);
-			console.log('logged in user', response.data);
-			const loggedInUser = response.data;
-			localStorage.setItem(
-				'accessToken',
-				loggedInUser.token,
-			);
-			return response.data;
-		} catch (error) {
-        console.log('error log in user', error);
-        // return NextResponse.json({ error: err, success: false }, { status: 500 })
+		console.log('process.env.BACKEND_URL', process.env.BACKEND_URL, '::backendUrl', backendUrl)
+		const response = await axios.post(
+			`${backendUrl}/api/v1/users/signin`,
+			userDetails,
+		);
+		console.log('logged in user', response.data);
+		const loggedInUser = response.data;
+		localStorage.setItem(
+			'accessToken',
+			loggedInUser.token,
+		);
+		return response.data;
+	} catch (error) {
+	console.log('error log in user', error.response.data);
+	// return NextResponse.json({ error: err, success: false }, { status: 500 })
     }
 };
