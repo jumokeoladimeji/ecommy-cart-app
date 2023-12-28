@@ -1,5 +1,5 @@
 import axios from 'axios';
-const backendUrl = process.env.BACKEND_URL || "http://localhost:8000";
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
 
 
 export const getCards = async () => {      

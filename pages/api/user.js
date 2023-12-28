@@ -1,6 +1,6 @@
 import axios from 'axios';
-const backendUrl = process.env.BACKEND_URL || "http://localhost:8000";
-console.log('process.env.BACKEND_URL', process.env.BACKEND_URL)
+const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+console.log('process.env.NEXT_PUBLIC_BACKEND_URL', process.env.NEXT_PUBLIC_BACKEND_URL)
 
 export const signup = async (userDetails) => {
     try {
@@ -24,7 +24,7 @@ export const verifyUserToken = async (token) => {
 
 export const signin = async (userDetails) => {
     try {
-		console.log(`process.env.BACKEND_URL, ${process.env.BACKEND_URL}, ::backendUrl::, ${backendUrl}`)
+		console.log(`process.env.NEXT_PUBLIC_BACKEND_URL, ${process.env.NEXT_PUBLIC_BACKEND_URL}, ::backendUrl::, ${backendUrl}`)
 		const response = await axios.post(
 			`${backendUrl}/api/v1/users/signin`,
 			userDetails,
@@ -37,7 +37,7 @@ export const signin = async (userDetails) => {
 		);
 		return response.data;
 	} catch (error) {
-	console.log('error log in user', error.response.data);
+	console.log('error log in user', error.response);
 	// return NextResponse.json({ error: err, success: false }, { status: 500 })
     }
 };
