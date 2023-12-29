@@ -1,15 +1,18 @@
 import { getCategories } from "@/pages/api/category";
 import Category from "@/components/Category";
 import CarouselList from "@/components/Carousel";
-
+import { UserContext } from './context/userContext';
+import { useContext } from 'react';
 
 export default function Home({ categories }) {
-  // console.log('orv=====2', process.env)
-  // var result = categories.map(category =>
-  //   category.cards.map(card => ({ parentId: category.id, ...card }))
-  // ).flat();
+	// console.log('orv=====2', process.env)
+	// var result = categories.map(category =>
+	//   category.cards.map(card => ({ parentId: category.id, ...card }))
+	// ).flat();
+	const { user, token, loginUser, logoutUser } =
+		useContext(UserContext);
 
-  return (
+	return (
 		<div className="bg-[#fff]">
 			{/* <CarouselList cards={result}/> */}
 			<div
