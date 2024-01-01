@@ -1,13 +1,18 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/solid';
+import { UserContext } from '@/pages/context/userContext';
 
 function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
+	return classes.filter(Boolean).join(' ');
 }
 
 const Dropdown = () => {
-  return (
+	const { user, token, loginUser, logoutUser } =
+		useContext(UserContext);
+
+	console.log(user);
+	return (
 		<div className="flex justify-between items-center px-1">
 			<ul className="flex items-center">
 				<li className="p-4">
@@ -36,36 +41,76 @@ const Dropdown = () => {
 						>
 							<Menu.Items className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none">
 								<div className="py-1">
-									<Menu.Item>
-										{({ active }) => (
-											<a
-												href="/login"
-												className={classNames(
-													active
-														? 'bg-gray-100 text-gray-900'
-														: 'text-gray-700',
-													'block px-4 py-2 text-sm',
+									{user ? (
+										<>
+											{user?.data.role === 'admin' && (
+												<Menu.Item>
+													{({ active }) => (
+														<a
+															href="/admin"
+															className={classNames(
+																active
+																	? 'bg-gray-100 text-gray-900'
+																	: 'text-gray-700',
+																'block px-4 py-2 text-sm',
+																'rounded-md',
+															)}
+														>
+															Admin
+														</a>
+													)}
+												</Menu.Item>
+											)}
+											<Menu.Item>
+												{({ active }) => (
+													<a
+														href="/profile"
+														className={classNames(
+															active
+																? 'bg-gray-100 text-gray-900'
+																: 'text-gray-700',
+															'block px-4 py-2 text-sm',
+															'rounded-md',
+														)}
+													>
+														Profile
+													</a>
 												)}
-											>
-												Signin / Register
-											</a>
-										)}
-									</Menu.Item>
-									<Menu.Item disabled>
-										{({ active }) => (
-											<a
-												href="#"
-												className={classNames(
-													active
-														? 'bg-gray-100 text-gray-900'
-														: 'text-gray-700',
-													'block px-4 py-2 text-sm',
+											</Menu.Item>
+											<hr />
+											<Menu.Item disabled>
+												{({ active }) => (
+													<a
+														href="#"
+														className={classNames(
+															active
+																? 'bg-gray-100 text-gray-900'
+																: 'text-gray-700',
+															'block px-4 py-2 text-sm',
+														)}
+													>
+														Log Out
+													</a>
 												)}
-											>
-												Signout
-											</a>
-										)}
-									</Menu.Item>
+											</Menu.Item>
+										</>
+									) : (
+										<Menu.Item>
+											{({ active }) => (
+												<a
+													href="/login"
+													className={classNames(
+														active
+															? 'bg-gray-100 text-gray-900'
+															: 'text-gray-700',
+														'block px-4 py-2 text-sm',
+													)}
+												>
+													Signin / Register
+												</a>
+											)}
+										</Menu.Item>
+									)}
 								</div>
 							</Menu.Items>
 						</Transition>
