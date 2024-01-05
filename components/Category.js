@@ -20,16 +20,7 @@ export default function Category({ category }) {
 			>
 				{name} cards
 			</p>
-			<div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 justify-center mx-auto gap-4 place-center flex-wrap w-100 md:max-w-[1200px]">
-				{newCardsArr.map((product) => (
-					<Product product={product} key={product.id} />
-				))}
-				{newCardsArr.map((product) => (
-					<Product product={product} key={product.id} />
-				))}
-				{newCardsArr.map((product) => (
-					<Product product={product} key={product.id} />
-				))}
+			<div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 justify-center mx-auto gap-4 place-center flex-wrap w-100 md:max-w-[1200px]">
 				{newCardsArr.map((product) => (
 					<Product product={product} key={product.id} />
 				))}

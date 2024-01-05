@@ -8,7 +8,7 @@ import { cookies } from 'next/headers';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import { signin } from '@/pages/api/user';
-import { UserContext } from './context/userContext';
+import { UserContext } from '../context/UserContext';
 // import loginImg from '@/assets/login.jpeg'
 
 export default function Login() {

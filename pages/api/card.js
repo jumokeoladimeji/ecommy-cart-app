@@ -3,8 +3,10 @@ const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000
 
 
 export const getCards = async () => {      
-  const response = await axios.get(`${backendUrl}/cards`);
-  return response;
+  const response = await axios.get(
+		`${backendUrl}/api/v1/cards`,
+	);
+	return response.data.data;
 };
 
 export const getOneCard = async (cardId) => {   

@@ -20,7 +20,7 @@ export default function NavBar() {
 						style={{ fontFamily: 'Lobster Two' }}
 						className="bg-white text-xl md:text-2xl font-bold decoration-2 decoration-emerald-500"
 					>
-						The Card Company
+						Measures of Fun
 					</p>
 				</Link>
 

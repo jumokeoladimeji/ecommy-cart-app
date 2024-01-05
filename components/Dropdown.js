@@ -1,7 +1,7 @@
 import React, { Fragment, useContext } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/solid';
-import { UserContext } from '@/pages/context/userContext';
+import { UserContext } from '../context/UserContext';
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
@@ -78,9 +78,10 @@ const Dropdown = () => {
 												)}
 											</Menu.Item>
 											<hr />
-											<Menu.Item disabled>
+											<Menu.Item>
 												{({ active }) => (
 													<a
+														onClick={() => logoutUser()}
 														href="#"
 														className={classNames(
 															active
