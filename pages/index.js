@@ -1,7 +1,7 @@
 import { getCategories } from "@/pages/api/category";
 import Category from "@/components/Category";
 import CarouselList from "@/components/Carousel";
-import { UserContext } from '../pages/context/UserContext';
+import { UserContext } from '../context/UserContext';
 import { useContext } from 'react';
 
 export default function Home({ categories }) {
