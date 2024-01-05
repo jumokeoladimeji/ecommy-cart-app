@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { UserContext } from './context/userContext';
+import { UserContext } from '../pages/context/UserContext';
 import { FaUserAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import { getUserOrders } from './api/order';

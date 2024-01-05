@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import "@/styles/globals.css";
 import { CartProvider } from "use-shopping-cart";
-import { UserProvider } from './context/userContext';
+import { UserProvider } from '../pages/context/UserContext';
 
 export default function App({ Component, pageProps }) {
   return (

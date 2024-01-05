@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { FaUserAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import { getUserOrders } from '../api/order';
-import { UserContext } from '../context/userContext';
+import { UserContext } from '../context/UserContext';
 import { getCards } from '../api/card';
 import { formatCurrencyString } from 'use-shopping-cart';
 
