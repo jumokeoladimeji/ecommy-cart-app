@@ -5,11 +5,8 @@ export default function Layout({ children }) {
   return (
 		<>
 			<Head>
-				<title>The Card Company</title>
-				<meta
-					name="description"
-					content="A simple website to show how to use use-shopping-cart"
-				/>
+				<title>Measures of Fun</title>
+				<meta name="description" content="" />
 				<meta
 					name="viewport"
 					content="width=device-width, initial-scale=1"

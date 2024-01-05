@@ -78,9 +78,10 @@ const Dropdown = () => {
 												)}
 											</Menu.Item>
 											<hr />
-											<Menu.Item disabled>
+											<Menu.Item>
 												{({ active }) => (
 													<a
+														onClick={() => logoutUser()}
 														href="#"
 														className={classNames(
 															active

@@ -16,19 +16,19 @@ export default function Home({ categories }) {
 		<div className="bg-[#fff]">
 			{/* <CarouselList cards={result}/> */}
 			<div
-				className="relative h-96 bg-cover bg-center mb-10 rounded-md"
+				className="relative h-96 bg-contain bg-center mb-10 rounded-md"
 				style={{
 					backgroundImage:
-						"url('https://static.vecteezy.com/system/resources/thumbnails/019/039/523/small/access-element-for-valentine-s-day-and-mother-s-day-greeting-card-3d-rendering-of-celebrations-on-special-days-png.png')",
+						"url('https://leanintree.com/cdn/shop/collections/19landscape.jpg?v=1691433907')",
 				}}
 			>
-				<div className="absolute inset-0 bg-black opacity-30"></div>
+				<div className="absolute inset-0 bg-black opacity-50"></div>
 				<div className="absolute inset-0 flex flex-col justify-center px-5 items-start md:items-center text-white">
 					<h1
 						style={{ fontFamily: 'Lobster Two' }}
 						className="text-5xl font-bold mb-4"
 					>
-						Welcome to Handmade Cards Emporium!
+						Welcome to Measures of Fun!
 					</h1>
 					<p className="text-lg mb-8">
 						Discover unique handmade cards for every

@@ -9,9 +9,11 @@ export const getOrders = async () => {
 const response = await axios.get(`${backendUrl}/orders`);
 return response;
 };
-export const getUserOrders = async () => {     
-const response = await axios.get(`${backendUrl}/users/:userId/orders`);
-return response;
+export const getUserOrders = async ({ id }) => {
+	const response = await axios.get(
+		`${backendUrl}/users/${id}/orders`,
+	);
+	return response;
 };
 export const getOneOrder = async () => {     
     const response = await axios.get(`${backendUrl}/orders/:orderId`);
@@ -26,3 +28,4 @@ export const deleteOrder = async () => {
     return response.data;
 };
 
+ 
