@@ -14,16 +14,25 @@ export const getOneCard = async (cardId) => {
   return response.data.data;
 }
 
-export const createCard = async (cardData) => {   
-  const response = await axios.post(`${backendUrl}/cards`, cardData);
-  return response.data;
-}
+export const createCard = async (cardData) => {
+	const response = await axios.post(
+		`${backendUrl}/api/v1/cards`,
+		cardData,
+	);
+	return response.data;
+};
 
-export const updateCard = async (cardData) => {     
-  const response = await axios.put(`${backendUrl}/cards/:cardId`, cardData);
-  return response.data;
+export const updateCard = async (cardData) => {
+	const response = await axios.put(
+		`${backendUrl}/api/v1/cards/:cardId`,
+		cardData,
+	);
+	return response.data;
 };
-export const deleteCard = async () => {     
-  const response = await axios.delete(`${backendUrl}/cards/:cardId`);
-  return response.data;
+export const deleteCard = async (cardId) => {
+	const response = await axios.delete(
+		`${backendUrl}/api/v1/cards/${cardId}`,
+	);
+	return response.data;
 };
+ 

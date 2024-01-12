@@ -3,14 +3,46 @@ import { FaUserAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 import { getUserOrders } from '../api/order';
 import { UserContext } from '../../context/UserContext';
-import { getCards } from '../api/card';
+import { deleteCard, getCards } from '../api/card';
 import { formatCurrencyString } from 'use-shopping-cart';
+import Link from 'next/link';
+import stripe from 'stripe';
 
 export default function AdminDashboard({ cards }) {
 	const { user, token, loginUser, logoutUser } =
 		useContext(UserContext);
 	const router = useRouter();
 	const [orders, setOrders] = useState([]);
+
+	const stripeInstance = stripe(
+		'sk_test_51OHnZ3BIztSkOPFM8xDUnfw7kKhzt67vtWubW1j7C3yGqEDmqGWvovVgM7AFoVQciFfcOyg9l7YX2nBh0JPG54OH006P0FcBHa',
+	);
+
+	const getCheckoutSessions = async () => {
+		try {
+			const sessions =
+				await stripeInstance.checkout.sessions.list();
+			return sessions;
+		} catch (error) {
+			// Handle errors here
+			console.error(
+				'Error fetching checkout sessions:',
+				error,
+			);
+			return null;
+		}
+	};
+
+	// Usage
+	getCheckoutSessions().then((sessions) => {
+		if (sessions) {
+			// Do something with the fetched sessions
+			console.log('Fetched sessions:', sessions);
+		} else {
+			// Handle the case where sessions couldn't be fetched
+			console.log('Failed to fetch sessions.');
+		}
+	});
 
 	useEffect(() => {
 		if (user) {
@@ -25,8 +57,6 @@ export default function AdminDashboard({ cards }) {
 			console.log('No user logged in');
 		}
 	}, []);
-
-	console.log(cards);
 
 	const isAuth = user && token;
 
@@ -57,6 +87,13 @@ export default function AdminDashboard({ cards }) {
 		// Implement logic to update user profile using formData
 		console.log('Form submitted with data:', formData);
 		// Add logic to update the user profile using API calls or other methods
+	};
+
+	const handleDelete = async (id) => {
+		const response = await deleteCard(id);
+		console.log(response);
+		// alert('Card deleted');
+		router.push('/admin');
 	};
 
 	const currentUser = user?.data;
@@ -173,9 +210,12 @@ export default function AdminDashboard({ cards }) {
 							>
 								Products
 							</h1>
-							<button className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-2 rounded-md mr-2">
+							<Link
+								href="/admin/add-product"
+								className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-2 rounded-md mr-2"
+							>
 								Add Product
-							</button>
+							</Link>
 						</div>
 						<div className="overflow-x-auto">
 							<table className="min-w-full border-collapse border border-gray-300">
@@ -220,7 +260,12 @@ export default function AdminDashboard({ cards }) {
 												<button className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-2 rounded-md mr-2">
 													Edit
 												</button>
-												<button className="bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded-md">
+												<button
+													onClick={() =>
+														handleDelete(product.id)
+													}
+													className="bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded-md"
+												>
 													Delete
 												</button>
 											</td>
@@ -239,3 +284,4 @@ export async function getServerSideProps(ctx) {
 	const cards = await getCards(process.env);
 	return { props: { cards } };
 }
+ 
