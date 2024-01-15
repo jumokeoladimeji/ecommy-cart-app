@@ -59,34 +59,6 @@ export default function Profile() {
 
 	const currentUser = user?.data;
 
-	// const orders = [
-	// 	{
-	// 		id: 'ORD001',
-	// 		date: '2023-12-20',
-	// 		items: [{ name: 'Product 1' }, { name: 'Product 2' }],
-	// 		total: '$150',
-	// 		status: 'Delivered',
-	// 	},
-	// 	{
-	// 		id: 'ORD002',
-	// 		date: '2023-12-22',
-	// 		items: [
-	// 			{ name: 'Product 3' },
-	// 			{ name: 'Product 4' },
-	// 			{ name: 'Product 5' },
-	// 		],
-	// 		total: '$250',
-	// 		status: 'Processing',
-	// 	},
-	// 	{
-	// 		id: 'ORD003',
-	// 		date: '2023-12-25',
-	// 		items: [{ name: 'Product 6' }],
-	// 		total: '$80',
-	// 		status: 'Shipped',
-	// 	},
-	// ];
-
 	if (isAuth)
 		return (
 			<div className="flex flex-col md:grid md:grid-cols-3 gap-6 p-6">
