@@ -10,7 +10,9 @@ export const getCards = async () => {
 };
 
 export const getOneCard = async (cardId) => {   
-  const response = await axios.post(`${backendUrl}/cards/:cardId`);
+  const response = await axios.get(
+		`${backendUrl}/api/v1/cards/${cardId}`,
+	);
   return response.data.data;
 }
 

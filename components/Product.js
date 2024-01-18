@@ -1,12 +1,14 @@
-import { useState } from "react";
-import { formatCurrencyString } from "use-shopping-cart";
-import { useShoppingCart } from "use-shopping-cart";
-import Link from "next/link";
+import { useContext, useState } from 'react';
+import { formatCurrencyString } from 'use-shopping-cart';
+import { useShoppingCart } from 'use-shopping-cart';
+import Link from 'next/link';
+import { CartContext } from '../context/CartContext';
+import toast from 'react-hot-toast';
 
 export default function Product({ product }) {
-  const { addItem } = useShoppingCart();
-  console.log('product', product)
-  const {
+	const { addProduct } = useContext(CartContext);
+	console.log('product', product);
+	const {
 		name,
 		price,
 		img_url,
@@ -33,9 +35,10 @@ export default function Product({ product }) {
 	};
 
 	const addToCart = () => {
-		console.log('quantity', quantity);
-		addItem(product, { count: quantity });
+		addProduct(product, quantity);
 		setQuantity(1);
+		console.log(quantity);
+		toast.success('Item added to cart');
 	};
 
 	return (

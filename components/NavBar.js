@@ -1,18 +1,21 @@
 
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/solid';
-import { useShoppingCart } from "use-shopping-cart";
+import { useShoppingCart } from 'use-shopping-cart';
 
-import Image from "next/image";
-import Link from "next/link";
-import ShoppingCart from "@/components/ShoppingCart";
+import Image from 'next/image';
+import Link from 'next/link';
+import ShoppingCart from '@/components/ShoppingCart';
 import SearchBox from '@/components/SearchBox';
 import Dropdown from '@/components/Dropdown';
+import { CartContext } from '../context/CartContext';
+import { useRouter } from 'next/router';
 
 export default function NavBar() {
-  const { handleCartClick, cartCount } = useShoppingCart();
-  return (
+	const { cartProducts } = useContext(CartContext);
+	const router = useRouter();
+	return (
 		<nav className="flex w-full pl-4 items-center py-2 lg:justify-start shadow-md fixed top-0 z-50 bg-white">
 			<div className="flex w-full items-center justify-between px-0">
 				<Link href="/">
@@ -28,7 +31,7 @@ export default function NavBar() {
 				<div className="flex items-center">
 					<button
 						className="relative"
-						onClick={() => handleCartClick()}
+						onClick={() => router.push('/cart')}
 					>
 						<Image
 							src="./cart.svg"
@@ -37,10 +40,10 @@ export default function NavBar() {
 							alt="shopping cart icon"
 						/>
 						<div className="rounded-full flex justify-center items-center bg-emerald-500 text-xs text-white absolute w-6 h-5 bottom-6 -right-1">
-							{cartCount}
+							{cartProducts?.length}
 						</div>
 					</button>
-					<ShoppingCart />
+					{/* <ShoppingCart /> */}
 					<Dropdown />
 				</div>
 
