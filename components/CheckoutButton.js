@@ -1,61 +1,46 @@
-import axios from 'axios';
-import { useState } from 'react';
-import { useShoppingCart } from 'use-shopping-cart';
+import { loadStripe } from '@stripe/stripe-js';
+import { useRouter } from 'next/router';
 
-export default function CheckoutButton() {
-	const [status, setStatus] = useState('idle');
-	const { redirectToCheckout, cartCount, totalPrice } =
-		useShoppingCart();
+const asyncStripe = loadStripe(
+	process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
+);
 
-	async function handleClick(event) {
-		event.preventDefault();
-		if (cartCount > 0) {
-			setStatus('loading');
-			try {
-				const result = await redirectToCheckout();
-				console.log(result);
-				if (result?.error) {
-					console.error(result);
-					setStatus('redirect-error');
-				}
-			} catch (error) {
-				console.error(error);
-				setStatus('redirect-error');
+const CheckoutButton = ({ amount = 1 }) => {
+	const router = useRouter();
+
+	const handler = async () => {
+		try {
+			const stripe = await asyncStripe;
+			const res = await fetch('/api/stripe/session', {
+				method: 'POST',
+				body: JSON.stringify({
+					amount,
+				}),
+				headers: { 'Content-Type': 'application/json' },
+			});
+			const { sessionId } = await res.json();
+
+			const { error } = await stripe.redirectToCheckout({
+				sessionId,
+			});
+			console.log(error);
+			if (error) {
+				router.push('/error');
 			}
-		} else {
-			setStatus('no-items');
+		} catch (err) {
+			console.log(err);
+			router.push('/error');
 		}
-	}
+	};
 
-	console.log('total price', totalPrice);
 	return (
-		<article className="mt-3 flex flex-col">
-			<div className="text-red-700 text-xs mb-3 h-5 text-center">
-				{totalPrice && totalPrice < 0.3
-					? 'You must have at least $0.30 in your basket'
-					: // : cartCount && cartCount > 3
-					// ? "You cannot have more than 3 items"
-					status === 'redirect-error'
-					? 'Unable to redirect to Stripe checkout page'
-					: status === 'no-items'
-					? 'Please add some items to your cart'
-					: null}
-			</div>
-			<button
-				onClick={handleClick}
-				className="bg-emerald-50 hover:bg-emerald-500 hover:text-white transition-colors duration-500 text-emerald-500 py-3 px-5 rounded-md w-100 disabled:bg-slate-300 disabled:cursor-not-allowed disabled:text-white"
-				// disabled={
-				//   (totalPrice && totalPrice >= 0) ||
-				//   (cartCount && cartCount >= 0 ) ||
-				//   status == "no-items"
-				//     ? true
-				//     : false
-				// }
-			>
-				{status !== 'loading'
-					? 'Proceed to checkout'
-					: 'Loading...'}
-			</button>
-		</article>
+		<button
+			onClick={handler}
+			className="bg-blue-700 hover:bg-blue-800 duration-200 px-8 py-4 text-white"
+		>
+			Checkout
+		</button>
 	);
-}
+};
+
+export default CheckoutButton;

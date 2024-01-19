@@ -11,7 +11,6 @@ const Dropdown = () => {
 	const { user, token, loginUser, logoutUser } =
 		useContext(UserContext);
 
-	console.log(user);
 	return (
 		<div className="flex justify-between items-center px-1">
 			<ul className="flex items-center">
