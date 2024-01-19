@@ -29,21 +29,6 @@ export default function Cart() {
 	const router = useRouter();
 
 	useEffect(() => {
-		setLoading(true);
-		if (cartProducts.length > 0) {
-			axios
-				.post('/api/cart', { ids: cartProducts })
-				.then((response) => {
-					setProducts(response.data);
-					setLoading(false);
-				});
-		} else {
-			setProducts([]);
-			setLoading(false);
-		}
-	}, [cartProducts]);
-
-	useEffect(() => {
 		if (typeof window === 'undefined') {
 			return;
 		}
@@ -132,7 +117,7 @@ export default function Cart() {
 			toast.error('An error occured!!');
 		}
 	}
-	console.log(cartProducts);
+	// console.log(cartProducts);
 
 	if (isSuccess) {
 		return (

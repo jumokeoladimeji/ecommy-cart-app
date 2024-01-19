@@ -1,4 +1,5 @@
 import { getOneCard } from './card';
+import { createOrder } from './order';
 
 const stripe = require('stripe')(
 	process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY,
@@ -48,15 +49,28 @@ export default async function handler(req, res) {
 		}
 	}
 
-	console.log(line_items);
-	console.log(`${process.env.NEXT_PUBLIC_URL}/success`);
+	const orderData = {
+		line_items,
+		email,
+		name,
+		address,
+		city,
+		country,
+		zip,
+		paid: false,
+	};
+
+	const orderDoc = await createOrder(orderData);
 
 	const session = await stripe.checkout.sessions.create({
 		line_items,
 		mode: 'payment',
 		customer_email: email,
-		success_url: `${process.env.NEXT_PUBLIC_URL}/success`,
-		cancel_url: `${process.env.NEXT_PUBLIC_URL}/success`,
+		success_url: `${process.env.NEXT_PUBLIC_URL}/api/success?orderId=${orderDoc.data.id}`,
+		cancel_url: `${process.env.NEXT_PUBLIC_URL}/cart`,
+		metadata: {
+			orderId: `${orderDoc.data.id}`,
+		},
 	});
 
 	res.json({

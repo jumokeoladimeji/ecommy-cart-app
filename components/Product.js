@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 
 export default function Product({ product }) {
 	const { addProduct } = useContext(CartContext);
-	console.log('product', product);
+	
 	const {
 		name,
 		price,
@@ -21,7 +21,7 @@ export default function Product({ product }) {
 		title,
 	} = product;
 	const [quantity, setQuantity] = useState(1);
-	console.log('quantity intial', quantity);
+	
 	const cardPage = '/cards/' + card_id;
 
 	const decreaseQuantity = () => {
