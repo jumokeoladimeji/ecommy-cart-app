@@ -28,9 +28,9 @@ export default function Profile() {
 
 	const isAuth = user && token;
 
-	if (!isAuth) {
-		router.push('/login');
-	}
+	// if (!isAuth) {
+	// 	router.push('/login');
+	// }
 
 	const [formData, setFormData] = useState({
 		firstName: '',
@@ -238,4 +238,22 @@ export default function Profile() {
 				</div>
 			</div>
 		);
+	return (
+		<>
+			<div className="grid h-screen px-4 bg-white place-content-center">
+				<div className="text-center">
+					<p className="mt-4 text-text text-2xl">
+						You should sign Up to view profile
+					</p>
+
+					<button
+						onClick={() => router.push('/login')}
+						className="inline-block px-5 py-3 mt-6 text-sm font-medium text-text bg-primary rounded hover:bg-primary focus:outline-none focus:ring"
+					>
+						Login / Register
+					</button>
+				</div>
+			</div>
+		</>
+	);
 }
