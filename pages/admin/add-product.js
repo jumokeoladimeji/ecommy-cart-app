@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { getCategories } from '../api/category';
 import { createCard } from '../api/card';
+import toast from 'react-hot-toast';
 
 export default function AddProduct({ categories }) {
 	const [imageSrc, setImageSrc] = useState();
@@ -16,10 +17,21 @@ export default function AddProduct({ categories }) {
 		categories[0].id,
 	);
 	const [quantity, setQuantity] = useState(0);
+	const [loading, setLoading] = useState(false);
+
+	const Loading = () => {
+		return (
+			<div className="flex items-center justify-center flex-col">
+				<div className="border-t-8 border-[#015438] border-solid rounded-full animate-spin w-12 h-12"></div>
+				<p>Uploading. Please wait...</p>
+			</div>
+		);
+	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (imageSrc && backImgSrc) {
+			setLoading(true);
 			try {
 				const apiUrl =
 					'https://api.cloudinary.com/v1_1/dkhoomk9a/image/upload';
@@ -65,16 +77,19 @@ export default function AddProduct({ categories }) {
 
 					// Perform the next steps or make API calls using the info object
 					await createCard(info);
-					console.log(info);
-					alert('Product Successfully Added!');
+					setLoading(false);
+					toast.success('Product Successfully Added!');
 				} else {
 					console.log('Failed to upload image');
+					setLoading(false);
 				}
 			} catch (error) {
 				console.error('Error uploading image:', error);
+				setLoading(false);
 			}
 		} else {
 			console.log('No image source provided');
+			setLoading(false);
 		}
 	};
 
@@ -101,8 +116,8 @@ export default function AddProduct({ categories }) {
 	}
 
 	return (
-		<div className=" overflow-y-auto">
-			<div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+		<div className=" overflow-y-auto mx-auto">
+			<div className="flex items-end justify-center min-h-screen max-w-4xl mx-auto pt-4 px-4 pb-20 text-center sm:block sm:p-0">
 				<div className="fixed inset-0 transition-opacity">
 					<div className="absolute inset-0 bg-gray-500 opacity-75"></div>
 				</div>
@@ -141,6 +156,7 @@ export default function AddProduct({ categories }) {
 										onChange={(ev) =>
 											setTitle(ev.target.value)
 										}
+										required
 										className="mt-1 px-5 border border-b-2 py-4 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-600 rounded-md"
 									/>
 								</div>
@@ -159,6 +175,7 @@ export default function AddProduct({ categories }) {
 										onChange={(ev) =>
 											setPrice(ev.target.value)
 										}
+										required
 										className="mt-1 py-4 px-5 border border-b-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-600 rounded-md"
 									/>
 								</div>
@@ -194,6 +211,7 @@ export default function AddProduct({ categories }) {
 										onChange={(ev) =>
 											setQuantity(ev.target.value)
 										}
+										required
 										className="mt-1 py-4 px-5 border border-b-2 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-600 rounded-md"
 									/>
 								</div>
@@ -311,13 +329,17 @@ export default function AddProduct({ categories }) {
 						</form>
 					</div>
 					<div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-						<button
-							type="submit"
-							className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
-							onClick={handleSubmit}
-						>
-							Add Product
-						</button>
+						{loading ? (
+							<Loading />
+						) : (
+							<button
+								type="submit"
+								className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#005438] text-base font-medium text-white hover:bg-[#005438] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+								onClick={handleSubmit}
+							>
+								Add Product
+							</button>
+						)}
 					</div>
 				</div>
 			</div>

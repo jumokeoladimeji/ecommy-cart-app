@@ -16,7 +16,7 @@ export default function Home({ categories }) {
 		<div className="bg-[#fff]">
 			{/* <CarouselList cards={result}/> */}
 			<div
-				className="relative h-96 bg-contain bg-center mb-10 rounded-md"
+				className="relative h-[28rem] bg-contain bg-center mb-10 rounded-md"
 				style={{
 					backgroundImage:
 						"url('https://leanintree.com/cdn/shop/collections/19landscape.jpg?v=1691433907')",
