@@ -14,62 +14,55 @@ export default async function handler(req, res) {
 	const {
 		email,
 		name,
+		user_id,
 		address,
-		city,
 		country,
 		zip,
+		city,
 		cartProducts,
+		customMessage,
+		phone_number,
+		token,
 	} = req.body;
 
-	const uniqueIds = [...new Set(cartProducts)];
+	// console.log(cartProducts);
 
-	let line_items = [];
-
-	for (const productId of uniqueIds) {
-		// Assuming you have some way to fetch product information based on productId
-		// Replace this with your own logic to fetch product details
-
-		const productInfo = await getOneCard(
-			productId.productId.card_id,
-		);
-
-		const quantity =
-			cartProducts.filter((id) => id === productId)
-				?.length || 0;
-
-		if (quantity > 0 && productInfo) {
-			line_items.push({
-				quantity,
-				price_data: {
-					currency: 'USD',
-					product_data: { name: productInfo.title },
-					unit_amount: quantity * productInfo.price,
-				},
-			});
-		}
-	}
+	const line_items = Object.values(cartProducts).map(
+		(item) => ({
+			// id: item.id,
+			quantity: item.quantity,
+			product_data: item.product_data,
+			price_data: item.price_data,
+		}),
+	);
 
 	const orderData = {
 		line_items,
+		user_id,
 		email,
 		name,
-		address,
+		address1: address,
 		city,
 		country,
 		zip,
+		customized_message: customMessage,
+		shipping_phone_number: phone_number,
 		paid: false,
 	};
 
-	const orderDoc = await createOrder(orderData);
+	// console.log(orderData, token);
+
+	const orderDoc = await createOrder(orderData, token);
 
 	const session = await stripe.checkout.sessions.create({
 		line_items,
 		mode: 'payment',
 		customer_email: email,
-		success_url: `${process.env.NEXT_PUBLIC_URL}/api/success?orderId=${orderDoc.data.id}`,
-		cancel_url: `${process.env.NEXT_PUBLIC_URL}/cart`,
+		success_url: `${process.env.NEXT_PUBLIC_URL}/api/success?orderId=${orderDoc?.id}?token=${token}`,
+		cancel_url: `${process.env.NEXT_PUBLIC_URL}`,
 		metadata: {
-			orderId: `${orderDoc.data.id}`,
+			orderId: orderDoc?.id,
+			token: token,
 		},
 	});
 

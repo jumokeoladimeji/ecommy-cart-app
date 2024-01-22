@@ -212,7 +212,7 @@ export default function AdminDashboard({ cards }) {
 							</h1>
 							<Link
 								href="/admin/add-product"
-								className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-2 rounded-md mr-2"
+								className="bg-[#005438] hover:bg-[#005438ec] text-white py-1 px-2 rounded-md mr-2"
 							>
 								Add Product
 							</Link>
@@ -257,7 +257,7 @@ export default function AdminDashboard({ cards }) {
 												})}
 											</td>
 											<td className="border border-gray-300 px-4 py-2">
-												<button className="bg-blue-500 hover:bg-blue-600 text-white py-1 px-2 rounded-md mr-2">
+												<button className="bg-[#005438] hover:bg-[#005438ee] text-white py-1 px-2 rounded-md mr-2">
 													Edit
 												</button>
 												<button

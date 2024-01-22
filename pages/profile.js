@@ -9,6 +9,7 @@ export default function Profile() {
 		useContext(UserContext);
 	const router = useRouter();
 	const [orders, setOrders] = useState([]);
+	const [showEdit, setShowEdit] = useState(false);
 
 	useEffect(() => {
 		if (user) {
@@ -57,6 +58,14 @@ export default function Profile() {
 		// Add logic to update the user profile using API calls or other methods
 	};
 
+	const showEditModal = () => {
+		setShowEdit(true);
+	};
+
+	const closeEditModal = () => {
+		setShowEdit(false);
+	};
+
 	const currentUser = user?.data;
 
 	if (isAuth)
@@ -71,12 +80,12 @@ export default function Profile() {
 							>
 								Customer Information
 							</h1>
-							<a
-								href=""
-								className="px-4 py-3 rounded-md bg-slate-200"
+							<button
+								onClick={() => showEditModal()}
+								className="bg-[#005438] w-20 text-white px-4 py-2 rounded-md hover:bg-[#005438] transition duration-300"
 							>
 								Edit
-							</a>
+							</button>
 						</div>
 						<div className="flex flex-row items-center mt-5">
 							<div>
@@ -163,78 +172,97 @@ export default function Profile() {
 							</table>
 						</div>
 					</div>
-					<div className=" border-slate-200 rounded-lg p-6 border-2">
-						<div className="flex flex-row justify-between items-center">
-							<h1
-								style={{ fontFamily: 'Lobster Two' }}
-								className=" text-2xl"
-							>
-								Update Profile
-							</h1>
-						</div>
-						<div className="mx-auto mt-8">
-							<form
-								onSubmit={handleSubmit}
-								className="space-y-4"
-							>
-								<div>
-									<label
-										htmlFor="firstName"
-										className="block text-gray-600"
-									>
-										First Name
-									</label>
-									<input
-										type="text"
-										id="firstName"
-										name="firstName"
-										value={formData.firstName}
-										onChange={handleInputChange}
-										className="border border-gray-300 px-3 py-2 w-full rounded-md focus:outline-none focus:border-blue-500"
-									/>
-								</div>
-								<div>
-									<label
-										htmlFor="lastName"
-										className="block text-gray-600"
-									>
-										Last Name
-									</label>
-									<input
-										type="text"
-										id="lastName"
-										name="lastName"
-										value={formData.lastName}
-										onChange={handleInputChange}
-										className="border border-gray-300 px-3 py-2 w-full rounded-md focus:outline-none focus:border-blue-500"
-									/>
-								</div>
-								<div>
-									<label
-										htmlFor="email"
-										className="block text-gray-600"
-									>
-										Email
-									</label>
-									<input
-										type="email"
-										id="email"
-										name="email"
-										value={formData.email}
-										onChange={handleInputChange}
-										className="border border-gray-300 px-3 py-2 w-full rounded-md focus:outline-none focus:border-blue-500"
-									/>
-								</div>
+					{!showEdit ? (
+						<button
+							onClick={() => showEditModal()}
+							className="bg-[#005438] w-32 text-white px-4 py-2 rounded-md hover:bg-[#005438] transition duration-300"
+						>
+							Edit Profile
+						</button>
+					) : (
+						<button
+							onClick={() => closeEditModal()}
+							className="bg-[#ac2f2f] w-32 text-white px-4 py-2 rounded-md hover:bg-[#ac2f2f] transition duration-300"
+						>
+							Close
+						</button>
+					)}
 
-								<button
-									type="submit"
-									className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300"
+					{showEdit && (
+						<div className=" border-slate-200 rounded-lg p-6 border-2">
+							<div className="flex flex-row justify-between items-center">
+								<h1
+									style={{ fontFamily: 'Lobster Two' }}
+									className=" text-2xl"
 								>
 									Update Profile
-								</button>
-							</form>
+								</h1>
+							</div>
+
+							<div className="mx-auto mt-8">
+								<form
+									onSubmit={handleSubmit}
+									className="space-y-4"
+								>
+									<div>
+										<label
+											htmlFor="firstName"
+											className="block text-gray-600"
+										>
+											First Name
+										</label>
+										<input
+											type="text"
+											id="firstName"
+											name="firstName"
+											value={formData.firstName}
+											onChange={handleInputChange}
+											className="border border-gray-300 px-3 py-2 w-full rounded-md focus:outline-none focus:border-blue-500"
+										/>
+									</div>
+									<div>
+										<label
+											htmlFor="lastName"
+											className="block text-gray-600"
+										>
+											Last Name
+										</label>
+										<input
+											type="text"
+											id="lastName"
+											name="lastName"
+											value={formData.lastName}
+											onChange={handleInputChange}
+											className="border border-gray-300 px-3 py-2 w-full rounded-md focus:outline-none focus:border-blue-500"
+										/>
+									</div>
+									<div>
+										<label
+											htmlFor="email"
+											className="block text-gray-600"
+										>
+											Email
+										</label>
+										<input
+											type="email"
+											id="email"
+											name="email"
+											value={formData.email}
+											onChange={handleInputChange}
+											className="border border-gray-300 px-3 py-2 w-full rounded-md focus:outline-none focus:border-blue-500"
+										/>
+									</div>
+
+									<button
+										type="submit"
+										className="bg-[#005438] text-white px-4 py-2 rounded-md hover:bg-[#005438] transition duration-300"
+									>
+										Update Profile
+									</button>
+								</form>
+							</div>
 						</div>
-					</div>
+					)}
 				</div>
 			</div>
 		);

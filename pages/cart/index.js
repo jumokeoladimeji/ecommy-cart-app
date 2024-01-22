@@ -7,6 +7,12 @@ import Success from '../success';
 import { UserContext } from '../../context/UserContext';
 import { useRouter } from 'next/router';
 import Spinner from '../../components/Spinner';
+import {
+	formatCurrencyString,
+	useShoppingCart,
+} from 'use-shopping-cart';
+import CartItem from '../../components/CartItem';
+import Image from 'next/image';
 
 export default function Cart() {
 	const {
@@ -15,11 +21,19 @@ export default function Cart() {
 		addProduct,
 		clearCart,
 	} = useContext(CartContext);
+	const {
+		shouldDisplayCart,
+		cartCount,
+		cartDetails,
+		formattedTotalPrice,
+	} = useShoppingCart();
+	console.log(cartDetails);
 	const [products, setProducts] = useState([]);
 	const [address, setAddress] = useState('');
 	const [email, setEmail] = useState('');
 	const [name, setName] = useState('');
 	const [city, setCity] = useState('');
+	const [customMessage, setCustomMessage] = useState('');
 	const [country, setCountry] = useState('');
 	const [zip, setZip] = useState('');
 	const [loading, setLoading] = useState(true);
@@ -27,7 +41,7 @@ export default function Cart() {
 		useContext(UserContext);
 	const [isSuccess, setIsSuccess] = useState(false);
 	const router = useRouter();
-
+	console.log(user.data);
 	useEffect(() => {
 		if (typeof window === 'undefined') {
 			return;
@@ -38,77 +52,23 @@ export default function Cart() {
 		}
 	}, []);
 
-	let total = 0;
-	for (const productId of cartProducts) {
-		const price =
-			products.find((p) => p._id === productId)?.price || 0;
-		total += price;
-	}
-
-	let subTotal = 0;
-	for (const productId of cartProducts) {
-		const price =
-			cartProducts.find((p) => p.id === productId)?.price ||
-			0;
-		subTotal = total + total / 1000;
-	}
-
 	const [totalPrice, setTotalPrice] = useState(0);
 
-	useEffect(() => {
-		// Function to calculate total price
-		const calculateTotalPrice = () => {
-			let totalPrice = 0;
-
-			// Iterate through each item in the cartProducts array
-			cartProducts.forEach((item) => {
-				// Check if the item has count and productId properties
-				if (
-					item.count &&
-					item.productId &&
-					item.productId.price
-				) {
-					// Multiply count by price and add to the total
-					totalPrice += item.count * item.productId.price;
-				}
-			});
-
-			// Update the state with the total price
-			setTotalPrice(totalPrice);
-		};
-
-		// Call the function to calculate total price when cartProducts change
-		calculateTotalPrice();
-	}, [cartProducts]);
-
-	function increaseProduct(id) {
-		addProduct(id);
-	}
-
-	function decreaseProduct(id) {
-		removeProduct(id);
-		toast.success('Removed product!!');
-	}
-	function deleteCart(id) {
-		clearCart();
-		toast.success('Cart cleared!!');
-	}
-
-	const formatPrice = (price) => {
-		return price
-			.toString()
-			.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-	};
+	const storedToken = localStorage.getItem('token');
 
 	async function stripeCheckout() {
 		const response = await axios.post('/api/checkout', {
 			email: user.data.email,
 			name: user.data.name,
+			user_id: user.data.id,
+			phone_number: user.data.phone_number,
 			address,
 			country,
 			zip,
 			city,
-			cartProducts,
+			customMessage,
+			token: storedToken,
+			cartProducts: cartDetails,
 		});
 
 		if (response.data.url) {
@@ -117,7 +77,12 @@ export default function Cart() {
 			toast.error('An error occured!!');
 		}
 	}
-	// console.log(cartProducts);
+
+	const { removeItem } = useShoppingCart();
+
+	const removeItemFromCart = () => {
+		removeItem(item.id);
+	};
 
 	if (isSuccess) {
 		return (
@@ -132,119 +97,109 @@ export default function Cart() {
 			<>
 				<section className="flex justify-between max-md:flex-col space-x-4 ">
 					<div className=" md:w-2/3  px-4">
-						<div className=" mt-16 md:mt-6 ">
+						<div className=" mt-10 md:mt-6 ">
 							<header className="text-center flex justify-between w-full">
 								<h1 className="text-xl font-bold text-gray-900 sm:text-3xl">
-									Your Cart
+									Checkout
 								</h1>
 							</header>
-							{!loading ? (
-								<div className="flex justify-center items-center h-screen">
-									<p className="my-6 text-center ">
-										Your cart is empty
-									</p>
-								</div>
-							) : !cartProducts?.length ? (
+							{!cartDetails ? (
 								<p className="my-6 text-center ">
 									Your cart is empty
 								</p>
 							) : (
 								<>
-									{cartProducts?.length > 0 &&
-										cartProducts.map((product) => (
+									{Object.values(cartDetails ?? {}).map(
+										(entry) => (
+											// <CartItem
+											// 	key={entry.id}
+											// 	item={entry}
+											// />
 											<div
-												key={product.productId.id}
-												className="mt-8"
+												key={entry.id}
+												className="flex items-center gap-4 mb-3 mt-2"
 											>
-												<ul className="space-y-4">
-													<li className="flex items-center gap-4 justify-between">
-														<img
-															src={
-																product.productId
-																	.front_img_url
-															}
-															alt=""
-															className="h-16 w-16 rounded object-cover"
-														/>
-
-														<div>
-															<h3 className="text-md text-text max-w-md">
-																{product.productId.title}
-															</h3>
-
-															<dl className="mt-0.5 space-y-px text-[10px] text-text">
-																<p>
-																	${' '}
-																	{formatPrice(
-																		product.productId
-																			.price / 100,
-																	) *
-																		formatPrice(
-																			product.count,
-																		)}
-																</p>
-															</dl>
-														</div>
-
-														<div>
-															<label
-																htmlFor="Quantity"
-																className="sr-only"
-															>
-																{' '}
-																Quantity{' '}
-															</label>
-
-															<div className="flex items-center gap-1">
-																<button
-																	type="button"
-																	className="w-10 h-10 leading-10 text-text transition hover:opacity-75 border "
-																>
-																	X {product.count}
-																</button>
-															</div>
-														</div>
-													</li>
-												</ul>
+												<div>
+													<img
+														alt="product image"
+														src={entry.front_img_url}
+														className="h-14 w-14 rounded-md"
+													/>
+												</div>
+												<div>
+													{entry.title}{' '}
+													<span className="text-xs">
+														({entry.quantity})
+													</span>
+												</div>
+												<div className="ml-auto">
+													{formatCurrencyString({
+														value: entry.price,
+														currency: 'USD',
+													})}
+												</div>
+												<button
+													onClick={() =>
+														removeItemFromCart()
+													}
+													className="hover:bg-emerald-50 transition-colors rounded-full duration-500 p-1"
+												>
+													<Image
+														alt="delete icon"
+														src="./trash.svg"
+														width={20}
+														height={20}
+													/>
+												</button>
 											</div>
-										))}
+										),
+									)}
+
+									<div class="col-span-12 pt-5 pl-3">
+										<label class="mb-1 block text-sm font-medium text-text">
+											Customize Card Message (optional)
+										</label>
+										<input
+											type="text"
+											name="customMessage"
+											class="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+											placeholder="Have a good fishing..."
+											value={customMessage}
+											onChange={(ev) =>
+												setCustomMessage(ev.target.value)
+											}
+										/>
+									</div>
 
 									<div className="mt-8 flex justify-end border-t border-gray-100 pt-8">
 										<div className=" max-w-md space-y-4">
 											<dl className="space-y-0.5 text-md text-gray-700">
-												<div className="flex justify-end text-red-400 border-b mb-3">
-													<button onClick={deleteCart}>
-														Clear Cart
-													</button>
-												</div>
 												<div className="flex justify-between">
 													<dt>Subtotal</dt>
-													<dd>$ {totalPrice / 100}</dd>
+													<dd>{formattedTotalPrice}</dd>
 												</div>
 
-												<strike className="flex justify-between">
+												{/* <strike className="flex justify-between">
 													<dt>VAT</dt>
-													<dd>
-														$ {formatPrice(total / 1000)}
-													</dd>
-												</strike>
+													<dd>{formattedTotalPrice}</dd>
+												</strike> */}
 
 												<div className="flex justify-between !text-base font-medium">
 													<dt>Total</dt>
-													<dd>$ {totalPrice / 100}</dd>
+													<dd>{formattedTotalPrice}</dd>
 												</div>
 											</dl>
 
 											<div className="flex justify-end">
 												<Link
-													class="group flex items-center justify-between gap-4 rounded-lg border border-current px-4 py-2 text-orange-600 transition-colors hover:bg-orange-600 focus:outline-none focus:ring active:bg-orange-500"
+													class="group flex items-center justify-between gap-4 rounded-lg border border-current px-4 py-2 text-[#00553A] transition-colors hover:bg-[#00553A] focus:outline-none focus:ring active:bg-[#00553A]"
 													href="/"
 												>
 													<span class="font-medium transition-colors group-hover:text-white">
 														Continue shopping
 													</span>
 
-													<span class="shrink-0 rounded-full border border-orange-600 bg-white p-2 group-active:border-orange-500">
+													<span class="shrink-0 rounded-full border border-[#00553A] bg-white p-2 group-active:border-[#00553A]">
 														<svg
 															class="h-4 w-4 rtl:rotate-180"
 															xmlns="http://www.w3.org/2000/svg"
@@ -268,7 +223,7 @@ export default function Cart() {
 							)}
 						</div>
 					</div>
-					{!cartProducts.length ? (
+					{!cartDetails ? (
 						''
 					) : (
 						<div className="md:1/3 mt-16 md:mt-6">
@@ -374,7 +329,7 @@ export default function Cart() {
 										<div class="col-span-12 text-center w-full">
 											<button
 												onClick={stripeCheckout}
-												className="block rounded border border-orange-600 bg-white p-2 px-5 py-3 text-md text-text transition hover:bg-orange-600 w-full"
+												className="block rounded border border-[#00553A] bg-white p-2 px-5 py-3 text-md text-text transition hover:bg-[#00553A] hover:text-white w-full"
 											>
 												Checkout
 											</button>
