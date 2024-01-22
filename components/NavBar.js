@@ -19,14 +19,13 @@ export default function NavBar() {
 		<nav className="flex w-full pl-4 items-center py-2 lg:justify-start shadow-md fixed top-0 z-50 bg-white">
 			<div className="flex w-full items-center justify-between px-0">
 				<Link href="/">
-					<p
-						style={{ fontFamily: 'Lobster Two' }}
-						className="bg-white text-xl md:text-2xl font-bold decoration-2 decoration-emerald-500"
-					>
-						Measures of Fun
-					</p>
+          <Image
+              src={'/measures_of_fun_logo_small.jpg'}
+							width={200}
+							height={200}
+							alt="Measures of Fun"
+						/>
 				</Link>
-
 				{/* <SearchBox /> */}
 				<div className="flex items-center">
 					<button
