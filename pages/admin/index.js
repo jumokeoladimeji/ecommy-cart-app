@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from 'react';
 import { FaUserAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
-import { getUserOrders } from '../api/order';
+import { getOrders, getUserOrders } from '../api/order';
 import { UserContext } from '../../context/UserContext';
 import { deleteCard, getCards } from '../api/card';
 import { formatCurrencyString } from 'use-shopping-cart';
 import Link from 'next/link';
 import stripe from 'stripe';
+import { format } from 'date-fns';
 
 export default function AdminDashboard({ cards }) {
 	const { user, token, loginUser, logoutUser } =
@@ -45,18 +46,29 @@ export default function AdminDashboard({ cards }) {
 	});
 
 	useEffect(() => {
-		if (user) {
-			getUserOrders({ id: user.data.id })
-				.then((res) => {
-					setOrders(res.data);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		} else {
-			console.log('No user logged in');
-		}
-	}, []);
+		const fetchOrders = async () => {
+			try {
+				if (user) {
+					const res = await getOrders(token);
+					const sortedOrders = res.data.sort((a, b) => {
+						// Assuming 'updatedAt' is a string in ISO format
+						const dateA = new Date(a.updatedAt);
+						const dateB = new Date(b.updatedAt);
+						return dateB - dateA; // Sort in descending order (latest first)
+					});
+					setOrders(sortedOrders);
+				} else {
+					console.log('No user logged in');
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		};
+
+		fetchOrders();
+	}, [user, token]);
+
+	console.log(orders);
 
 	const isAuth = user && token;
 
@@ -162,11 +174,14 @@ export default function AdminDashboard({ cards }) {
 										<th className="border border-gray-300 px-4 py-2">
 											Items
 										</th>
-										<th className="border border-gray-300 px-4 py-2">
+										{/* <th className="border border-gray-300 px-4 py-2">
 											Total
-										</th>
+										</th> */}
 										<th className="border border-gray-300 px-4 py-2">
 											Status
+										</th>
+										<th className="border border-gray-300 px-4 py-2">
+											Actions
 										</th>
 									</tr>
 								</thead>
@@ -174,27 +189,65 @@ export default function AdminDashboard({ cards }) {
 									{orders.map((order) => (
 										<tr key={order.id}>
 											<td className="border border-gray-300 px-4 py-2">
-												{order.id}
+												{order.id.split('-')[0]}...
 											</td>
 											<td className="border border-gray-300 px-4 py-2">
-												{order.date}
+												{format(
+													new Date(order.updatedAt),
+													'MMM d, yyyy',
+												)}
 											</td>
 											<td className="border border-gray-300 px-4 py-2">
 												<ul>
-													{order.items.map(
+													{order?.line_items?.map(
 														(item, index) => (
 															<li key={index}>
-																{item.name}
+																{
+																	item.price_data
+																		?.product_data?.name
+																}{' '}
+																(X{item?.quantity})
 															</li>
 														),
 													)}
 												</ul>
 											</td>
+											{/* <td className="border border-gray-300 px-4 py-2">
+												${order.total}
+											</td> */}
 											<td className="border border-gray-300 px-4 py-2">
-												{order.total}
+												{order.paid ? 'Paid' : 'Not Paid'}
 											</td>
 											<td className="border border-gray-300 px-4 py-2">
-												{order.status}
+												<button
+													onClick={() =>
+														router.push(
+															`/admin/order/${order?.id}`,
+														)
+													}
+													className="bg-[#7b7c7c] hover:bg-[#005438ee] text-white py-1 px-2 rounded-md mr-2"
+												>
+													View
+												</button>
+												{/* {order.confirm_delivery ? (
+													<button
+														onClick={() =>
+															handleDelete(product.id)
+														}
+														className="bg-[#005438] hover:bg-[#005438] text-white py-1 px-2 rounded-md"
+													>
+														Delivered
+													</button>
+												) : (
+													<button
+														onClick={() =>
+															handleDelete(product.id)
+														}
+														className="bg-[#005438] hover:bg-[#005438] text-white py-1 px-2 rounded-md"
+													>
+														Mark as Delivered
+													</button>
+												)} */}
 											</td>
 										</tr>
 									))}

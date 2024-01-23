@@ -1,8 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
-import { UserContext } from '../context/UserContext';
+import { UserContext } from '../../context/UserContext';
 import { FaUserAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
-import { getUserOrders } from './api/order';
+import {
+	getOrders,
+	getUserOrders,
+} from '../../pages/api/order';
+import { format } from 'date-fns';
 
 export default function Profile() {
 	const { user, token, loginUser, logoutUser } =
@@ -12,18 +16,31 @@ export default function Profile() {
 	const [showEdit, setShowEdit] = useState(false);
 
 	useEffect(() => {
-		if (user) {
-			getUserOrders({ id: user.data.id })
-				.then((res) => {
-					setOrders(res.data);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		} else {
-			console.log('No user logged in');
-		}
-	}, []);
+		const fetchOrders = async () => {
+			try {
+				if (user) {
+					const res = await getOrders(token);
+
+					const sortedOrders = res?.data?.sort((a, b) => {
+						// Assuming 'updatedAt' is a string in ISO format
+						const dateA = new Date(a.updatedAt);
+						const dateB = new Date(b.updatedAt);
+						return dateB - dateA; // Sort in descending order (latest first)
+					});
+					const userOrders = sortedOrders?.filter(
+						(order) => order.user_id === user?.data.id,
+					);
+					setOrders(userOrders);
+				} else {
+					console.log('No user logged in');
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		};
+
+		fetchOrders();
+	}, [user, token]);
 
 	console.log(orders);
 
@@ -116,7 +133,7 @@ export default function Profile() {
 								style={{ fontFamily: 'Lobster Two' }}
 								className=" text-2xl"
 							>
-								Order History
+								Your Order History
 							</h1>
 						</div>
 						<div className="overflow-x-auto">
@@ -132,11 +149,14 @@ export default function Profile() {
 										<th className="border border-gray-300 px-4 py-2">
 											Items
 										</th>
-										<th className="border border-gray-300 px-4 py-2">
+										{/* <th className="border border-gray-300 px-4 py-2">
 											Total
-										</th>
+										</th> */}
 										<th className="border border-gray-300 px-4 py-2">
 											Status
+										</th>
+										<th className="border border-gray-300 px-4 py-2">
+											Actions
 										</th>
 									</tr>
 								</thead>
@@ -144,27 +164,46 @@ export default function Profile() {
 									{orders.map((order) => (
 										<tr key={order.id}>
 											<td className="border border-gray-300 px-4 py-2">
-												{order.id}
+												{order.id.split('-')[0]}...
 											</td>
 											<td className="border border-gray-300 px-4 py-2">
-												{order.date}
+												{format(
+													new Date(order.updatedAt),
+													'MMM d, yyyy',
+												)}
 											</td>
 											<td className="border border-gray-300 px-4 py-2">
 												<ul>
-													{order.items.map(
+													{order?.line_items?.map(
 														(item, index) => (
 															<li key={index}>
-																{item.name}
+																{
+																	item.price_data
+																		?.product_data?.name
+																}{' '}
+																(X{item?.quantity})
 															</li>
 														),
 													)}
 												</ul>
 											</td>
+											{/* <td className="border border-gray-300 px-4 py-2">
+												${order.total}
+											</td> */}
 											<td className="border border-gray-300 px-4 py-2">
-												{order.total}
+												{order.paid ? 'Paid' : 'Not Paid'}
 											</td>
 											<td className="border border-gray-300 px-4 py-2">
-												{order.status}
+												<button
+													onClick={() =>
+														router.push(
+															`/profile/order/${order?.id}`,
+														)
+													}
+													className="bg-[#7b7c7c] hover:bg-[#005438ee] text-white py-1 px-2 rounded-md mr-2"
+												>
+													View
+												</button>
 											</td>
 										</tr>
 									))}

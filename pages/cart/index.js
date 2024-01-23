@@ -41,7 +41,7 @@ export default function Cart() {
 		useContext(UserContext);
 	const [isSuccess, setIsSuccess] = useState(false);
 	const router = useRouter();
-	console.log(user.data);
+
 	useEffect(() => {
 		if (typeof window === 'undefined') {
 			return;
@@ -77,6 +77,8 @@ export default function Cart() {
 			toast.error('An error occured!!');
 		}
 	}
+
+	console.log(token);
 
 	const { removeItem } = useShoppingCart();
 
