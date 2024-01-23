@@ -58,7 +58,7 @@ export default async function handler(req, res) {
 		line_items,
 		mode: 'payment',
 		customer_email: email,
-		success_url: `${process.env.NEXT_PUBLIC_URL}/api/success?orderId=${orderDoc?.id}?token=${token}`,
+		success_url: `${process.env.NEXT_PUBLIC_URL}/api/success?orderId=${orderDoc?.id}&token=${token}`,
 		cancel_url: `${process.env.NEXT_PUBLIC_URL}`,
 		metadata: {
 			orderId: orderDoc?.id,

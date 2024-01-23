@@ -19,24 +19,42 @@ export const createOrder = async (orderData, token) => {
 	}
 };
 
-export const getOrders = async () => {
+export const getOrders = async (token) => {
 	const response = await axios.get(
 		`${backendUrl}/api/v1/orders`,
+		{
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		},
 	);
-	return response;
+	console.log(response);
+	return response.data;
 };
-export const getUserOrders = async ({ id }) => {
+export const getUserOrders = async (id, token) => {
 	const response = await axios.get(
 		`${backendUrl}/api/v1/users/${id}/orders`,
-	);
-	return response;
-};
-export const getOneOrder = async () => {
-	const response = await axios.get(
-		`${backendUrl}/orders/:orderId`,
+		{
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		},
 	);
 	return response.data;
 };
+export const getOneOrder = async (id, token) => {
+	console.log(id);
+	const response = await axios.get(
+		`${backendUrl}/api/v1/orders/${id}`,
+		{
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		},
+	);
+	return response.data.data;
+};
+
 export const updateOrder = async (
 	orderId,
 	orderData,
@@ -58,9 +76,11 @@ export const updateOrder = async (
 		console.log(error.response.data);
 	}
 };
-export const deleteOrder = async () => {     
-    const response = await axios.delete(`${backendUrl}/orders/:orderId`);
-    return response.data;
+export const deleteOrder = async () => {
+	const response = await axios.delete(
+		`${backendUrl}/api/v1/orders/:orderId`,
+	);
+	return response.data;
 };
 
  

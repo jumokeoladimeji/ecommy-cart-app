@@ -75,7 +75,7 @@ export default function CheckoutButton() {
 			</div>
 			<button
 				onClick={goToCart}
-				className="bg-emerald-50 hover:bg-emerald-500 hover:text-white transition-colors duration-500 text-emerald-500 py-3 px-5 rounded-md w-100 disabled:bg-slate-300 disabled:cursor-not-allowed disabled:text-white"
+				className="bg-[#02533C] hover:bg-[#02533cd7] hover:text-white transition-colors duration-500 text-white py-3 px-5 rounded-md w-100 disabled:bg-slate-300 disabled:cursor-not-allowed disabled:text-white"
 				// disabled={
 				//   (totalPrice && totalPrice >= 0) ||
 				//   (cartCount && cartCount >= 0 ) ||

@@ -17,6 +17,7 @@ export const signup = async (userDetails) => {
 			'error registering in user',
 			error.response.data,
 		);
+		return error.response.data;
 	}
 };
 
@@ -51,8 +52,10 @@ export const signin = async (userDetails, loginUser) => {
 		}
 
 		loginUser(loggedInUser, loggedInUser.token);
+		return response.data;
 	} catch (error) {
 		console.log('error log in user', error.response);
 		// return NextResponse.json({ error: err, success: false }, { status: 500 })
+		return error.response;
 	}
 };
