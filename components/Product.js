@@ -1,12 +1,13 @@
-import { useState } from "react";
-import { formatCurrencyString } from "use-shopping-cart";
-import { useShoppingCart } from "use-shopping-cart";
-import Link from "next/link";
+import { useState } from 'react';
+import { formatCurrencyString } from 'use-shopping-cart';
+import { useShoppingCart } from 'use-shopping-cart';
+import Link from 'next/link';
+import toast from 'react-hot-toast';
 
 export default function Product({ product }) {
-  const { addItem } = useShoppingCart();
-  console.log('product', product)
-  const {
+	const { addItem } = useShoppingCart();
+	console.log('product', product);
+	const {
 		name,
 		price,
 		img_url,
@@ -33,9 +34,18 @@ export default function Product({ product }) {
 	};
 
 	const addToCart = () => {
-		console.log('quantity', quantity);
-		addItem(product, { count: quantity });
+		addItem(product, {
+			count: quantity,
+			price_metadata: {
+				currency: 'USD',
+				product_data: {
+					name: product.title,
+				},
+				unit_amount: quantity * product.price,
+			},
+		});
 		setQuantity(1);
+		toast.success('Item added to cart');
 	};
 
 	return (
@@ -90,7 +100,7 @@ export default function Product({ product }) {
 				})}
 				<button
 					onClick={() => addToCart()}
-					className="bg-emerald-50 w-full md:w-1/3 mx-auto hover:bg-emerald-500 hover:text-white transition-colors duration-500 text-emerald-500 rounded-md px-5 py-2"
+					className="bg-[#00543A] w-full md:w-1/3 mx-auto hover:bg-[#f1f1f1] hover:text-[#00543A] transition-colors duration-500 text-[#fff] rounded-md px-5 py-2"
 				>
 					Add to cart
 				</button>

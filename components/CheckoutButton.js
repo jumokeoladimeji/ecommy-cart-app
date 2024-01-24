@@ -1,11 +1,21 @@
+import { UserContext } from '@/context/UserContext';
 import axios from 'axios';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
+import { useContext, useState } from 'react';
+import toast from 'react-hot-toast';
 import { useShoppingCart } from 'use-shopping-cart';
 
 export default function CheckoutButton() {
 	const [status, setStatus] = useState('idle');
-	const { redirectToCheckout, cartCount, totalPrice } =
-		useShoppingCart();
+	const router = useRouter();
+	const {
+		redirectToCheckout,
+		cartCount,
+		totalPrice,
+		cartDetails,
+	} = useShoppingCart();
+	const { user, token, loginUser, logoutUser } =
+		useContext(UserContext);
 
 	async function handleClick(event) {
 		event.preventDefault();
@@ -27,6 +37,28 @@ export default function CheckoutButton() {
 		}
 	}
 
+	async function stripeCheckout() {
+		const response = await axios.post('/api/checkout', {
+			email: user.data.email,
+			name: user.data.name,
+			// address,
+			// country,
+			// zip,
+			// city,
+			cartProducts: cartDetails,
+		});
+
+		if (response.data.url) {
+			window.location = response.data.url;
+		} else {
+			toast.error('An error occured!!');
+		}
+	}
+
+	async function goToCart() {
+		router.push('/cart');
+	}
+
 	console.log('total price', totalPrice);
 	return (
 		<article className="mt-3 flex flex-col">
@@ -42,8 +74,8 @@ export default function CheckoutButton() {
 					: null}
 			</div>
 			<button
-				onClick={handleClick}
-				className="bg-emerald-50 hover:bg-emerald-500 hover:text-white transition-colors duration-500 text-emerald-500 py-3 px-5 rounded-md w-100 disabled:bg-slate-300 disabled:cursor-not-allowed disabled:text-white"
+				onClick={goToCart}
+				className="bg-[#02533C] hover:bg-[#02533cd7] hover:text-white transition-colors duration-500 text-white py-3 px-5 rounded-md w-100 disabled:bg-slate-300 disabled:cursor-not-allowed disabled:text-white"
 				// disabled={
 				//   (totalPrice && totalPrice >= 0) ||
 				//   (cartCount && cartCount >= 0 ) ||

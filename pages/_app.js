@@ -2,9 +2,11 @@ import Layout from "@/components/Layout";
 import "@/styles/globals.css";
 import { CartProvider } from "use-shopping-cart";
 import { UserProvider } from '../context/UserContext';
+import { CartContextProvider } from '../context/CartContext';
+import { Toaster } from 'react-hot-toast';
 
 export default function App({ Component, pageProps }) {
-  return (
+	return (
 		<UserProvider>
 			<CartProvider
 				mode="payment"
@@ -27,6 +29,10 @@ export default function App({ Component, pageProps }) {
 			>
 				<Layout>
 					<Component {...pageProps} />
+					<Toaster
+						position="top-center"
+						reverseOrder={false}
+					/>
 				</Layout>
 			</CartProvider>
 		</UserProvider>

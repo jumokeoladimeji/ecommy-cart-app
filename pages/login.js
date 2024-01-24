@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import { signin } from '@/pages/api/user';
 import { UserContext } from '../context/UserContext';
+import toast from 'react-hot-toast';
 // import loginImg from '@/assets/login.jpeg'
 
 export default function Login() {
@@ -28,7 +29,14 @@ export default function Login() {
 
 	async function onSubmit(user) {
 		const signInUser = await signin(user, loginUser);
-		Router.push('/');
+
+		console.log(signInUser);
+		if (signInUser.data.error) {
+			toast.error(signInUser.data.error);
+		} else {
+			Router.push('/');
+			toast.success('Logged in successfully');
+		}
 	}
 
 	return (
@@ -46,7 +54,13 @@ export default function Login() {
 				{/* <img className='w-full h-full object-cover' src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2620&q=80" alt="" /> */}
 			</div>
 
-			<div className="bg-gray-100 flex flex-col justify-center">
+			<div className="bg-white flex flex-col justify-center">
+				<div className="text-center pb-4">
+					<h1 className="font-bold text-3xl">
+						Welcome Back,
+					</h1>
+					<p>Log in to continue.</p>
+				</div>
 				<form
 					onSubmit={handleSubmit(onSubmit)}
 					className="max-w-[400px] w-full mx-auto bg-white p-4"
@@ -59,7 +73,7 @@ export default function Login() {
 							{...register('email')}
 							className={`border p-2`}
 						/>
-						<div className="invalid-feedback">
+						<div className="invalid-feedback text-red-600 text-sm">
 							{errors.email?.message}
 						</div>
 					</div>
@@ -73,18 +87,21 @@ export default function Login() {
 								errors.password ? 'is-invalid' : ''
 							}`}
 						/>
-						<div className="invalid-feedback">
+						<div className="invalid-feedback text-red-600 text-sm">
 							{errors.password?.message}
 						</div>
 					</div>
-					<button className="border w-full my-5 py-2 bg-emerald-50 text-emerald-500 disabled:text-white hover:bg-emerald-500 hover:text-white transition-colors duration-500 rounded-md w-100 disabled:bg-slate-300 disabled:cursor-not-allowed">
+					<button className="border w-full my-5 py-2 bg-[#02533C] text-white disabled:text-white hover:bg-[#02533ce5] hover:text-white transition-colors duration-500 rounded-md w-100 disabled:bg-slate-300 disabled:cursor-not-allowed">
 						Sign In
 					</button>
 					{/*  py-3 px-5  */}
-					<div className="flex justify-between">
+					<div className="">
 						<Link href="/register">
-							<p className="bg-white underline underline-offset-4 decoration-2 decoration-emerald-500">
-								Not a member? Sign up now
+							<p className="bg-white text-center text-sm">
+								Don't have an account?{' '}
+								<span className="underline underline-offset-3">
+									Sign up now
+								</span>
 							</p>
 						</Link>
 						{/* <a className='text-center mt-8' href='/register'>Not a member? Sign up now</a> */}
@@ -92,9 +109,9 @@ export default function Login() {
 					{/* <div className='flex justify-between'>
                         <p className='flex items-center'><input className='mr-2' type="checkbox" /> Remember Me</p>
                     </div> */}
-					<div className="flex justify-between">
-						<p className="text-center">
-							Forgot Username or Password?
+					<div className="">
+						<p className="text-sm mt-2 text-center">
+							Forgot Password?
 						</p>
 					</div>
 				</form>

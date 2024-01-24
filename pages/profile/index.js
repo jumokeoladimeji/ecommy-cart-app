@@ -1,62 +1,36 @@
 import { useContext, useEffect, useState } from 'react';
+import { UserContext } from '../../context/UserContext';
 import { FaUserAlt } from 'react-icons/fa';
 import { useRouter } from 'next/router';
-import { getOrders, getUserOrders } from '../api/order';
-import { UserContext } from '../../context/UserContext';
-import { deleteCard, getCards } from '../api/card';
-import { formatCurrencyString } from 'use-shopping-cart';
-import Link from 'next/link';
-import stripe from 'stripe';
+import {
+	getOrders,
+	getUserOrders,
+} from '../../pages/api/order';
 import { format } from 'date-fns';
 
-export default function AdminDashboard({ cards }) {
+export default function Profile() {
 	const { user, token, loginUser, logoutUser } =
 		useContext(UserContext);
 	const router = useRouter();
 	const [orders, setOrders] = useState([]);
-
-	const stripeInstance = stripe(
-		'sk_test_51OHnZ3BIztSkOPFM8xDUnfw7kKhzt67vtWubW1j7C3yGqEDmqGWvovVgM7AFoVQciFfcOyg9l7YX2nBh0JPG54OH006P0FcBHa',
-	);
-
-	const getCheckoutSessions = async () => {
-		try {
-			const sessions =
-				await stripeInstance.checkout.sessions.list();
-			return sessions;
-		} catch (error) {
-			// Handle errors here
-			console.error(
-				'Error fetching checkout sessions:',
-				error,
-			);
-			return null;
-		}
-	};
-
-	// Usage
-	getCheckoutSessions().then((sessions) => {
-		if (sessions) {
-			// Do something with the fetched sessions
-			console.log('Fetched sessions:', sessions);
-		} else {
-			// Handle the case where sessions couldn't be fetched
-			console.log('Failed to fetch sessions.');
-		}
-	});
+	const [showEdit, setShowEdit] = useState(false);
 
 	useEffect(() => {
 		const fetchOrders = async () => {
 			try {
 				if (user) {
 					const res = await getOrders(token);
-					const sortedOrders = res.data.sort((a, b) => {
+
+					const sortedOrders = res?.data?.sort((a, b) => {
 						// Assuming 'updatedAt' is a string in ISO format
 						const dateA = new Date(a.updatedAt);
 						const dateB = new Date(b.updatedAt);
 						return dateB - dateA; // Sort in descending order (latest first)
 					});
-					setOrders(sortedOrders);
+					const userOrders = sortedOrders?.filter(
+						(order) => order.user_id === user?.data.id,
+					);
+					setOrders(userOrders);
 				} else {
 					console.log('No user logged in');
 				}
@@ -101,11 +75,12 @@ export default function AdminDashboard({ cards }) {
 		// Add logic to update the user profile using API calls or other methods
 	};
 
-	const handleDelete = async (id) => {
-		const response = await deleteCard(id);
-		console.log(response);
-		// alert('Card deleted');
-		router.push('/admin');
+	const showEditModal = () => {
+		setShowEdit(true);
+	};
+
+	const closeEditModal = () => {
+		setShowEdit(false);
 	};
 
 	const currentUser = user?.data;
@@ -120,14 +95,14 @@ export default function AdminDashboard({ cards }) {
 								style={{ fontFamily: 'Lobster Two' }}
 								className=" text-2xl"
 							>
-								Admin Information
+								Customer Information
 							</h1>
-							<a
-								href=""
-								className="px-4 py-3 rounded-md bg-slate-200"
+							<button
+								onClick={() => showEditModal()}
+								className="bg-[#005438] w-20 text-white px-4 py-2 rounded-md hover:bg-[#005438] transition duration-300"
 							>
 								Edit
-							</a>
+							</button>
 						</div>
 						<div className="flex flex-row items-center mt-5">
 							<div>
@@ -158,7 +133,7 @@ export default function AdminDashboard({ cards }) {
 								style={{ fontFamily: 'Lobster Two' }}
 								className=" text-2xl"
 							>
-								Order History
+								Your Order History
 							</h1>
 						</div>
 						<div className="overflow-x-auto">
@@ -222,32 +197,13 @@ export default function AdminDashboard({ cards }) {
 												<button
 													onClick={() =>
 														router.push(
-															`/admin/order/${order?.id}`,
+															`/profile/order/${order?.id}`,
 														)
 													}
 													className="bg-[#7b7c7c] hover:bg-[#005438ee] text-white py-1 px-2 rounded-md mr-2"
 												>
 													View
 												</button>
-												{/* {order.confirm_delivery ? (
-													<button
-														onClick={() =>
-															handleDelete(product.id)
-														}
-														className="bg-[#005438] hover:bg-[#005438] text-white py-1 px-2 rounded-md"
-													>
-														Delivered
-													</button>
-												) : (
-													<button
-														onClick={() =>
-															handleDelete(product.id)
-														}
-														className="bg-[#005438] hover:bg-[#005438] text-white py-1 px-2 rounded-md"
-													>
-														Mark as Delivered
-													</button>
-												)} */}
 											</td>
 										</tr>
 									))}
@@ -255,79 +211,97 @@ export default function AdminDashboard({ cards }) {
 							</table>
 						</div>
 					</div>
-					<div className=" border-slate-200 rounded-lg p-6 border-2">
-						<div className="flex flex-row justify-between items-center mb-3">
-							<h1
-								style={{ fontFamily: 'Lobster Two' }}
-								className=" text-2xl"
-							>
-								Products
-							</h1>
-							<Link
-								href="/admin/add-product"
-								className="bg-[#005438] hover:bg-[#005438ec] text-white py-1 px-2 rounded-md mr-2"
-							>
-								Add Product
-							</Link>
+					{!showEdit ? (
+						<button
+							onClick={() => showEditModal()}
+							className="bg-[#005438] w-32 text-white px-4 py-2 rounded-md hover:bg-[#005438] transition duration-300"
+						>
+							Edit Profile
+						</button>
+					) : (
+						<button
+							onClick={() => closeEditModal()}
+							className="bg-[#ac2f2f] w-32 text-white px-4 py-2 rounded-md hover:bg-[#ac2f2f] transition duration-300"
+						>
+							Close
+						</button>
+					)}
+
+					{showEdit && (
+						<div className=" border-slate-200 rounded-lg p-6 border-2">
+							<div className="flex flex-row justify-between items-center">
+								<h1
+									style={{ fontFamily: 'Lobster Two' }}
+									className=" text-2xl"
+								>
+									Update Profile
+								</h1>
+							</div>
+
+							<div className="mx-auto mt-8">
+								<form
+									onSubmit={handleSubmit}
+									className="space-y-4"
+								>
+									<div>
+										<label
+											htmlFor="firstName"
+											className="block text-gray-600"
+										>
+											First Name
+										</label>
+										<input
+											type="text"
+											id="firstName"
+											name="firstName"
+											value={formData.firstName}
+											onChange={handleInputChange}
+											className="border border-gray-300 px-3 py-2 w-full rounded-md focus:outline-none focus:border-blue-500"
+										/>
+									</div>
+									<div>
+										<label
+											htmlFor="lastName"
+											className="block text-gray-600"
+										>
+											Last Name
+										</label>
+										<input
+											type="text"
+											id="lastName"
+											name="lastName"
+											value={formData.lastName}
+											onChange={handleInputChange}
+											className="border border-gray-300 px-3 py-2 w-full rounded-md focus:outline-none focus:border-blue-500"
+										/>
+									</div>
+									<div>
+										<label
+											htmlFor="email"
+											className="block text-gray-600"
+										>
+											Email
+										</label>
+										<input
+											type="email"
+											id="email"
+											name="email"
+											value={formData.email}
+											onChange={handleInputChange}
+											className="border border-gray-300 px-3 py-2 w-full rounded-md focus:outline-none focus:border-blue-500"
+										/>
+									</div>
+
+									<button
+										type="submit"
+										className="bg-[#005438] text-white px-4 py-2 rounded-md hover:bg-[#005438] transition duration-300"
+									>
+										Update Profile
+									</button>
+								</form>
+							</div>
 						</div>
-						<div className="overflow-x-auto">
-							<table className="min-w-full border-collapse border border-gray-300">
-								<thead>
-									<tr>
-										{/* <th className="border border-gray-300 px-4 py-2">
-											ID
-										</th> */}
-										<th className="border border-gray-300 px-4 py-2">
-											Name
-										</th>
-										<th className="border border-gray-300 px-4 py-2">
-											Description
-										</th>
-										<th className="border border-gray-300 px-4 py-2">
-											Price
-										</th>
-										<th className="border border-gray-300 px-4 py-2">
-											Actions
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									{cards?.map((product) => (
-										<tr key={product.id}>
-											{/* <td className="border border-gray-300 px-4 py-2">
-												{product.id}
-											</td> */}
-											<td className="border border-gray-300 px-4 py-2">
-												{product.title}
-											</td>
-											<td className="border border-gray-300 px-4 py-2">
-												{product.description}
-											</td>
-											<td className="border border-gray-300 px-4 py-2">
-												{formatCurrencyString({
-													value: product.price,
-													currency: 'USD',
-												})}
-											</td>
-											<td className="border border-gray-300 px-4 py-2">
-												<button className="bg-[#005438] hover:bg-[#005438ee] text-white py-1 px-2 rounded-md mr-2">
-													Edit
-												</button>
-												<button
-													onClick={() =>
-														handleDelete(product.id)
-													}
-													className="bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded-md"
-												>
-													Delete
-												</button>
-											</td>
-										</tr>
-									))}
-								</tbody>
-							</table>
-						</div>
-					</div>
+					)}
 				</div>
 			</div>
 		);
@@ -336,7 +310,7 @@ export default function AdminDashboard({ cards }) {
 			<div className="grid h-screen px-4 bg-white place-content-center">
 				<div className="text-center">
 					<p className="mt-4 text-text text-2xl">
-						You should sign Up to view Admin Page
+						You should sign Up to view profile
 					</p>
 
 					<button
@@ -350,9 +324,3 @@ export default function AdminDashboard({ cards }) {
 		</>
 	);
 }
-
-export async function getServerSideProps(ctx) {
-	const cards = await getCards(process.env);
-	return { props: { cards } };
-}
- 
