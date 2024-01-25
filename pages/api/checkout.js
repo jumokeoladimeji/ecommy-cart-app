@@ -5,7 +5,7 @@ const stripe = require('stripe')(
 	process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY,
 );
 
-export default async function (req, res) {
+export default async function handler(req, res) {
 	console.log(req.method);
 	if (req.method === 'POST') {
 		try {
