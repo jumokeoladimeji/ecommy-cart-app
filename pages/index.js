@@ -3,6 +3,7 @@ import Category from "@/components/Category";
 import CarouselList from "@/components/Carousel";
 import { UserContext } from '../context/UserContext';
 import { useContext } from 'react';
+import { useRouter } from 'next/router';
 
 export default function Home({ categories }) {
 	// console.log('orv=====2', process.env)
@@ -11,35 +12,48 @@ export default function Home({ categories }) {
 	// ).flat();
 	const { user, token, loginUser, logoutUser } =
 		useContext(UserContext);
+	
+	const router = useRouter();
+
+	const goToAbout = () => {
+		router.push('/about');
+	};
 
 	return (
 		<div className="bg-[#fff]">
 			{/* <CarouselList cards={result}/> */}
-			<div
-				className="relative h-[28rem] bg-contain bg-center mb-10 rounded-md"
-				style={{
-					backgroundImage:
-						"url('https://leanintree.com/cdn/shop/collections/19landscape.jpg?v=1691433907')",
-				}}
-			>
-				<div className="absolute inset-0 bg-black opacity-50"></div>
-				<div className="absolute inset-0 flex flex-col justify-center px-5 items-start md:items-center text-white">
-					<h1
-						style={{ fontFamily: 'Lobster Two' }}
-						className="text-5xl font-bold mb-4"
-					>
-						Welcome to Measures of Fun!
-					</h1>
-					<p className="text-lg mb-8">
-						Discover unique handmade cards for every
-						occasion.
-					</p>
-					<a
-						href="/"
-						className="bg-white text-gray-900 py-2 px-6 rounded-full text-lg font-semibold hover:bg-gray-300 transition duration-300"
-					>
-						Shop Now
-					</a>
+			<div>
+				<div className="py-10 px-5 md:px-10 flex flex-col items-center lg:flex-row gap-3 lg:gap-5">
+					<img
+						src="/landing.png"
+						alt=""
+						className="h-auto w-auto lg:w-1/2"
+					/>
+					<div className="landing-text">
+						<h1 className="text-4xl font-bold text-center mx-3 lg:text-left lg:mx-0 lg:text-5xl lg:leading-snug">
+							Finally, a greeting card you don’t throw away!
+						</h1>
+						<p className="py-3 text-center leading-6 text-gray-600 lg:text-left lg:leading-7 lg:text-lg">
+							Stop going to the store and looking over
+							hundreds of cards just to pick one that will
+							get thrown away!{' '}
+							<span className="font-bold text-[#02533C]">
+								MEASURES OF FUN
+							</span>{' '}
+							laminated cards are cards{' '}
+							<span className="text-[#02533C] font-bold">
+								forever!
+							</span>{' '}
+						</p>
+						<div className="flex justify-center items-center lg:items-start lg:justify-start">
+							<button
+								onClick={goToAbout}
+								className="bg-[#02533C] px-4 py-4 rounded-md text-white font-bold text-md hover:bg-[#fff] hover:border-[#02533C] border hover:text-[#02533C]"
+							>
+								About Us
+							</button>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div className="px-5 md:px-10">
