@@ -11,7 +11,7 @@ export default async function handler(req, res) {
 	};
 
 	const updated = await updateOrder(orderId, update, token);
-	console.log(updated);
+	// console.log(updated);
 
 	// Optionally, retrieve additional order details or perform other actions
 
