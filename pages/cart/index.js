@@ -13,6 +13,9 @@ import {
 } from 'use-shopping-cart';
 import CartItem from '../../components/CartItem';
 import Image from 'next/image';
+const url =
+	process.env.NEXT_PUBLIC_URL || 'http://localhost:3000';
+import states from '../../data/states';
 
 export default function Cart() {
 	const {
@@ -34,13 +37,25 @@ export default function Cart() {
 	const [name, setName] = useState('');
 	const [city, setCity] = useState('');
 	const [customMessage, setCustomMessage] = useState('');
-	const [country, setCountry] = useState('');
+	const [country, setCountry] = useState('US');
 	const [zip, setZip] = useState('');
 	const [loading, setLoading] = useState(true);
 	const { user, token, loginUser, logoutUser } =
 		useContext(UserContext);
 	const [isSuccess, setIsSuccess] = useState(false);
 	const router = useRouter();
+
+	const countries = [
+		{ name: 'United States of Ameria', code: 'US' },
+	];
+
+	const handleChange = (event) => {
+		setCity(event.target.value);
+	};
+
+	const handleCountryChange = (event) => {
+		setCountry(event.target.value);
+	};
 
 	useEffect(() => {
 		if (typeof window === 'undefined') {
@@ -57,7 +72,7 @@ export default function Cart() {
 	const storedToken = localStorage.getItem('token');
 
 	async function stripeCheckout() {
-		const response = await axios.post('/api/checkout', {
+		const response = await axios.post(`/api/checkout`, {
 			email: user.data.email,
 			name: user.data.name,
 			user_id: user.data.id,
@@ -77,8 +92,6 @@ export default function Cart() {
 			toast.error('An error occured!!');
 		}
 	}
-
-	console.log(token);
 
 	const { removeItem } = useShoppingCart();
 
@@ -271,7 +284,7 @@ export default function Cart() {
 											<input
 												type="text"
 												name="address"
-												class="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+												className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
 												placeholder="1864 Main Street"
 												value={address}
 												onChange={(ev) =>
@@ -282,35 +295,46 @@ export default function Cart() {
 										</div>
 										<div class="col-span-6">
 											<label class="mb-1 block text-sm font-medium text-text">
-												City
+												State
 											</label>
-											<input
-												type="text"
-												name="city"
-												class="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-												placeholder=""
+											<select
+												id="stateSelect"
 												value={city}
-												onChange={(ev) =>
-													setCity(ev.target.value)
-												}
-												required
-											/>
+												onChange={handleChange}
+												className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+											>
+												<option value="">
+													Select a state
+												</option>
+												{states.map((state) => (
+													<option
+														key={state.name}
+														value={state.name}
+													>
+														{state.name}
+													</option>
+												))}
+											</select>
 										</div>
 										<div class="col-span-4">
 											<label class="mb-1 block text-sm font-medium text-text">
-												State
+												Country
 											</label>
-											<input
-												type="text"
-												name="state"
-												class="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-												placeholder=""
+											<select
+												id="stateSelect"
 												value={country}
-												onChange={(ev) =>
-													setCountry(ev.target.value)
-												}
-												required
-											/>
+												onChange={handleChange}
+												className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+											>
+												{countries.map((country) => (
+													<option
+														key={country.code}
+														value={country.code}
+													>
+														{country.code}
+													</option>
+												))}
+											</select>
 										</div>
 										<div class="col-span-2">
 											<label class="mb-1 block text-sm font-medium text-text">
