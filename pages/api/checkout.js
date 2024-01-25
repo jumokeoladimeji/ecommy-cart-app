@@ -28,17 +28,26 @@ export default async function handler(req, res) {
 			token,
 		} = req.body;
 
-		const line_items = Object.values(cartProducts)?.map(
+		const line_items = Object.values(cartProducts).map(
 			(item) => ({
 				// id: item.id,
 				quantity: item.quantity,
-				product_data: item.product_data,
-				price_data: item.price_data,
+				// product_data: item.product_data,
+				price: item.id,
 			}),
 		);
 
+		const order_line_items = Object.values(
+			cartProducts,
+		).map((item) => ({
+			// id: item.id,
+			quantity: item.quantity,
+			product_data: item.product_data,
+			price: item.price_data,
+		}));
+
 		const orderData = {
-			line_items,
+			order_line_items,
 			user_id,
 			email,
 			name,
@@ -87,12 +96,13 @@ export default async function handler(req, res) {
 			},
 		});
 
+		console.log(session);
+
 		res.json({
 			url: session.url,
 		});
-
 	} catch {
-		console.error('Error processing checkout:');
+		console.error('Error processing checkout');
 		res
 			.status(500)
 			.json({ error: 'Internal Server Error' });
