@@ -7,10 +7,10 @@ const stripe = require('stripe')(
 
 export default async function (req, res) {
 	console.log(req.method);
-	if (req.method !== 'POST') {
-		res.json('Should be a post request');
-		return;
-	}
+	// if (req.method === 'POST') {
+	// 	res.json('Should be a post request');
+	// 	return;
+	// }
 
 	try {
 		const {
