@@ -54,28 +54,6 @@ export default async function handle (req, res) {
 
 		const session = await stripe.checkout.sessions.create({
 			line_items,
-			shipping_options: [
-				{
-					shipping_rate_data: {
-						type: 'fixed_amount',
-						fixed_amount: {
-							amount: 1000,
-							currency: 'usd',
-						},
-						display_name: 'Classic Shipping',
-						delivery_estimate: {
-							minimum: {
-								unit: 'business_day',
-								value: 5,
-							},
-							maximum: {
-								unit: 'business_day',
-								value: 7,
-							},
-						},
-					},
-				},
-			],
 			mode: 'payment',
 			customer_email: email,
 			success_url: `${process.env.NEXT_PUBLIC_URL}/api/success?orderId=${orderDoc?.id}&token=${token}`,
