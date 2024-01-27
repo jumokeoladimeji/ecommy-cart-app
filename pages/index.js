@@ -19,7 +19,7 @@ export default function Home({ categories }) {
 	return (
 		<div className="bg-[#fff]">
 			{/* <CarouselList cards={result}/> */}
-			<div>
+			{/* <div>
 				<div className="py-10 px-5 md:px-10 flex flex-col items-center gap-3 lg:gap-5">
 					<img
 						src="/landing.png"
@@ -27,7 +27,7 @@ export default function Home({ categories }) {
 						className="h-auto w-auto lg:w-1/2"
 					/>
 				</div>
-			</div>
+			</div> */}
 			<div className="px-5 md:px-10">
 				<Category category={categories[0]} key={categories[0].id} />
 				<div className="landing-text">
