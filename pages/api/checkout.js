@@ -5,7 +5,7 @@ const stripe = require('stripe')(
 	process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY,
 );
 
-export default async function (req, res) {
+export default async function handle (req, res) {
 	console.log(req.method);
 	if (req.method !== 'POST') {
 		res.json('Should be a post request');
@@ -89,8 +89,8 @@ export default async function (req, res) {
 		res.json({
 			url: session.url,
 		});
-	} catch {
-		console.error('Error processing checkout:');
+	} catch(error) {
+		console.error('Error processing checkout:', error);
 		res
 			.status(500)
 			.json({ error: 'Internal Server Error' });
