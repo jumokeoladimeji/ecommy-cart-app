@@ -18,6 +18,10 @@ export default function NavBar() {
 		router.push('/about');
 	};
 
+	const goToHome = () => {
+		router.push('/');
+	};
+
 	// Function to hide nav on resize
 	const handleResize = () => {
 		if (window.innerWidth >= 768) { // Assuming 768px is your md breakpoint
@@ -70,14 +74,9 @@ export default function NavBar() {
 					{nav && (
 						<ul className="flex flex-col justify-center items-center absolute top-0 left-0  h-80 w-32 bg-gradient-to-r from-green-400 via-green-100 to-green-200 text-gray-500">
 						<li>
-						<Link href="/">
-							<Image
-								src={'/measures_of_fun_logo_small.jpg'}
-								width={100}
-								height={180}
-								alt="Measures of Fun"
-							/>
-						</Link>
+						<button onClick={goToHome} className="bg-[#02533C] m-2 w-30 px-2 py-2 rounded-md text-white font-bold text-md hover:bg-[#fff] hover:border-[#02533C] border hover:text-[#02533C] margin-top: 1em">
+							Home
+						</button>
 						</li>
 						<li>
 							<button

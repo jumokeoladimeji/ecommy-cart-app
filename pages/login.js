@@ -4,7 +4,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import Router from 'next/router';
 
-import { cookies } from 'next/headers';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 import { signin } from '@/pages/api/user';
