@@ -9,8 +9,7 @@ const about = () => {
 					<div className="flex flex-col md:flex-row gap-3 lg:gap-10">
 						<img
 							src="/about.png"
-							className="h-96 w-full object-cover rounded-lg"
-							// h-auto max-w-full rounded-lg shadow-none transition-shadow duration-300 ease-in-out hover:shadow-lg hover:shadow-black/30
+							className="h-96 w-full rounded-lg max-w-full h-auto"
 							alt=""
 						/>
 						<div className="text-left">

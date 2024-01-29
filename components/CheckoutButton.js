@@ -23,7 +23,6 @@ export default function CheckoutButton() {
 			setStatus('loading');
 			try {
 				const result = await redirectToCheckout();
-				console.log(result);
 				if (result?.error) {
 					console.error(result);
 					setStatus('redirect-error');
@@ -59,7 +58,6 @@ export default function CheckoutButton() {
 		router.push('/cart');
 	}
 
-	console.log('total price', totalPrice);
 	return (
 		<article className="mt-3 flex flex-col">
 			<div className="text-red-700 text-xs mb-3 h-5 text-center">

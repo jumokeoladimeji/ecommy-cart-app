@@ -30,7 +30,6 @@ export default function Login() {
 	async function onSubmit(user) {
 		const signInUser = await signin(user, loginUser);
 
-		console.log(signInUser);
 		if (signInUser.data.error) {
 			toast.error(signInUser.data.error);
 		} else {

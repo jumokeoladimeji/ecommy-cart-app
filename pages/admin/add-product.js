@@ -80,7 +80,6 @@ export default function AddProduct({ categories }) {
 					setLoading(false);
 					toast.success('Product Successfully Added!');
 				} else {
-					console.log('Failed to upload image');
 					setLoading(false);
 				}
 			} catch (error) {
@@ -88,7 +87,6 @@ export default function AddProduct({ categories }) {
 				setLoading(false);
 			}
 		} else {
-			console.log('No image source provided');
 			setLoading(false);
 		}
 	};

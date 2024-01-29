@@ -1,57 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BsChevronCompactLeft, BsChevronCompactRight } from 'react-icons/bs';
 import { RxDotFilled } from 'react-icons/rx';
+import Image from 'next/image';
 
 export default function CarouselList( {cards} ) {
 
   const slides = cards
-  console.log('slide', slides)
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [activeImage, setActiveImage] = useState(0);
 
-  const prevSlide = () => {
-    const isFirstSlide = currentIndex === 0;
-    const newIndex = isFirstSlide ? slides.length - 1 : currentIndex - 1;
-    setCurrentIndex(newIndex);
+  const clickNext = () => {
+    activeImage === slides.length - 1
+      ? setActiveImage(0)
+      : setActiveImage(activeImage + 1);
+  };
+  const clickPrev = () => {
+    activeImage === 0
+      ? setActiveImage(slides.length - 1)
+      : setActiveImage(activeImage - 1);
   };
 
-  const nextSlide = () => {
-    const isLastSlide = currentIndex === slides.length - 1;
-    const newIndex = isLastSlide ? 0 : currentIndex + 1;
-    setCurrentIndex(newIndex);
-  };
-
-  const goToSlide = (slideIndex) => {
-    console.log('slideIndex', slideIndex)
-    setCurrentIndex(slideIndex);
-  };
-
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      clickNext();
+    }, 5000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [activeImage]);
   return (
-    <div className='max-w-[1400px] h-[780px] w-full m-auto py-16 px-4 relative group'>
+    <main className="grid place-items-center md:grid-cols-1 w-full mx-auto max-w-5xl shadow-2xl rounded-2xl">
       <div
-        style={{ backgroundImage: `url(${slides[currentIndex]})` }}
-        className='w-full h-full rounded-2xl bg-center bg-cover duration-500'
-      ></div>
-      {/* Left Arrow */}
-      <div className='hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'>
-        <BsChevronCompactLeft onClick={prevSlide} size={30} />
-      </div>
-      {/* Right Arrow */}
-      <div className='hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer'>
-        <BsChevronCompactRight onClick={nextSlide} size={30} />
-      </div>
-      <div className='flex top-4 justify-center py-2'>
-        {slides.map((slide, slideIndex) => (
+        className={`w-full justify-center items-center transition-transform ease-in-out duration-300 md:rounded-2xl p-6 md:p-0`}
+      >
+        {slides.map((elem, idx) => (
           <div
-            key={slideIndex}
-            onClick={() => goToSlide(slideIndex)}
-            className='text-2xl cursor-pointer'
+            key={idx}
+            className={`${
+              idx === activeImage
+                ? "w-full transition-all duration-300 ease-in-out"
+                : "hidden"
+            }`}
           >
-            <RxDotFilled />
+            <img
+              src={elem}
+              alt=""
+              width={400}
+              height={400}
+              className="w-full h-full h-auto"
+            />
           </div>
         ))}
       </div>
-    </div>
+
+    </main>
   );
 }
 
