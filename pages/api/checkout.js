@@ -5,12 +5,7 @@ const stripe = require('stripe')(
 	process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY,
 );
 
-<<<<<<< HEAD
 export default async function handler(req, res) {
-=======
-export default async function handle (req, res) {
-	console.log(req.method);
->>>>>>> 0d7126eb21c57ff90880e2ab15e10809bdda85d7
 	if (req.method !== 'POST') {
 		res.setHeader('Allow', ['POST']);
 		res.status(405).json({
@@ -66,31 +61,66 @@ export default async function handle (req, res) {
 		};
 
 		const orderDoc = await createOrder(orderData, token);
+		console.log(orderData);
 
-		const session = await stripe.checkout.sessions.create({
-			line_items,
-			mode: 'payment',
-			customer_email: email,
-			success_url: `${process.env.NEXT_PUBLIC_URL}/api/success?orderId=${orderDoc?.id}&token=${token}`,
-			cancel_url: `${process.env.NEXT_PUBLIC_URL}`,
-			metadata: {
-				orderId: orderDoc?.id,
-				token: token,
-			},
-		});
+		const totalQuantity = line_items?.reduce(
+			(acc, item) => acc + item.quantity,
+			0,
+		);
 
-		console.log(session);
+		if (totalQuantity >= 12) {
+			const coupon = await stripe.coupons.create({
+				percent_off: 16.67,
+				duration: 'once',
+			});
 
-		res.json({
-			url: session.url,
-		});
-<<<<<<< HEAD
+			const session = await stripe.checkout.sessions.create(
+				{
+					line_items,
+					mode: 'payment',
+					customer_email: email,
+					success_url: `${process.env.NEXT_PUBLIC_URL}/api/success?orderId=${orderDoc?.id}&token=${token}`,
+					cancel_url: `${process.env.NEXT_PUBLIC_URL}`,
+					metadata: {
+						orderId: orderDoc?.id,
+						token: token,
+					},
+					discounts: [
+						{
+							coupon: `${coupon?.id}`,
+						},
+					],
+				},
+			);
+
+			// console.log(session);
+
+			res.json({
+				url: session.url,
+			});
+		} else {
+			const session = await stripe.checkout.sessions.create(
+				{
+					line_items,
+					mode: 'payment',
+					customer_email: email,
+					success_url: `${process.env.NEXT_PUBLIC_URL}/api/success?orderId=${orderDoc?.id}&token=${token}`,
+					cancel_url: `${process.env.NEXT_PUBLIC_URL}`,
+					metadata: {
+						orderId: orderDoc?.id,
+						token: token,
+					},
+				},
+			);
+
+			// console.log(session);
+
+			res.json({
+				url: session.url,
+			});
+		}
 	} catch {
 		console.error('Error processing checkout');
-=======
-	} catch(error) {
-		console.error('Error processing checkout:', error);
->>>>>>> 0d7126eb21c57ff90880e2ab15e10809bdda85d7
 		res
 			.status(500)
 			.json({ error: 'Internal Server Error' });

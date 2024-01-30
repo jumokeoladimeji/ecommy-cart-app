@@ -9,7 +9,7 @@ const about = () => {
 					<div className="flex flex-col md:flex-row gap-3 lg:gap-10">
 						<img
 							src="/about.png"
-							className="h-96 w-full rounded-lg max-w-full h-auto"
+							className="h-96 w-full rounded-lg max-w-full"
 							alt=""
 						/>
 						<div className="text-left">

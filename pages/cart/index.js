@@ -29,6 +29,7 @@ export default function Cart() {
 		cartCount,
 		cartDetails,
 		formattedTotalPrice,
+		totalPrice,
 	} = useShoppingCart();
 	const [products, setProducts] = useState([]);
 	const [address, setAddress] = useState('');
@@ -38,6 +39,7 @@ export default function Cart() {
 	const [customMessage, setCustomMessage] = useState('');
 	const [country, setCountry] = useState('US');
 	const [zip, setZip] = useState('');
+	const [customMessages, setCustomMessages] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const { user, token, loginUser, logoutUser } =
 		useContext(UserContext);
@@ -46,6 +48,37 @@ export default function Cart() {
 
 	const countries = [
 		{ name: 'United States of Ameria', code: 'US' },
+	];
+
+	const messages = [
+		'Birthday',
+		'Anniversary',
+		'Christmas',
+		'Get Well',
+		'I love you',
+		'Graduation',
+		'Thank you',
+		'Best Friend',
+		'I need a favor',
+		"It's your day",
+		"You're the boss",
+		'You already have everything you need',
+		"I didn't have time to get you anything else",
+		'My mom said I had to get you something',
+		'You need a little humor in your life',
+		'This envelope was unusual(like you)',
+		'The President of the United States uses one of these',
+		'You deserve to be distracted',
+		'This looked like good easy reading',
+		"The price to take you out to eat wasn't in my budget",
+		"Unlike a shirt or tie, you can't return this",
+		"I wanted one and thought if i got you one, you'd get me one. (If this is too much to read, stop here an finish tomorrow).",
+		"Of it's educational value",
+		"It's part of limited edition... (Only a limited number of people want one)",
+		'I could still fit this between my dirty clothes in my suitcase',
+		'I out of 10 people surveyed laughed loudly while reading this',
+		'It looked like bad weather was coming',
+		'At least now you have a reason to celebrate',
 	];
 
 	const handleChange = (event) => {
@@ -66,7 +99,19 @@ export default function Cart() {
 		}
 	}, []);
 
-	const [totalPrice, setTotalPrice] = useState(0);
+	// Function to handle checkbox changes
+	const handleCheckboxChange = (e) => {
+		const { value } = e.target;
+		if (customMessages.includes(value)) {
+			// If already selected, remove it
+			setCustomMessages(
+				customMessages.filter((msg) => msg !== value),
+			);
+		} else {
+			// If not selected, add it
+			setCustomMessages([...customMessages, value]);
+		}
+	};
 
 	const storedToken = localStorage.getItem('token');
 
@@ -80,7 +125,7 @@ export default function Cart() {
 			country,
 			zip,
 			city,
-			customMessage,
+			customMessage: JSON.stringify(customMessages),
 			token: storedToken,
 			cartProducts: cartDetails,
 		});
@@ -94,7 +139,7 @@ export default function Cart() {
 
 	const { removeItem } = useShoppingCart();
 
-	const removeItemFromCart = () => {
+	const removeItemFromCart = (item) => {
 		removeItem(item.id);
 	};
 
@@ -125,10 +170,6 @@ export default function Cart() {
 								<>
 									{Object.values(cartDetails ?? {}).map(
 										(entry) => (
-											// <CartItem
-											// 	key={entry.id}
-											// 	item={entry}
-											// />
 											<div
 												key={entry.id}
 												className="flex items-center gap-4 mb-3 mt-2"
@@ -154,7 +195,7 @@ export default function Cart() {
 												</div>
 												<button
 													onClick={() =>
-														removeItemFromCart()
+														removeItemFromCart(entry)
 													}
 													className="hover:bg-emerald-50 transition-colors rounded-full duration-500 p-1"
 												>
@@ -183,20 +224,48 @@ export default function Cart() {
 												setCustomMessage(ev.target.value)
 											}
 										/>
+										<form className="grid grid-cols-3 gap-4">
+											{messages.map((message, index) => (
+												<div
+													key={index}
+													className="flex items-center"
+												>
+													<input
+														type="checkbox"
+														id={message}
+														value={message}
+														checked={customMessages.includes(
+															message,
+														)}
+														onChange={handleCheckboxChange}
+													/>
+													<label htmlFor={message}>
+														{message}
+													</label>
+												</div>
+											))}
+										</form>
 									</div>
 
 									<div className="mt-8 flex justify-end border-t border-gray-100 pt-8">
 										<div className=" max-w-md space-y-4">
 											<dl className="space-y-0.5 text-md text-gray-700">
+												<div>
+													<p>
+														Buy at least{' '}
+														<span className="font-bold">
+															12 items
+														</span>{' '}
+														and get{' '}
+														<span className="font-bold">
+															a discount.
+														</span>
+													</p>
+												</div>
 												<div className="flex justify-between">
 													<dt>Subtotal</dt>
 													<dd>{formattedTotalPrice}</dd>
 												</div>
-
-												{/* <strike className="flex justify-between">
-													<dt>VAT</dt>
-													<dd>{formattedTotalPrice}</dd>
-												</strike> */}
 
 												<div className="flex justify-between !text-base font-medium">
 													<dt>Total</dt>
