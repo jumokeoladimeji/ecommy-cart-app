@@ -22,6 +22,11 @@ export default function NavBar() {
 		router.push('/');
 	};
 
+	const goToBuy = () => {
+		router.push('/buy');
+	};
+
+
 	// Function to hide nav on resize
 	const handleResize = () => {
 		if (window.innerWidth >= 768) { // Assuming 768px is your md breakpoint
@@ -63,6 +68,14 @@ export default function NavBar() {
 							About Us
 						</button>
 					</li>
+					<li>
+						<button
+							onClick={goToBuy}
+							className="bg-[#02533C] w-40 px-2 py-3 rounded-md text-white font-bold text-md hover:bg-[#fff] hover:border-[#02533C] border hover:text-[#02533C]"
+						>
+							Buy
+						</button>
+					</li>
 				</ul>
 				<div className="flex flex-row">
 					<div
@@ -73,19 +86,27 @@ export default function NavBar() {
 					</div>
 					{nav && (
 						<ul className="flex flex-col justify-center items-center absolute top-0 left-0  h-80 w-32 bg-gradient-to-r from-green-400 via-green-100 to-green-200 text-gray-500">
-						<li>
-						<button onClick={goToHome} className="bg-[#02533C] m-2 w-30 px-2 py-2 rounded-md text-white font-bold text-md hover:bg-[#fff] hover:border-[#02533C] border hover:text-[#02533C] margin-top: 1em">
-							Home
-						</button>
-						</li>
-						<li>
-							<button
-							onClick={goToAbout}
-							className="bg-[#02533C] w-30 px-2 py-2 rounded-md text-white font-bold text-md hover:bg-[#fff] hover:border-[#02533C] border hover:text-[#02533C] margin-top: 1em"
-						>
-							About Us
-						</button>
-						</li>
+							<li>
+								<button onClick={goToHome} className="bg-[#02533C] m-2 w-30 px-2 py-2 rounded-md text-white font-bold text-md hover:bg-[#fff] hover:border-[#02533C] border hover:text-[#02533C] margin-top: 1em">
+									Home
+								</button>
+							</li>
+							<li>
+								<button
+								onClick={goToAbout}
+								className="bg-[#02533C] w-30 px-2 py-2 rounded-md text-white font-bold text-md hover:bg-[#fff] hover:border-[#02533C] border hover:text-[#02533C] margin-top: 1em"
+								>
+									About Us
+								</button>
+							</li>
+							<li>
+								<button
+									onClick={goToBuy}
+									className="bg-[#02533C] w-40 px-2 py-3 rounded-md text-white font-bold text-md hover:bg-[#fff] hover:border-[#02533C] border hover:text-[#02533C]"
+								>
+									Buy
+								</button>
+							</li>
 						</ul>
 					)}
 				</div>
