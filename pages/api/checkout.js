@@ -5,7 +5,12 @@ const stripe = require('stripe')(
 	process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY,
 );
 
+<<<<<<< HEAD
 export default async function handler(req, res) {
+=======
+export default async function handle (req, res) {
+	console.log(req.method);
+>>>>>>> 0d7126eb21c57ff90880e2ab15e10809bdda85d7
 	if (req.method !== 'POST') {
 		res.setHeader('Allow', ['POST']);
 		res.status(405).json({
@@ -64,28 +69,6 @@ export default async function handler(req, res) {
 
 		const session = await stripe.checkout.sessions.create({
 			line_items,
-			shipping_options: [
-				{
-					shipping_rate_data: {
-						type: 'fixed_amount',
-						fixed_amount: {
-							amount: 1000,
-							currency: 'usd',
-						},
-						display_name: 'Classic Shipping',
-						delivery_estimate: {
-							minimum: {
-								unit: 'business_day',
-								value: 5,
-							},
-							maximum: {
-								unit: 'business_day',
-								value: 7,
-							},
-						},
-					},
-				},
-			],
 			mode: 'payment',
 			customer_email: email,
 			success_url: `${process.env.NEXT_PUBLIC_URL}/api/success?orderId=${orderDoc?.id}&token=${token}`,
@@ -101,8 +84,13 @@ export default async function handler(req, res) {
 		res.json({
 			url: session.url,
 		});
+<<<<<<< HEAD
 	} catch {
 		console.error('Error processing checkout');
+=======
+	} catch(error) {
+		console.error('Error processing checkout:', error);
+>>>>>>> 0d7126eb21c57ff90880e2ab15e10809bdda85d7
 		res
 			.status(500)
 			.json({ error: 'Internal Server Error' });
