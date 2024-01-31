@@ -2,6 +2,8 @@ import React, { Fragment, useContext } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import { UserContext } from '../context/UserContext';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/router';
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
@@ -10,6 +12,7 @@ function classNames(...classes) {
 const Dropdown = () => {
 	const { user, token, loginUser, logoutUser } =
 		useContext(UserContext);
+	const router = useRouter();
 
 	return (
 		<div className="flex justify-between items-center px-1">
@@ -80,7 +83,13 @@ const Dropdown = () => {
 											<Menu.Item>
 												{({ active }) => (
 													<a
-														onClick={() => logoutUser()}
+														onClick={() => {
+															logoutUser();
+															toast.success(
+																'Logged out successfully',
+															);
+															router.push('/');
+														}}
 														href="#"
 														className={classNames(
 															active
