@@ -61,7 +61,6 @@ export default async function handler(req, res) {
 		};
 
 		const orderDoc = await createOrder(orderData, token);
-		console.log(orderData);
 
 		const totalQuantity = line_items?.reduce(
 			(acc, item) => acc + item.quantity,
@@ -70,9 +69,12 @@ export default async function handler(req, res) {
 
 		if (totalQuantity >= 12) {
 			const coupon = await stripe.coupons.create({
-				percent_off: 16.67,
+				amount_off: 1990,
 				duration: 'once',
+				currency: 'usd',
 			});
+
+			console.log(coupon);
 
 			const session = await stripe.checkout.sessions.create(
 				{

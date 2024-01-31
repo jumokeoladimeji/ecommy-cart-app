@@ -1,3 +1,4 @@
+import { useShoppingCart } from 'use-shopping-cart';
 import { updateOrder } from './order';
 
 export default async function handler(req, res) {
@@ -11,11 +12,9 @@ export default async function handler(req, res) {
 	};
 
 	const updated = await updateOrder(orderId, update, token);
-	// console.log(updated);
 
 	// Optionally, retrieve additional order details or perform other actions
 
 	// Redirect or respond accordingly
 	res.redirect(`${process.env.NEXT_PUBLIC_URL}/success`); // Update this URL
 }
- 

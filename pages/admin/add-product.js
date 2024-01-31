@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { getCategories } from '../api/category';
 import { createCard } from '../api/card';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/router';
 
 export default function AddProduct({ categories }) {
 	const [imageSrc, setImageSrc] = useState();
@@ -27,6 +28,8 @@ export default function AddProduct({ categories }) {
 			</div>
 		);
 	};
+
+	const router = useRouter();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -330,13 +333,22 @@ export default function AddProduct({ categories }) {
 						{loading ? (
 							<Loading />
 						) : (
-							<button
-								type="submit"
-								className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#005438] text-base font-medium text-white hover:bg-[#005438] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
-								onClick={handleSubmit}
-							>
-								Add Product
-							</button>
+							<>
+								<button
+									type="submit"
+									className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#005438] text-base font-medium text-white hover:bg-[#005438] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+									onClick={handleSubmit}
+								>
+									Add Product
+								</button>
+								<button
+									type="submit"
+									className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#303030] text-base font-medium text-white hover:bg-[#c54b4b] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:ml-3 sm:w-auto sm:text-sm"
+									onClick={() => router.push('/admin')}
+								>
+									Cancel
+								</button>
+							</>
 						)}
 					</div>
 				</div>

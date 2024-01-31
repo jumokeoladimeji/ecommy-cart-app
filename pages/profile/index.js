@@ -7,6 +7,9 @@ import {
 	getUserOrders,
 } from '../../pages/api/order';
 import { format } from 'date-fns';
+import Modal from '../../components/Modal';
+import { updateUser } from '../api/user';
+import toast from 'react-hot-toast';
 
 export default function Profile() {
 	const { user, token, loginUser, logoutUser } =
@@ -14,6 +17,7 @@ export default function Profile() {
 	const router = useRouter();
 	const [orders, setOrders] = useState([]);
 	const [showEdit, setShowEdit] = useState(false);
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
 		const fetchOrders = async () => {
@@ -42,8 +46,6 @@ export default function Profile() {
 		fetchOrders();
 	}, [user, token]);
 
-	console.log(orders);
-
 	const isAuth = user && token;
 
 	// if (!isAuth) {
@@ -51,10 +53,10 @@ export default function Profile() {
 	// }
 
 	const [formData, setFormData] = useState({
-		firstName: '',
-		lastName: '',
-		email: '',
-		address: '',
+		name: '',
+		username: '',
+		email: user?.data.email,
+		// address: '',
 		// Add more fields as needed
 	});
 
@@ -68,11 +70,11 @@ export default function Profile() {
 	};
 
 	// Function to handle form submission
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		// Implement logic to update user profile using formData
-		console.log('Form submitted with data:', formData);
-		// Add logic to update the user profile using API calls or other methods
+		await updateUser(user?.data.id, formData);
+		toast.success('Profile Updated');
+		setIsModalOpen(false);
 	};
 
 	const showEditModal = () => {
@@ -98,7 +100,7 @@ export default function Profile() {
 								Customer Information
 							</h1>
 							<button
-								onClick={() => showEditModal()}
+								onClick={() => setIsModalOpen(true)}
 								className="bg-[#005438] w-20 text-white px-4 py-2 rounded-md hover:bg-[#005438] transition duration-300"
 							>
 								Edit
@@ -211,23 +213,17 @@ export default function Profile() {
 							</table>
 						</div>
 					</div>
-					{!showEdit ? (
-						<button
-							onClick={() => showEditModal()}
-							className="bg-[#005438] w-32 text-white px-4 py-2 rounded-md hover:bg-[#005438] transition duration-300"
-						>
-							Edit Profile
-						</button>
-					) : (
-						<button
-							onClick={() => closeEditModal()}
-							className="bg-[#ac2f2f] w-32 text-white px-4 py-2 rounded-md hover:bg-[#ac2f2f] transition duration-300"
-						>
-							Close
-						</button>
-					)}
+					<button
+						onClick={() => setIsModalOpen(true)}
+						className="bg-[#005438] w-32 text-white px-4 py-2 rounded-md hover:bg-[#005438] transition duration-300"
+					>
+						Edit Profile
+					</button>
 
-					{showEdit && (
+					<Modal
+						isOpen={isModalOpen}
+						onClose={() => setIsModalOpen(false)}
+					>
 						<div className=" border-slate-200 rounded-lg p-6 border-2">
 							<div className="flex flex-row justify-between items-center">
 								<h1
@@ -236,6 +232,11 @@ export default function Profile() {
 								>
 									Update Profile
 								</h1>
+								<button
+									onClick={() => setIsModalOpen(false)}
+								>
+									Close
+								</button>
 							</div>
 
 							<div className="mx-auto mt-8">
@@ -248,13 +249,13 @@ export default function Profile() {
 											htmlFor="firstName"
 											className="block text-gray-600"
 										>
-											First Name
+											Name
 										</label>
 										<input
 											type="text"
-											id="firstName"
-											name="firstName"
-											value={formData.firstName}
+											id="name"
+											name="name"
+											value={formData.name}
 											onChange={handleInputChange}
 											className="border border-gray-300 px-3 py-2 w-full rounded-md focus:outline-none focus:border-blue-500"
 										/>
@@ -264,13 +265,13 @@ export default function Profile() {
 											htmlFor="lastName"
 											className="block text-gray-600"
 										>
-											Last Name
+											Username
 										</label>
 										<input
 											type="text"
-											id="lastName"
-											name="lastName"
-											value={formData.lastName}
+											id="username"
+											name="userame"
+											value={formData.username}
 											onChange={handleInputChange}
 											className="border border-gray-300 px-3 py-2 w-full rounded-md focus:outline-none focus:border-blue-500"
 										/>
@@ -295,13 +296,14 @@ export default function Profile() {
 									<button
 										type="submit"
 										className="bg-[#005438] text-white px-4 py-2 rounded-md hover:bg-[#005438] transition duration-300"
+										onClick={handleSubmit}
 									>
 										Update Profile
 									</button>
 								</form>
 							</div>
 						</div>
-					)}
+					</Modal>
 				</div>
 			</div>
 		);
