@@ -69,26 +69,20 @@ export default async function handler(req, res) {
 		);
 
 		if (totalQuantity >= 12) {
-			const coupon = await stripe.coupons.create({
-				amount_off: 1990,
-				duration: 'once',
-				currency: 'usd',
-			});
-
 			const session = await stripe.checkout.sessions.create(
 				{
 					line_items,
 					mode: 'payment',
 					customer_email: email,
-					success_url: `${process.env.NEXT_PUBLIC_URL}/api/success?orderId=${orderDoc.id}&token=${token}`,
+					success_url: `${process.env.NEXT_PUBLIC_URL}/api/success?orderId=${orderDoc?.id}&token=${token}`,
 					cancel_url: `${process.env.NEXT_PUBLIC_URL}`,
 					metadata: {
-						orderId: orderDoc.id,
+						orderId: orderDoc?.id,
 						token: token,
 					},
 					discounts: [
 						{
-							coupon: `${coupon?.id}`,
+							coupon: `3MoIkOrK`,
 						},
 					],
 				},
