@@ -147,70 +147,80 @@ export default function NavBar() {
 						className="cursor-pointer pr-4 z-10 text-gray-500 md:hidden"
 					>
 						{nav ? (
-							<FaTimes size={30} />
+							<div className="z-20">
+								<FaTimes className="z-20" size={30} />
+							</div>
 						) : (
 							<FaBars size={30} />
 						)}
 					</div>
 					{nav && (
-						<ul className="flex divide-y flex-col justify-start pt-20 items-center bg-white absolute top-[0] left-0 shadow-lg transition-transform min-h-screen w-56 text-gray-500">
-							<div>
-								<button
-									onClick={goToHome}
-									className="bg-[#fff] m-2 w-30 px-2 py-2 rounded-md text-[#02533C] font-bold text-md hover:underline hover:text-[#02533C] margin-top: 1em"
+						<div className="justify-start items-start flex flex-col gap-4">
+							<ul className="flex divide-y flex-col justify-start pt-7 z-10 items-start px-5 bg-white absolute top-0 left-0 shadow-lg min-h-screen w-56 text-gray-500">
+								<div
+									className="z-20 flex items-start mb-7"
+									onClick={() => setNav(!nav)}
 								>
-									Home
-								</button>
-							</div>
-
-							<div>
-								<button
-									onClick={goToAbout}
-									className="bg-[#fff] m-2 w-30 px-2 py-2 rounded-md text-[#02533C] font-bold text-md hover:underline hover:text-[#02533C] margin-top: 1em"
-								>
-									About Us
-								</button>
-							</div>
-
-							<div>
-								<button
-									onClick={goToBuy}
-									className="bg-[#fff] m-2 w-30 px-2 py-2 rounded-md text-[#02533C] font-bold text-md hover:underline hover:text-[#02533C] margin-top: 1em"
-								>
-									Buy
-								</button>
-							</div>
-
-							{user ? (
-								<>
-									<div>
-										<button
-											onClick={goToProfile}
-											className="bg-[#fff] m-2 w-30 px-2 py-2 rounded-md text-[#02533C] font-bold text-md hover:underline hover:text-[#02533C] margin-top: 1em"
-										>
-											Profile
-										</button>
-									</div>
-									<div>
-										<button
-											onClick={logout}
-											className="bg-[#fff] m-2 w-30 px-2 py-2 rounded-md text-[#e65050] font-bold text-md hover:underline hover:text-[#02533C] margin-top: 1em"
-										>
-											Logout
-										</button>
-									</div>
-								</>
-							) : (
+									<FaTimes className="z-20" size={30} />
+								</div>
 								<div>
 									<button
-										onClick={login}
-										className="bg-[#02533C] m-2 w-30 px-2 py-2 rounded-md text-[#fff] font-bold text-md hover:text-[#fff] mt-3"
+										onClick={goToHome}
+										className="bg-[#fff] m-2 w-30 px-2 py-2 rounded-md text-[#02533C] font-bold text-md hover:underline hover:text-[#02533C] margin-top: 1em"
 									>
-										Login
+										Home
 									</button>
 								</div>
-							)}
-						</ul>
+
+								<div>
+									<button
+										onClick={goToAbout}
+										className="bg-[#fff] m-2 w-30 px-2 py-2 rounded-md text-[#02533C] font-bold text-md hover:underline hover:text-[#02533C] margin-top: 1em"
+									>
+										About Us
+									</button>
+								</div>
+
+								<div>
+									<button
+										onClick={goToBuy}
+										className="bg-[#fff] m-2 w-30 px-2 py-2 rounded-md text-[#02533C] font-bold text-md hover:underline hover:text-[#02533C] margin-top: 1em"
+									>
+										Buy
+									</button>
+								</div>
+
+								{user ? (
+									<>
+										<div>
+											<button
+												onClick={goToProfile}
+												className="bg-[#fff] m-2 w-30 px-2 py-2 rounded-md text-[#02533C] font-bold text-md hover:underline hover:text-[#02533C] margin-top: 1em"
+											>
+												Profile
+											</button>
+										</div>
+										<div>
+											<button
+												onClick={logout}
+												className="bg-[#fff] m-2 w-30 px-2 py-2 rounded-md text-[#e65050] font-bold text-md hover:underline hover:text-[#02533C] margin-top: 1em"
+											>
+												Logout
+											</button>
+										</div>
+									</>
+								) : (
+									<div>
+										<button
+											onClick={login}
+											className="bg-[#02533C] m-2 w-30 px-2 py-2 rounded-md text-[#fff] font-bold text-md hover:text-[#fff] mt-3"
+										>
+											Login
+										</button>
+									</div>
+								)}
+							</ul>
+						</div>
 					)}
 				</div>
 				<div className="flex items-center">
