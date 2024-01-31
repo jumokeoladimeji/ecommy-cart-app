@@ -4,6 +4,7 @@ import { CartProvider } from "use-shopping-cart";
 import { UserProvider } from '../context/UserContext';
 import { CartContextProvider } from '../context/CartContext';
 import { Toaster } from 'react-hot-toast';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 export default function App({ Component, pageProps }) {
 	return (
@@ -29,6 +30,9 @@ export default function App({ Component, pageProps }) {
 			>
 				<Layout>
 					<Component {...pageProps} />
+					<GoogleAnalytics
+						gaId={process.env.NEXT_PUBLIC_GA_ID}
+					/>
 					<Toaster
 						position="top-center"
 						reverseOrder={false}

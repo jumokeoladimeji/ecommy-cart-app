@@ -12,11 +12,11 @@ export default function Buy({ categories }) {
 
 
 	return (
-		<div className="bg-[#fff]">
+		<div className="bg-[#fff] pt-10 md:pt-0">
 			<div className="px-5 md:px-10">
-            {categories.map((category) => (
-				<Category category={category} key={category.id} />
-            ))}
+				{categories.map((category) => (
+					<Category category={category} key={category.id} />
+				))}
 			</div>
 		</div>
 	);
