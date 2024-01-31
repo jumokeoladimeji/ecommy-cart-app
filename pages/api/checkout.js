@@ -61,6 +61,7 @@ export default async function handler(req, res) {
 		};
 
 		const orderDoc = await createOrder(orderData, token);
+		// console.log(orderDoc.error);
 
 		const totalQuantity = line_items?.reduce(
 			(acc, item) => acc + item.quantity,
@@ -74,17 +75,15 @@ export default async function handler(req, res) {
 				currency: 'usd',
 			});
 
-			console.log(coupon);
-
 			const session = await stripe.checkout.sessions.create(
 				{
 					line_items,
 					mode: 'payment',
 					customer_email: email,
-					success_url: `${process.env.NEXT_PUBLIC_URL}/api/success?orderId=${orderDoc?.id}&token=${token}`,
+					success_url: `${process.env.NEXT_PUBLIC_URL}/api/success?orderId=${orderDoc.id}&token=${token}`,
 					cancel_url: `${process.env.NEXT_PUBLIC_URL}`,
 					metadata: {
-						orderId: orderDoc?.id,
+						orderId: orderDoc.id,
 						token: token,
 					},
 					discounts: [
@@ -122,7 +121,6 @@ export default async function handler(req, res) {
 			});
 		}
 	} catch {
-		console.error('Error processing checkout');
 		res
 			.status(500)
 			.json({ error: 'Internal Server Error' });
