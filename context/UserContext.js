@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { createContext, useState, useEffect } from 'react';
 
 export const UserContext = createContext();
@@ -5,6 +6,7 @@ export const UserContext = createContext();
 export const UserProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [token, setToken] = useState(null);
+	const router = useRouter();
 
 	useEffect(() => {
 		// Check if user data exists in local storage on initial load
@@ -27,6 +29,12 @@ export const UserProvider = ({ children }) => {
 			JSON.stringify(userData),
 		);
 		localStorage.setItem('token', authToken);
+		const previousRoute =
+			sessionStorage.getItem('previousRoute');
+		// Redirect user to the previous route
+		router.push(previousRoute || '/');
+		// Clear the stored previous route from session storage
+		sessionStorage.removeItem('previousRoute');
 	};
 
 	const logoutUser = () => {
