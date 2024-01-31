@@ -29,6 +29,7 @@ export default function Cart() {
 		cartCount,
 		cartDetails,
 		formattedTotalPrice,
+		totalPrice,
 	} = useShoppingCart();
 	const [products, setProducts] = useState([]);
 	const [address, setAddress] = useState('');
@@ -38,6 +39,7 @@ export default function Cart() {
 	const [customMessage, setCustomMessage] = useState('');
 	const [country, setCountry] = useState('US');
 	const [zip, setZip] = useState('');
+	const [customMessages, setCustomMessages] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const { user, token, loginUser, logoutUser } =
 		useContext(UserContext);
@@ -46,6 +48,37 @@ export default function Cart() {
 
 	const countries = [
 		{ name: 'United States of Ameria', code: 'US' },
+	];
+
+	const messages = [
+		'Birthday',
+		'Anniversary',
+		'Christmas',
+		'Get Well',
+		'I love you',
+		'Graduation',
+		'Thank you',
+		'Best Friend',
+		'I need a favor',
+		"It's your day",
+		"You're the boss",
+		'You already have everything you need',
+		"I didn't have time to get you anything else",
+		'My mom said I had to get you something',
+		'You need a little humor in your life',
+		'This envelope was unusual(like you)',
+		'The President of the United States uses one of these',
+		'You deserve to be distracted',
+		'This looked like good easy reading',
+		"The price to take you out to eat wasn't in my budget",
+		"Unlike a shirt or tie, you can't return this",
+		"I wanted one and thought if i got you one, you'd get me one. (If this is too much to read, stop here an finish tomorrow).",
+		"Of it's educational value",
+		"It's part of limited edition... (Only a limited number of people want one)",
+		'I could still fit this between my dirty clothes in my suitcase',
+		'I out of 10 people surveyed laughed loudly while reading this',
+		'It looked like bad weather was coming',
+		'At least now you have a reason to celebrate',
 	];
 
 	const handleChange = (event) => {
@@ -66,9 +99,36 @@ export default function Cart() {
 		}
 	}, []);
 
-	const [totalPrice, setTotalPrice] = useState(0);
+	// Function to handle checkbox changes
+	const handleCheckboxChange = (e) => {
+		const { value } = e.target;
+		if (customMessages.includes(value)) {
+			// If already selected, remove it
+			setCustomMessages(
+				customMessages.filter((msg) => msg !== value),
+			);
+		} else {
+			if (customMessages.length >= 4) {
+				toast.error('You can only select 4 messages');
+				return;
+			}
+			setCustomMessages([...customMessages, value]);
+		}
+	};
+
+	// console.log(customMessages);
 
 	const storedToken = localStorage.getItem('token');
+
+	const stringifiedArray = [
+		JSON.stringify(customMessages),
+		JSON.stringify(customMessage),
+	];
+
+	const array1 = JSON.parse(stringifiedArray[0]);
+	const array2 = JSON.parse(stringifiedArray[1]);
+
+	const combinedArray = [...array1, array2];
 
 	async function stripeCheckout() {
 		const response = await axios.post(`/api/checkout`, {
@@ -80,7 +140,7 @@ export default function Cart() {
 			country,
 			zip,
 			city,
-			customMessage,
+			customMessage: JSON.stringify(combinedArray),
 			token: storedToken,
 			cartProducts: cartDetails,
 		});
@@ -94,8 +154,20 @@ export default function Cart() {
 
 	const { removeItem } = useShoppingCart();
 
-	const removeItemFromCart = () => {
+	const removeItemFromCart = (item) => {
 		removeItem(item.id);
+	};
+
+	const handleInputChange = (event) => {
+		const inputText = event.target.value;
+		const words = inputText.trim().split(/\s+/);
+		if (words.length <= 12) {
+			setCustomMessage(inputText);
+		} else {
+			// Truncate to first 12 words
+			const truncatedText = words.slice(0, 12).join(' ');
+			setCustomMessage(truncatedText);
+		}
 	};
 
 	if (isSuccess) {
@@ -125,10 +197,6 @@ export default function Cart() {
 								<>
 									{Object.values(cartDetails ?? {}).map(
 										(entry) => (
-											// <CartItem
-											// 	key={entry.id}
-											// 	item={entry}
-											// />
 											<div
 												key={entry.id}
 												className="flex items-center gap-4 mb-3 mt-2"
@@ -154,7 +222,7 @@ export default function Cart() {
 												</div>
 												<button
 													onClick={() =>
-														removeItemFromCart()
+														removeItemFromCart(entry)
 													}
 													className="hover:bg-emerald-50 transition-colors rounded-full duration-500 p-1"
 												>
@@ -177,26 +245,68 @@ export default function Cart() {
 											type="text"
 											name="customMessage"
 											className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-											placeholder="Have a good fishing..."
+											placeholder="Enter up to 12 words..."
 											value={customMessage}
-											onChange={(ev) =>
-												setCustomMessage(ev.target.value)
-											}
+											onChange={handleInputChange}
 										/>
+										<p>
+											Remaining words:{' '}
+											{12 -
+												customMessage.trim().split(/\s+/)
+													.length}
+										</p>
+										<form className="grid grid-cols-3 gap-4 mt-5">
+											{messages.map((message, index) => (
+												<div
+													key={index}
+													className="flex items-start"
+												>
+													<input
+														type="checkbox"
+														id={message}
+														value={message}
+														checked={customMessages.includes(
+															message,
+														)}
+														onChange={handleCheckboxChange}
+														className="mr-2 mt-1"
+													/>
+													<label htmlFor={message}>
+														{message}
+													</label>
+												</div>
+											))}
+										</form>
 									</div>
 
 									<div className="mt-8 flex justify-end border-t border-gray-100 pt-8">
 										<div className=" max-w-md space-y-4">
 											<dl className="space-y-0.5 text-md text-gray-700">
+												<div>
+													{cartCount >= 12 ? (
+														<p>
+															<span className="font-bold">
+																Congrats! $19.90 discount
+																applied.
+															</span>
+														</p>
+													) : (
+														<p>
+															Buy a minimun of{' '}
+															<span className="font-bold">
+																12 cards
+															</span>{' '}
+															and get a{' '}
+															<span className="font-bold">
+																$19.90 discount.
+															</span>
+														</p>
+													)}
+												</div>
 												<div className="flex justify-between">
 													<dt>Subtotal</dt>
 													<dd>{formattedTotalPrice}</dd>
 												</div>
-
-												{/* <strike className="flex justify-between">
-													<dt>VAT</dt>
-													<dd>{formattedTotalPrice}</dd>
-												</strike> */}
 
 												<div className="flex justify-between !text-base font-medium">
 													<dt>Total</dt>
@@ -207,7 +317,7 @@ export default function Cart() {
 											<div className="flex justify-end">
 												<Link
 													className="group flex items-center justify-between gap-4 rounded-lg border border-current px-4 py-2 text-[#00553A] transition-colors hover:bg-[#00553A] focus:outline-none focus:ring active:bg-[#00553A]"
-													href="/"
+													href="/buy"
 												>
 													<span className="font-medium transition-colors group-hover:text-white">
 														Continue shopping

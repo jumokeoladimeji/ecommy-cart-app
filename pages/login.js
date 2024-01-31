@@ -42,7 +42,7 @@ export default function Login() {
 			<div className="hidden sm:block">
 				{/* <Image src='/login.jpeg' alt={''} width={24} height={24} /> */}
 				<Image
-					src={'/login.jpeg'}
+					src={'/login.jpg'}
 					alt={''}
 					width={300}
 					height={400}

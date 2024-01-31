@@ -52,3 +52,11 @@ export const signin = async (userDetails, loginUser) => {
 		return error.response;
 	}
 };
+
+export const updateUser = async (userId, userData) => {
+	const response = await axios.put(
+		`${backendUrl}/api/v1/users/${userId}`,
+		userData,
+	);
+	return response.data;
+};
