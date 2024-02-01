@@ -7,8 +7,8 @@ export default async function handler(req, res) {
 	const token = req.query.token;
 
 	const update = {
-		confirm_delivery: '0',
-		paid: 1,
+		confirm_delivery: false,
+		paid: true,
 	};
 
 	const updated = await updateOrder(orderId, update, token);

@@ -47,7 +47,7 @@ export default async function handler(req, res) {
 		}));
 
 		const orderData = {
-			order_line_items,
+			line_items: order_line_items,
 			user_id,
 			email,
 			name,
@@ -59,6 +59,8 @@ export default async function handler(req, res) {
 			shipping_phone_number: phone_number,
 			paid: false,
 		};
+
+		console.log(orderData);
 
 		const orderDoc = await createOrder(orderData, token);
 		// console.log(orderDoc.error);
@@ -115,8 +117,6 @@ export default async function handler(req, res) {
 			});
 		}
 	} catch {
-		res
-			.status(500)
-			.json({ error: 'Internal Server Error' });
+		console.log('error');
 	}
 }
