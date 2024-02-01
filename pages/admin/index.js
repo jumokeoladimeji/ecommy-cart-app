@@ -178,6 +178,9 @@ export default function AdminDashboard({ cards }) {
 											Total
 										</th> */}
 										<th className="border border-gray-300 px-4 py-2">
+											Customized Message
+										</th>
+										<th className="border border-gray-300 px-4 py-2">
 											Status
 										</th>
 										<th className="border border-gray-300 px-4 py-2">
@@ -215,6 +218,13 @@ export default function AdminDashboard({ cards }) {
 											{/* <td className="border border-gray-300 px-4 py-2">
 												${order.total}
 											</td> */}
+											<td className="border border-gray-300 px-4 py-2">
+												<ul>
+												{order?.customized_message.toString().split(',').map((message, index) => (
+												<li key={index}>
+													{message}
+												</li>))}</ul>
+											</td>
 											<td className="border border-gray-300 px-4 py-2">
 												{order.paid ? 'Paid' : 'Not Paid'}
 											</td>
