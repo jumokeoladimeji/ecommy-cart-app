@@ -10,6 +10,7 @@ import Spinner from '../../components/Spinner';
 import {
 	formatCurrencyString,
 	useShoppingCart,
+	clearCart
 } from 'use-shopping-cart';
 import CartItem from '../../components/CartItem';
 import Image from 'next/image';
@@ -116,8 +117,6 @@ export default function Cart() {
 		}
 	};
 
-	// console.log(customMessages);
-
 	const storedToken = localStorage.getItem('token');
 
 	const stringifiedArray = [
@@ -176,6 +175,7 @@ export default function Cart() {
 	}, []);
 
 	if (isSuccess) {
+		clearCart();
 		return (
 			<>
 				<Success />

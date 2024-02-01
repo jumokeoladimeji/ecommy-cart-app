@@ -17,6 +17,21 @@ export default function Home({ categories }) {
 
 	return (
 		<div className="bg-[#fff]">
+			<div className="landing-text text-center">
+				<h1 className="text-3xl w-full font-bold text-center mx-3 lg:mx-0 lg:text-3xl lg:leading-snug">
+					Finally, a greeting card you don’t throw away!
+				</h1>
+				{/* <div> */}
+				<h1 className="font-bold text-2xl pt-5">
+					Buy a dozen cards... only pay for 10!
+				</h1>
+				<p className="text-gray-500 text-md pt-4 font-bold leading-relaxed block">
+					Tell us how many of each…. “fish” and “golf”
+					rulers you need to make 12, we’ll ship them
+					and your envelopes to you FREE.
+				</p>
+			{/* </div> */}
+			</div>
 			<div className="px-5 md:px-10">
 				<CarouselList cards={fishSlideImages} />
 				{/* <Category category={categories[0]} key={categories[0].id} /> */}
@@ -27,20 +42,15 @@ export default function Home({ categories }) {
 							height="315"
 							src="https://www.youtube.com/embed/GENPXFaqy8o?si=0735NClaC6JdlaYh&amp;controls=0"
 							title="YouTube video player"
-							frameborder="0"
+							// frameBorder="0"
 							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-							allowfullscreen
+							allowFullScreen
 							className="w-full object-cover"
 						></iframe>
 					</div>
 				</div>
 				<CarouselList cards={golfSlideImages} />
 				{/* <Category category={categories[1]} key={categories[1].id} /> */}
-				<div className="landing-text">
-					<h1 className="text-3xl w-full font-bold text-center mx-3 lg:mx-0 lg:text-3xl lg:leading-snug">
-						Finally, a greeting card you don’t throw away!
-					</h1>
-				</div>
 			</div>
 		</div>
 	);
