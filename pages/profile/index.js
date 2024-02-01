@@ -180,8 +180,8 @@ export default function Profile() {
 														(item, index) => (
 															<li key={index}>
 																{
-																	item.price_data
-																		?.product_data?.name
+																	item.price?.product_data
+																		?.name
 																}{' '}
 																(X{item?.quantity})
 															</li>
