@@ -206,8 +206,8 @@ export default function AdminDashboard({ cards }) {
 														(item, index) => (
 															<li key={index}>
 																{
-																	item.price_data
-																		?.product_data?.name
+																	item?.price?.product_data
+																		?.name
 																}{' '}
 																(X{item?.quantity})
 															</li>
@@ -220,10 +220,13 @@ export default function AdminDashboard({ cards }) {
 											</td> */}
 											<td className="border border-gray-300 px-4 py-2">
 												<ul>
-												{order?.customized_message.toString().split(',').map((message, index) => (
-												<li key={index}>
-													{message}
-												</li>))}</ul>
+													{order?.customized_message
+														?.toString()
+														.split(',')
+														.map((message, index) => (
+															<li key={index}>{message}</li>
+														))}
+												</ul>
 											</td>
 											<td className="border border-gray-300 px-4 py-2">
 												{order.paid ? 'Paid' : 'Not Paid'}
