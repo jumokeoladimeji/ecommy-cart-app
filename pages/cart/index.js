@@ -1,3 +1,5 @@
+'use client'
+
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
@@ -19,12 +21,13 @@ const url =
 import states from '../../data/states';
 
 export default function Cart() {
-	const {
+    const {
 		cartProducts,
 		removeProduct,
 		addProduct,
 		clearCart,
 	} = useContext(CartContext);
+
 	const {
 		shouldDisplayCart,
 		cartCount,
@@ -32,65 +35,15 @@ export default function Cart() {
 		formattedTotalPrice,
 		totalPrice,
 	} = useShoppingCart();
-	const [products, setProducts] = useState([]);
-	const [address, setAddress] = useState('');
-	const [email, setEmail] = useState('');
-	const [name, setName] = useState('');
-	const [city, setCity] = useState('');
-	const [customMessage, setCustomMessage] = useState('');
-	const [country, setCountry] = useState('US');
-	const [zip, setZip] = useState('');
-	const [customMessages, setCustomMessages] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const { user, token, loginUser, logoutUser } =
-		useContext(UserContext);
-	const [isSuccess, setIsSuccess] = useState(false);
-	const router = useRouter();
 
-	const countries = [
-		{ name: 'United States of Ameria', code: 'US' },
-	];
+    
+    const { user, token, loginUser, logoutUser } =
+    useContext(UserContext);
+    const [isSuccess, setIsSuccess] = useState(false);
+    const router = useRouter();
 
-	const messages = [
-		'Birthday',
-		'Anniversary',
-		'Christmas',
-		'Get Well',
-		'I love you',
-		'Graduation',
-		'Thank you',
-		'Best Friend',
-		'I need a favor',
-		"It's your day",
-		"You're the boss",
-		'You already have everything you need',
-		"I didn't have time to get you anything else",
-		'My mom said I had to get you something',
-		'You need a little humor in your life',
-		'This envelope was unusual(like you)',
-		'The President of the United States uses one of these',
-		'You deserve to be distracted',
-		'This looked like good easy reading',
-		"The price to take you out to eat wasn't in my budget",
-		"Unlike a shirt or tie, you can't return this",
-		"I wanted one and thought if i got you one, you'd get me one. (If this is too much to read, stop here an finish tomorrow).",
-		"Of it's educational value",
-		"It's part of limited edition... (Only a limited number of people want one)",
-		'I could still fit this between my dirty clothes in my suitcase',
-		'I out of 10 people surveyed laughed loudly while reading this',
-		'It looked like bad weather was coming',
-		'At least now you have a reason to celebrate',
-	];
-
-	const handleChange = (event) => {
-		setCity(event.target.value);
-	};
-
-	const handleCountryChange = (event) => {
-		setCountry(event.target.value);
-	};
-
-	useEffect(() => {
+    const [cartItems, setCartItems] = useState([]);
+    useEffect(() => {
 		if (typeof window === 'undefined') {
 			return;
 		}
@@ -98,50 +51,41 @@ export default function Cart() {
 			setIsSuccess(true);
 			clearCart();
 		}
+        let products;
+
+        const fishingCardsInCart = JSON.parse(localStorage.getItem("fishingCardItems")) || [];
+        const golfingCardsInCart = JSON.parse(localStorage.getItem("golfingCardItems")) || [];
+        products = [...fishingCardsInCart, ...golfingCardsInCart]
+        setCartItems(products)
 	}, []);
 
-	// Function to handle checkbox changes
-	const handleCheckboxChange = (e) => {
-		const { value } = e.target;
-		if (customMessages.includes(value)) {
-			// If already selected, remove it
-			setCustomMessages(
-				customMessages.filter((msg) => msg !== value),
-			);
-		} else {
-			if (customMessages.length >= 4) {
-				toast.error('You can only select 4 messages');
-				return;
-			}
-			setCustomMessages([...customMessages, value]);
-		}
-	};
+    const storedToken = localStorage.getItem('token');
 
-	const storedToken = localStorage.getItem('token');
+    let productSum = 0;
+    if (cartItems.length > 0) {
+        cartItems.forEach((item, ind) => {
+            productSum += item.product.price;
+        })
+    }
 
-	const stringifiedArray = [
-		JSON.stringify(customMessages),
-		JSON.stringify(customMessage),
-	];
+    async function stripeCheckout() {
 
-	const array1 = JSON.parse(stringifiedArray[0]);
-	const array2 = JSON.parse(stringifiedArray[1]);
+        const shippingAdd = cartItems.map(item => item.product_data.shippingAddress)
 
-	const combinedArray = [...array1, array2];
-
-	async function stripeCheckout() {
-		const response = await axios.post(`/api/checkout`, {
+        const response = await axios.post(`/api/checkout`, {
 			email: user.data.email,
 			name: user.data.name,
 			user_id: user.data.id,
 			phone_number: user.data.phone_number,
-			address,
-			country,
-			zip,
-			city,
-			customMessage: JSON.stringify(combinedArray),
+			address: '',
+			country: 'US',
+			zip: 0,
+            state: '',
+            full_address:  shippingAdd,
 			token: storedToken,
 			cartProducts: cartDetails,
+            buy_twelve_pay_for_ten: false,
+            cartItems
 		});
 
 		if (response.data.url) {
@@ -151,10 +95,31 @@ export default function Cart() {
 		}
 	}
 
-	const { removeItem } = useShoppingCart();
+	const { decrementItem } = useShoppingCart();
 
-	const removeItemFromCart = (item) => {
-		removeItem(item.id);
+    const removeFromCart = (indexToRemove, cartArray) => {
+        // delete at index
+        cartArray.splice(indexToRemove, 1);
+    }
+
+	const removeItemFromCart = (item, index) => {
+		decrementItem(item.product.id);
+        const fishingCardsInCart = JSON.parse(localStorage.getItem("fishingCardItems")) || [];
+        const golfingCardsInCart = JSON.parse(localStorage.getItem("golfingCardItems")) || [];
+        switch (item.product.title) {
+            case 'Fishing Card':
+                removeFromCart(index, fishingCardsInCart);
+                localStorage.setItem("fishingCardItems", JSON.stringify(fishingCardsInCart));
+                break;
+            case 'Golfing Card':
+                const indexToDelete = index - fishingCardsInCart.length
+                removeFromCart(indexToDelete, golfingCardsInCart);
+                localStorage.setItem("golfingCardItems", JSON.stringify(golfingCardsInCart));
+
+                break;
+            default:
+        }
+        setCartItems([...fishingCardsInCart, ...golfingCardsInCart])
 	};
 
 	const handleInputChange = (event) => {
@@ -184,110 +149,116 @@ export default function Cart() {
 	}
 
 	if (user) {
+        console.log('cartItems', cartItems)
 		return (
 			<>
 				<section className="flex justify-between max-md:flex-col space-x-4 ">
-					<div className=" md:w-2/3  px-4">
+					<div className="px-4">
 						<div className=" mt-10 md:mt-6 ">
 							<header className="text-center flex justify-between w-full">
 								<h1 className="text-xl font-bold text-gray-900 sm:text-3xl">
-									Checkout
+									CART DETAILS
 								</h1>
 							</header>
-							{!cartDetails ? (
+							{ !cartItems || cartItems.length === 0 ? (
 								<p className="my-6 text-center ">
 									Your cart is empty
 								</p>
 							) : (
-								<>
-									{Object.values(cartDetails ?? {}).map(
-										(entry) => (
-											<div
-												key={entry.id}
-												className="flex items-center gap-4 mb-3 mt-2"
-											>
-												<div>
-													<img
-														alt="product image"
-														src={entry.front_img_url}
-														className="h-14 w-14 rounded-md"
-													/>
-												</div>
-												<div>
-													{entry.title}{' '}
-													<span className="text-xs">
-														({entry.quantity})
-													</span>
-												</div>
-												<div className="ml-auto">
-													{formatCurrencyString({
-														value: entry.price,
-														currency: 'USD',
-													})}
-												</div>
-												<button
-													onClick={() =>
-														removeItemFromCart(entry)
-													}
-													className="hover:bg-emerald-50 transition-colors rounded-full duration-500 p-1"
-												>
-													<Image
-														alt="delete icon"
-														src="./trash.svg"
-														width={20}
-														height={20}
-													/>
-												</button>
-											</div>
-										),
-									)}
-
-									<div className="col-span-12 pt-5 pl-3">
-										<label className="mb-1 block text-sm font-medium text-text">
-											Customize Card Message (optional)
-										</label>
-										<input
-											type="text"
-											name="customMessage"
-											className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-											placeholder="Enter up to 12 words..."
-											value={customMessage}
-											onChange={handleInputChange}
-										/>
-										<p>
-											Remaining words:{' '}
-											{12 -
-												customMessage.trim().split(/\s+/)
-													.length}
-										</p>
-										<form className="grid grid-cols-3 gap-4 mt-5">
-											{messages.map((message, index) => (
-												<div
-													key={index}
-													className="flex items-start"
-												>
-													<input
-														type="checkbox"
-														id={message}
-														value={message}
-														checked={customMessages.includes(
-															message,
-														)}
-														onChange={handleCheckboxChange}
-														className="mr-2 mt-1"
-													/>
-													<label htmlFor={message}>
-														{message}
-													</label>
-												</div>
-											))}
-										</form>
-									</div>
-
+								<> 
+                                <div className="overflow-x-auto">
+                                        <table className="min-w-full border-collapse border border-gray-300">
+                                            <thead>
+                                                <tr>
+                                                    <th className="border border-gray-300 px-4 py-2">
+                                                        Item
+                                                    </th>
+                                                    <th className="border border-gray-300 px-4 py-2">
+                                                        Image
+                                                    </th>
+                                                    <th className="border border-gray-300 px-4 py-2">
+                                                        Customized Message
+                                                    </th>
+                                                    <th className="border border-gray-300 px-4 py-2">
+                                                        Shipping Information
+                                                    </th>
+                                                    <th className="border border-gray-300 px-4 py-2">
+                                                        Price
+                                                    </th>
+                                                    <th className="border border-gray-300 px-4 py-2">
+                                                        Actions
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {cartItems?.map(
+                                                    (item, index) => (
+                                                        <tr key={index}>
+                                                        <td className="border border-gray-300 px-4 py-2">
+                                                            <ul>
+                                                                <li>
+                                                                    {
+                                                                        item?.product?.title
+                                                                    }
+                                                                </li>	
+                                                            </ul>
+                                                        </td>
+                                                        <td>
+                                                            <img
+                                                                alt="product image"
+                                                                src={item?.product?.front_img_url}
+                                                                className="h-14 w-14 rounded-md"
+                                                            />
+                                                        </td>
+                                                        <td className="border border-gray-300 px-4 py-2">
+                                                            {
+                                                                item.product_data
+                                                                    ?.customMessages
+                                                                    ?.map((message, ind) => (
+                                                                        <div key={ind}>
+                                                                            {message}
+                                                                        </div>))
+                                                            }
+                                                        </td>
+                                                        <td className="border border-gray-300 px-4 py-2">
+                                                            <ul>
+                                                                <li>Name: {item?.product_data?.shippingAddress?.name}</li>
+                                                                <li>Address: {item?.product_data?.shippingAddress?.address}</li>
+                                                                <li>State: {item?.product_data?.shippingAddress?.state}</li>
+                                                                <li>Country: {item?.product_data?.shippingAddress?.country}</li>
+                                                                <li>Zip: {item?.product_data?.shippingAddress?.zip}</li>
+                                                            </ul>
+                                                        </td>
+                                                        <td className="border border-gray-300 px-4 py-2">
+                                                            {formatCurrencyString({
+                                                                value: item?.product.price,
+                                                                currency: 'USD',
+                                                            })}
+                                                        </td>
+                                                        <td>
+                                                            <button
+                                                                onClick={() =>
+                                                                    removeItemFromCart(item, index)
+                                                                }
+                                                                className="hover:bg-emerald-50 transition-colors rounded-full duration-500 p-1"
+                                                            >
+                                                                <Image
+                                                                    alt="delete icon"
+                                                                    src="./trash.svg"
+                                                                    width={20}
+                                                                    height={20}
+                                                                />
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
 									<div className="mt-8 flex justify-end border-t border-gray-100 pt-8">
 										<div className=" max-w-md space-y-4">
 											<dl className="space-y-0.5 text-md text-gray-700">
-												<div>
+												{/* <div>
 													{cartCount >= 12 ? (
 														<p>
 															<span className="font-bold">
@@ -307,15 +278,19 @@ export default function Cart() {
 															</span>
 														</p>
 													)}
-												</div>
-												<div className="flex justify-between">
+												</div> */}
+												{/* <div className="flex justify-between">
 													<dt>Subtotal</dt>
 													<dd>{formattedTotalPrice}</dd>
-												</div>
+												</div> */}
 
 												<div className="flex justify-between !text-base font-medium">
 													<dt>Total</dt>
-													<dd>{formattedTotalPrice}</dd>
+                                                    <dd>{formatCurrencyString({
+														value: productSum,
+														currency: 'USD',
+													})}</dd>
+													{/* <dd>{productSum}</dd> */}
 												</div>
 											</dl>
 
@@ -346,139 +321,33 @@ export default function Cart() {
 													</span>
 												</Link>
 											</div>
+                                            <div className="text-center">
+                                        <button
+                                            onClick={stripeCheckout}
+                                            className="block rounded border border-[#00553A] bg-white p-2 px-5 py-3 text-md text-text transition hover:bg-[#00553A] hover:text-white w-full"
+                                        >
+                                            Checkout
+                                        </button>
+                                    </div>
 										</div>
 									</div>
+                                    
 								</>
 							)}
 						</div>
 					</div>
-					{!cartDetails ? (
+					{/* {!cartDetails ? (
 						''
 					) : (
-						<div className="md:1/3 mt-16 md:mt-6">
-							<header className="text-start flex flex-col w-full">
-								<h1 className="text-xl font-bold text-gray-900 sm:text-3xl">
-									Shipping details
-								</h1>
-								<p className="mt-2 text-text text-lg">
-									We use your account details for shipping.
-								</p>
-							</header>
-							<div className="mx-auto max-w-xl p-4 border shadow-xl h-[400px] my-3">
-								<div className="space-y-5">
-									<div className="grid grid-cols-12 gap-5">
-										<div className="col-span-6">
-											<label className="mb-1 block text-sm font-medium text-text">
-												Email
-											</label>
-											<input
-												type="email"
-												name="email"
-												className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-												defaultValue={user.data.email}
-												placeholder="Email"
-											/>
-										</div>
-										<div className="col-span-6">
-											<label className="mb-1 block text-sm font-medium text-text">
-												Full Name
-											</label>
-											<input
-												type="text"
-												name="name"
-												className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-												defaultValue={user.data.name}
-												placeholder="Full name"
-											/>
-										</div>
-										<div className="col-span-12">
-											<label className="mb-1 block text-sm font-medium text-text">
-												Address
-											</label>
-											<input
-												type="text"
-												name="address"
-												className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-												placeholder="1864 Main Street"
-												value={address}
-												onChange={(ev) =>
-													setAddress(ev.target.value)
-												}
-												required
-											/>
-										</div>
-										<div className="col-span-6">
-											<label className="mb-1 block text-sm font-medium text-text">
-												State
-											</label>
-											<select
-												id="stateSelect"
-												value={city}
-												onChange={handleChange}
-												className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-											>
-												<option value="">
-													Select a state
-												</option>
-												{states.map((state) => (
-													<option
-														key={state.name}
-														value={state.name}
-													>
-														{state.name}
-													</option>
-												))}
-											</select>
-										</div>
-										<div className="col-span-4">
-											<label className="mb-1 block text-sm font-medium text-text">
-												Country
-											</label>
-											<select
-												id="stateSelect"
-												value={country}
-												onChange={handleChange}
-												className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-											>
-												{countries.map((country) => (
-													<option
-														key={country.code}
-														value={country.code}
-													>
-														{country.code}
-													</option>
-												))}
-											</select>
-										</div>
-										<div className="col-span-2">
-											<label className="mb-1 block text-sm font-medium text-text">
-												Zip
-											</label>
-											<input
-												type="text"
-												name="zip"
-												className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-												placeholder=""
-												value={zip}
-												onChange={(ev) =>
-													setZip(ev.target.value)
-												}
-												required
-											/>
-										</div>
-										<div className="col-span-12 text-center w-full">
-											<button
-												onClick={stripeCheckout}
-												className="block rounded border border-[#00553A] bg-white p-2 px-5 py-3 text-md text-text transition hover:bg-[#00553A] hover:text-white w-full"
-											>
-												Checkout
-											</button>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					)}
+                        <div className="col-span-12 text-center w-full">
+                            <button
+                                onClick={stripeCheckout}
+                                className="block rounded border border-[#00553A] bg-white p-2 px-5 py-3 text-md text-text transition hover:bg-[#00553A] hover:text-white w-full"
+                            >
+                                Checkout
+                            </button>
+                        </div>
+					)} */}
 				</section>
 			</>
 		);

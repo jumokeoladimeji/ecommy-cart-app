@@ -12,10 +12,9 @@ export const createOrder = async (orderData, token) => {
 				},
 			},
 		);
-		console.log(response);
 		return response.data.data;
 	} catch (error) {
-		console.log(error.response.data);
+		console.log('error', error);
 	}
 };
 

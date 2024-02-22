@@ -4,7 +4,7 @@ import { UserContext } from '../context/UserContext';
 import { useContext } from 'react';
 import { useRouter } from 'next/router';
 
-export default function Home({ categories }) {
+export default function Home() {
 	const { user, token, loginUser, logoutUser } =
 		useContext(UserContext);
 	

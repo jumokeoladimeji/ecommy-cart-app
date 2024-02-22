@@ -1,7 +1,7 @@
 import Product from "@/components/Product";
 import CarouselList from "@/components/Carousel";
 
-import { products } from "@/data/products";
+import { products } from "@/data/messages";
 
 // not in use
 

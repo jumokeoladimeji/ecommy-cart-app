@@ -42,6 +42,13 @@ export default function NavBar() {
 		}, 1500);
 	};
 
+	const goToFaq = () => {
+		router.push('/faq');
+		setTimeout(() => {
+			setNav(!nav);
+		}, 1500);
+	};
+
 	const goToProfile = () => {
 		router.push('/profile');
 		setTimeout(() => {
@@ -140,6 +147,18 @@ export default function NavBar() {
 							Buy
 						</button>
 					</div>
+					<div>
+						<button
+							onClick={() => router.push('/faq')}
+							className={
+								router.pathname === '/faq'
+									? activeStyle
+									: inactiveStyle
+							}
+						>
+							faq
+						</button>
+					</div>
 				</ul>
 				<div className="flex flex-row">
 					<div
@@ -187,6 +206,15 @@ export default function NavBar() {
 										className="bg-[#fff] m-2 w-30 px-2 py-2 rounded-md text-[#02533C] font-bold text-md hover:underline hover:text-[#02533C] margin-top: 1em"
 									>
 										Buy
+									</button>
+								</div>
+
+								<div>
+									<button
+										onClick={goToFaq}
+										className="bg-[#fff] m-2 w-30 px-2 py-2 rounded-md text-[#02533C] font-bold text-md hover:underline hover:text-[#02533C] margin-top: 1em"
+									>
+										Faq
 									</button>
 								</div>
 

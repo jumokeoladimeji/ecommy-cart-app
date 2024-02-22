@@ -3,8 +3,7 @@ import axios from 'axios';
 const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
 
 
-export const getCategories = async (data) => {
-        console.log('response', data)
+export const getCategories = async () => {
     const response = await axios.get(`${backendUrl}/api/v1/categories`);
     return response.data.data;
 };

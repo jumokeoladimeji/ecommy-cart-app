@@ -29,9 +29,7 @@ export const verifyUserToken = async (token) => {
 
 export const signin = async (userDetails, loginUser) => {
 	try {
-		console.log(
-			`process.env.NEXT_PUBLIC_BACKEND_URL, ${process.env.NEXT_PUBLIC_BACKEND_URL}, ::backendUrl::, ${backendUrl}`,
-		);
+
 		const response = await axios.post(
 			`${backendUrl}/api/v1/users/signin`,
 			userDetails,
