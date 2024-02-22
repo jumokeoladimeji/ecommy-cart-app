@@ -10,7 +10,7 @@ const faq = () => {
 		<div className="text-center">
 			{/* <CarouselList cards={imageUrls}/> */}
 <h1 className="font-bold text-2xl pt-10">
-					Measures of Fun - Q & A
+					Measures of Fun - FREQUENTLY ASKED QUESTIONS
 					</h1>
 			<div className="flex w-full flex-col justify-between max-w-5xl mx-auto md:flex-row gap-3 lg:gap-52 pt-10 px-5 md:px-10">
 				
@@ -42,33 +42,39 @@ const faq = () => {
 				<div className="text-left w-full lg:w-2/3">
 					
 					<div>
-						<p className="text-gray-500 text-md pt-4 text-left leading-relaxed block">
-							How do I order more than one?
+						<p className="text-gray-500 text-md pt-4 text-left leading-relaxed block"><b>
+							Q- How do I order more than one?</b>
 						</p>
-						<p className="text-gray-500 text-md pt-4 text-left leading-relaxed block">Can I buy in bulk?
+						<p className="text-gray-500 text-md pt-4 text-left leading-relaxed block">
+							A- You can add a card to your cart, fill in the information and before checking out it will direct you to continue buying?
+						</p>
+						<p className="text-gray-500 text-md pt-4 text-left leading-relaxed block">
+							<b>Q-Can I buy in bulk?</b>
 						</p>
 
 						<p className="text-gray-500 text-md pt-4 text-left leading-relaxed block">
 							A- Yes, there is a purchase option to buy 10 cards and get two FREE!
 						</p>
 
-						<p className="text-gray-500 text-md pt-4 text-left leading-relaxed block">Can you mail to multiple people?
+						<p className="text-gray-500 text-md pt-4 text-left leading-relaxed block">
+						<b>Q- Can you mail to multiple people?</b>
 						</p>
 
 						<p className="text-gray-500 text-md pt-4 text-left leading-relaxed block">
 							A- YES, just follow the options after adding to your cart and it will allow you to ship to whomever for each card.
 						</p>
 
-						<p className="text-gray-500 text-md pt-4 text-left leading-relaxed block">Are there other cards available?</p>
+						<p className="text-gray-500 text-md pt-4 text-left leading-relaxed block">
+							<b>Q- Are there other cards available?</b></p>
 
 						<p className="text-gray-500 text-md pt-4 text-left leading-relaxed block">
-						 A- We plan on it! Launching the first two is our start, but we do plan on adding!
+						  A- We plan on it! Launching the first two is our start, but we do plan on adding!
 						</p>
 						<p className="text-gray-500 text-md pt-4 text-left leading-relaxed block">
 						If you have an idea…..share!
 						</p>
 
-						<p className="text-gray-500 text-md pt-4 text-left leading-relaxed block"> Q- Why buy these cards?</p>
+						<p className="text-gray-500 text-md pt-4 text-left leading-relaxed block"> <b>Q- Why buy these cards?</b></p>
 
 						<p className="text-gray-500 text-md pt-4 text-left leading-relaxed block">
 						A- “It's More than a Card”…a laminated card that lasts forever, a ruler, a straight edge and a GIFT! </p>

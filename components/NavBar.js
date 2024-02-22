@@ -120,7 +120,7 @@ export default function NavBar() {
 									: inactiveStyle
 							}
 						>
-							Home
+							HOME
 						</button>
 					</div>
 					<div>
@@ -132,7 +132,7 @@ export default function NavBar() {
 									: inactiveStyle
 							}
 						>
-							About Us
+							ABOUT US
 						</button>
 					</div>
 					<div>
@@ -144,7 +144,7 @@ export default function NavBar() {
 									: inactiveStyle
 							}
 						>
-							Buy
+							BUY
 						</button>
 					</div>
 					<div>
@@ -156,7 +156,7 @@ export default function NavBar() {
 									: inactiveStyle
 							}
 						>
-							faq
+							FAQ
 						</button>
 					</div>
 				</ul>
@@ -187,7 +187,7 @@ export default function NavBar() {
 										onClick={goToHome}
 										className="bg-[#fff] m-2 w-30 px-2 py-2 rounded-md text-[#02533C] font-bold text-md hover:underline hover:text-[#02533C] margin-top: 1em"
 									>
-										Home
+										HOME
 									</button>
 								</div>
 
@@ -196,7 +196,7 @@ export default function NavBar() {
 										onClick={goToAbout}
 										className="bg-[#fff] m-2 w-30 px-2 py-2 rounded-md text-[#02533C] font-bold text-md hover:underline hover:text-[#02533C] margin-top: 1em"
 									>
-										About Us
+										ABOUT US
 									</button>
 								</div>
 
@@ -205,7 +205,7 @@ export default function NavBar() {
 										onClick={goToBuy}
 										className="bg-[#fff] m-2 w-30 px-2 py-2 rounded-md text-[#02533C] font-bold text-md hover:underline hover:text-[#02533C] margin-top: 1em"
 									>
-										Buy
+										BUY
 									</button>
 								</div>
 
@@ -214,7 +214,7 @@ export default function NavBar() {
 										onClick={goToFaq}
 										className="bg-[#fff] m-2 w-30 px-2 py-2 rounded-md text-[#02533C] font-bold text-md hover:underline hover:text-[#02533C] margin-top: 1em"
 									>
-										Faq
+										FAQ
 									</button>
 								</div>
 
@@ -225,7 +225,7 @@ export default function NavBar() {
 												onClick={goToProfile}
 												className="bg-[#fff] m-2 w-30 px-2 py-2 rounded-md text-[#02533C] font-bold text-md hover:underline hover:text-[#02533C] margin-top: 1em"
 											>
-												Profile
+												PROFILE
 											</button>
 										</div>
 										<div>
@@ -233,7 +233,7 @@ export default function NavBar() {
 												onClick={logout}
 												className="bg-[#fff] m-2 w-30 px-2 py-2 rounded-md text-[#e65050] font-bold text-md hover:underline hover:text-[#02533C] margin-top: 1em"
 											>
-												Logout
+												LOGOUT
 											</button>
 										</div>
 									</>
@@ -243,7 +243,7 @@ export default function NavBar() {
 											onClick={login}
 											className="bg-[#02533C] m-2 w-30 px-2 py-2 rounded-md text-[#fff] font-bold text-md hover:text-[#fff] mt-3"
 										>
-											Login
+											LOGIN
 										</button>
 									</div>
 								)}
@@ -267,7 +267,7 @@ export default function NavBar() {
 						</div>
 					</button>
 					<ShoppingCart />
-					<Dropdown />
+					{/* <Dropdown /> */}
 				</div>
 			</div>
 		</div>
