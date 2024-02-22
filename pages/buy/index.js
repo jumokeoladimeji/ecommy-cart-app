@@ -47,11 +47,11 @@ export default function Buy() {
 
 
     const decreaseQuantity = (card) => {
-        if (card.title  ===  "Fishing Card" && fishingQuantity >= 1) {
+        if (card.title  ===  "Fish Card" && fishingQuantity >= 1) {
             setFishingQuantity(fishingQuantity - 1);
         }
 
-        if (card.title  ===  "Golfing Card" && golfingQuantity >= 1) {
+        if (card.title  ===  "Golf Card" && golfingQuantity >= 1) {
             setGolfingQuantity(golfingQuantity - 1);
         }
 	};
@@ -61,11 +61,11 @@ export default function Buy() {
             toast.error('You can only select 12 Cards');
             return
         }
-        if (card.title  ===  "Fishing Card") {
+        if (card.title  ===  "Fish Card") {
             setFishingQuantity(fishingQuantity + 1);
         }
 
-        if (card.title  ===  "Golfing Card") {
+        if (card.title  ===  "Golf Card") {
             setGolfingQuantity(golfingQuantity + 1);
         }
 	};
@@ -105,10 +105,10 @@ export default function Buy() {
           
           cards.forEach((card) => {
             switch (card.title) {
-              case 'Fishing Card':
+              case 'Fish Card':
                 processCard(card, fishingQuantity);
                 break;
-              case 'Golfing Card':
+              case 'Golf Card':
                 processCard(card, golfingQuantity);
                 break;
               default:
@@ -119,10 +119,10 @@ export default function Buy() {
 
     async function stripeCheckout(cartProducts, address) {    
 		const response = await axios.post(`/api/checkout`, {
-			email: user.data.email,
-			name: user.data.name,
-			user_id: user.data.id,
-			phone_number: user.data.phone_number,
+            email: user.data.email,
+            name: user.data.name,
+            user_id: user.data.id,
+            phone_number: user.data.phone_number,
 			address: address.address,
             state: address.state,
 			country: address.country,
@@ -199,7 +199,7 @@ export default function Buy() {
                                             -
                                             </button>
                                             <span className="w-10 text-center rounded-md mx-3">
-                                                {card.title === "Fishing Card" ?
+                                                {card.title === "Fish Card" ?
                                                     fishingQuantity :
                                                     golfingQuantity
                                                 }
@@ -241,7 +241,7 @@ export default function Buy() {
 							</button> */}
 							<header className="text-start flex flex-col w-full">
 								<h1 className="text-xl font-bold text-gray-900 sm:text-3xl">
-									Shipping details
+									Shipping Information
 								</h1>
 							</header>
 							<form
@@ -250,9 +250,10 @@ export default function Buy() {
 							>
 								<div className="space-y-5">
 									<div className="grid grid-cols-12 gap-5">
-										<div className="col-span-12">
+                                    {/* <div className="col-span-12"> */}
+                                            {/* ENTER YOUR DETAILS
 											<label className="mb-1 block text-sm font-medium text-text">
-												Full Name
+												Name
 											</label>
 											<input
 												type="text"
@@ -260,6 +261,42 @@ export default function Buy() {
 												className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
 												{...register('name')}
 												placeholder="Full name"
+											/>
+										</div>
+                                        <div className="col-span-12">
+											<label className="mb-1 block text-sm font-medium text-text">
+												Email
+											</label>
+											<input
+												type="text"
+												name="name"
+												className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+												{...register('email')}
+												placeholder="Full name"
+											/>
+										</div>
+                                        <div className="col-span-12">
+											<label className="mb-1 block text-sm font-medium text-text">
+												Phone Number
+											</label>
+											<input
+												type="text"
+												name="name"
+												className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+												{...register('number')}
+												placeholder="Full name"
+											/>
+										</div> */}
+										<div className="col-span-12">
+											<label className="mb-1 block text-sm font-medium text-text">
+												Recipient Name
+											</label>
+											<input
+												type="text"
+												name="recipient_name"
+												className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+												{...register('recipient_name')}
+												placeholder="Recipient name"
 											/>
 										</div>
 										<div className="col-span-12">
@@ -342,11 +379,11 @@ export default function Buy() {
 							</form>
 						</div>
 				</Modal>
-                <p className="text-gray-500 text-md pt-4 font-bold leading-relaxed block">
+                {/* <p className="text-gray-500 text-md pt-4 font-bold leading-relaxed block">
                     Tell us how many of each…. “fish” and “golf”
                     rulers you need to make 12, we’ll ship them
                     and your envelopes to you FREE.
-                </p>
+                </p> */}
                 <div className="text-center">
                     {(!categories || categories?.length === 0)
                         ? <Spinner className="text-center"/>

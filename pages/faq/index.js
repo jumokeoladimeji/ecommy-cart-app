@@ -8,8 +8,7 @@ const faq = () => {
 	};
 	return (
 		<div className="text-center">
-			{/* <CarouselList cards={imageUrls}/> */}
-<h1 className="font-bold text-2xl pt-10">
+					<h1 className="font-bold text-2xl pt-10">
 					Measures of Fun - FREQUENTLY ASKED QUESTIONS
 					</h1>
 			<div className="flex w-full flex-col justify-between max-w-5xl mx-auto md:flex-row gap-3 lg:gap-52 pt-10 px-5 md:px-10">
@@ -22,13 +21,13 @@ const faq = () => {
 						alt=""
 					/>
 					</div>
-					<di>
+					<div>
 					<img
 						src="https://res.cloudinary.com/dkhoomk9a/image/upload/v1706621867/gfbeexajzzpzm125pdoh.jpg"
 						className="h-auto w-full rounded-lg max-w-full"
 						alt=""
 					/>
-					</di>
+					</div>
 				
 					<div className="text-left">
 						<button
@@ -77,7 +76,7 @@ const faq = () => {
 						<p className="text-gray-500 text-md pt-4 text-left leading-relaxed block"> <b>Q- Why buy these cards?</b></p>
 
 						<p className="text-gray-500 text-md pt-4 text-left leading-relaxed block">
-						A- “It's More than a Card”…a laminated card that lasts forever, a ruler, a straight edge and a GIFT! </p>
+						A- “It's More than a Card”…a laminated card that lasts forever, a ruler, a straight edge and a GIFT!</p>
 					</div>
 				</div>
 			</div>

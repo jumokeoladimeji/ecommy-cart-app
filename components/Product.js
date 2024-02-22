@@ -75,13 +75,13 @@ export default function Product({ product }) {
 			quantity,
 			value: product.price * quantity
 		}
-		if (product.title === 'Fishing Card') {
+		if (product.title === 'Fish Card') {
 			const fishingCardsInCart = JSON.parse(localStorage.getItem("fishingCardItems")) || [];
 			fishingCardsInCart.push(productToAdd)
 			localStorage.setItem("fishingCardItems", JSON.stringify(fishingCardsInCart));
 		}
 
-		if (product.title === 'Golfing Card') {
+		if (product.title === 'Golf Card') {
 			const golfingCardsInCart = JSON.parse(localStorage.getItem("golfingCardItems")) || [];
 			golfingCardsInCart.push(productToAdd)
 			localStorage.setItem("golfingCardItems", JSON.stringify(golfingCardsInCart));

@@ -267,7 +267,7 @@ export default function NavBar() {
 						</div>
 					</button>
 					<ShoppingCart />
-					{/* <Dropdown /> */}
+					<Dropdown />
 				</div>
 			</div>
 		</div>

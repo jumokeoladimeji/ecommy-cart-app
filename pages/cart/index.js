@@ -73,8 +73,10 @@ export default function Cart() {
         const shippingAdd = cartItems.map(item => item.product_data.shippingAddress)
 
         const response = await axios.post(`/api/checkout`, {
-			email: user.data.email,
-			name: user.data.name,
+			// email: cartItems[0].product_data?.shippingAddress?.email,
+			// name: cartItems[0].product_data?.shippingAddress?.name,
+            email: user.data.email,
+            name: user.data.name,
 			user_id: user.data.id,
 			phone_number: user.data.phone_number,
 			address: '',
@@ -107,11 +109,11 @@ export default function Cart() {
         const fishingCardsInCart = JSON.parse(localStorage.getItem("fishingCardItems")) || [];
         const golfingCardsInCart = JSON.parse(localStorage.getItem("golfingCardItems")) || [];
         switch (item.product.title) {
-            case 'Fishing Card':
+            case 'Fish Card':
                 removeFromCart(index, fishingCardsInCart);
                 localStorage.setItem("fishingCardItems", JSON.stringify(fishingCardsInCart));
                 break;
-            case 'Golfing Card':
+            case 'Golf Card':
                 const indexToDelete = index - fishingCardsInCart.length
                 removeFromCart(indexToDelete, golfingCardsInCart);
                 localStorage.setItem("golfingCardItems", JSON.stringify(golfingCardsInCart));
