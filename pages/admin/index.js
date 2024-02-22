@@ -245,7 +245,7 @@ export default function AdminDashboard({ cards }) {
 											Date
 										</th>
 										<th className="border border-gray-300 px-4 py-2">
-											Items
+											Item(s)
 										</th>
 										{/* <th className="border border-gray-300 px-4 py-2">
 											Total
@@ -309,22 +309,11 @@ export default function AdminDashboard({ cards }) {
 											</td> */}
 											{/* <td className="border border-gray-300 px-4 py-2">
 												<ul>
-<<<<<<< HEAD
-													{order?.customized_message
-														?.toString()
-														.split(',')
-														.map((message, index) => (
-															<li key={index}>{message}</li>
-														))}
-												</ul>
-											</td>
-=======
 												{order?.line_items?.product_data?.customMessages?.toString().split(',').map((message, index) => (
 												<li key={index}>
 													{message}
 												</li>))}</ul>
 											</td> */}
->>>>>>> f10bb03 (feat: customize and add cart)
 											<td className="border border-gray-300 px-4 py-2">
 												{order.paid ? 'Paid' : 'Not Paid'}
 											</td>
