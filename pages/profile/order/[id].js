@@ -87,13 +87,13 @@ const index = () => {
 							className="flex flex-row gap-14 mb-3"
 						>
 							<div className="flex flex-row gap-3">
-								<p>{item.price_data?.product_data?.name}</p>
+								<p>{item?.price?.product_data?.name}</p>
 								<p>X{item?.quantity}</p>
 							</div>
 							<div>
 								<p className="font-bold">
 									$
-									{(item.price_data?.unit_amount *
+									{(item.price?.unit_amount *
 										item?.quantity) /
 										100}
 								</p>

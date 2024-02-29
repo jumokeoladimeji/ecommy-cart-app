@@ -19,67 +19,74 @@ export default async function handler(req, res) {
 			name,
 			user_id,
 			address,
+			state,
 			country,
 			zip,
-			city,
 			cartProducts,
-			customMessage,
 			phone_number,
 			token,
+			full_address,
+			buy_twelve_pay_for_ten,
+			cartItems
 		} = req.body;
 
 		const line_items = Object.values(cartProducts).map(
 			(item) => ({
-				// id: item.id,
 				quantity: item.quantity,
-				// product_data: item.product_data,
 				price: item.id,
 			}),
 		);
 
+		const prodForOrder = buy_twelve_pay_for_ten ? cartProducts : cartItems
+	
 		const order_line_items = Object.values(
-			cartProducts,
+			prodForOrder,
 		).map((item) => ({
-			// id: item.id,
 			quantity: item.quantity,
 			product_data: item.product_data,
-			price: item.price_data,
+			price_data: item.price_data,
+			buy_twelve_pay_for_ten
 		}));
 
 		const orderData = {
-			order_line_items,
+			line_items: order_line_items,
 			user_id,
 			email,
 			name,
 			address1: address,
-			city,
 			country,
 			zip,
-			customized_message: customMessage,
+			full_address,
+			state,
 			shipping_phone_number: phone_number,
 			paid: false,
 		};
 
+		console.log(orderData);
+
 		const orderDoc = await createOrder(orderData, token);
-		// console.log(orderDoc.error);
 
 		const totalQuantity = line_items?.reduce(
 			(acc, item) => acc + item.quantity,
 			0,
 		);
 
+		const stripeObj = {
+			line_items,
+			mode: 'payment',
+			customer_email: email,
+			success_url: `${process.env.NEXT_PUBLIC_URL}/api/success?orderId=${orderDoc?.id}&token=${token}`,
+			cancel_url: `${process.env.NEXT_PUBLIC_URL}`,
+			metadata: {
+				orderId: orderDoc?.id,
+				token: token,
+			}
+		}
+
 		if (totalQuantity >= 12) {
 			const session = await stripe.checkout.sessions.create(
 				{
-					line_items,
-					mode: 'payment',
-					customer_email: email,
-					success_url: `${process.env.NEXT_PUBLIC_URL}/api/success?orderId=${orderDoc?.id}&token=${token}`,
-					cancel_url: `${process.env.NEXT_PUBLIC_URL}`,
-					metadata: {
-						orderId: orderDoc?.id,
-						token: token,
-					},
+					...stripeObj,
 					discounts: [
 						{
 							coupon: `3MoIkOrK`,
@@ -88,33 +95,18 @@ export default async function handler(req, res) {
 				},
 			);
 
-			// console.log(session);
-
 			res.json({
 				url: session.url,
 			});
 		} else {
-			const session = await stripe.checkout.sessions.create(
-				{
-					line_items,
-					mode: 'payment',
-					customer_email: email,
-					success_url: `${process.env.NEXT_PUBLIC_URL}/api/success?orderId=${orderDoc?.id}&token=${token}`,
-					cancel_url: `${process.env.NEXT_PUBLIC_URL}`,
-					metadata: {
-						orderId: orderDoc?.id,
-						token: token,
-					},
-				},
-			);
-
-			// console.log(session);
+			const session = await stripe.checkout.sessions.create(stripeObj);
 
 			res.json({
 				url: session.url,
 			});
 		}
-	} catch {
+	} catch(error) {
+		console.log('error with stripe', error)
 		res
 			.status(500)
 			.json({ error: 'Internal Server Error' });

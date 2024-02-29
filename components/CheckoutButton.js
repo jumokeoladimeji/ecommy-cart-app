@@ -45,6 +45,7 @@ export default function CheckoutButton() {
 			// zip,
 			// city,
 			cartProducts: cartDetails,
+			buy_twelve_pay_for_ten: false
 		});
 
 		if (response.data.url) {
@@ -61,11 +62,9 @@ export default function CheckoutButton() {
 	return (
 		<article className="mt-3 flex flex-col">
 			<div className="text-red-700 text-xs mb-3 h-5 text-center">
-				{totalPrice && totalPrice < 0.3
-					? 'You must have at least $0.30 in your basket'
-					: // : cartCount && cartCount > 3
-					// ? "You cannot have more than 3 items"
-					status === 'redirect-error'
+				{totalPrice && totalPrice < 9.95
+					? 'You must have at least $9.95 in your basket'
+					: status === 'redirect-error'
 					? 'Unable to redirect to Stripe checkout page'
 					: status === 'no-items'
 					? 'Please add some items to your cart'
@@ -74,13 +73,6 @@ export default function CheckoutButton() {
 			<button
 				onClick={goToCart}
 				className="bg-[#02533C] hover:bg-[#02533cd7] hover:text-white transition-colors duration-500 text-white py-3 px-5 rounded-md w-100 disabled:bg-slate-300 disabled:cursor-not-allowed disabled:text-white"
-				// disabled={
-				//   (totalPrice && totalPrice >= 0) ||
-				//   (cartCount && cartCount >= 0 ) ||
-				//   status == "no-items"
-				//     ? true
-				//     : false
-				// }
 			>
 				{status !== 'loading'
 					? 'Proceed to checkout'

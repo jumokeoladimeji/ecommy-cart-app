@@ -7,6 +7,8 @@ export default function Success() {
 	const { clearCart } = useShoppingCart();
 	useEffect(() => {
 		clearCart();
+		localStorage.removeItem("golfingCardItems")
+		localStorage.removeItem("fishingCardItems")
 	}, []);
 	return (
 		<>

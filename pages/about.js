@@ -19,13 +19,15 @@ const about = () => {
 					/>
 					<div className="text-left">
 						<h1 className="font-bold text-2xl pt-5">
-							Buy a dozen cards... only pay for 10!
+							{/* Buy a dozen cards... only pay for 10!
+							 */}
+							Free Shipping
 						</h1>
-						<p className="text-gray-500 text-md pt-4 text-left leading-relaxed block">
+						{/* <p className="text-gray-500 text-md pt-4 text-left leading-relaxed block">
 							Tell us how many of each…. “fish” and “golf”
 							rulers you need to make 12, we’ll ship them
 							and your envelopes to you FREE.
-						</p>
+						</p> */}
 
 						<button
 							onClick={goToBuy}

@@ -9,6 +9,8 @@ import React, {
 	useEffect,
 	useState,
 } from 'react';
+import { formatCurrencyString } from 'use-shopping-cart';
+import { add, format } from 'date-fns';
 
 const Loading = () => {
 	return (
@@ -60,7 +62,7 @@ const index = () => {
 	if (loading) {
 		return <Loading />;
 	}
-
+	console.log('order::', order)
 	return (
 		<div className="pt-10 px-5">
 			<div>
@@ -72,52 +74,112 @@ const index = () => {
 				<h1 className="font-bold text-xl mb-3">
 					Purchased Items
 				</h1>
-				<ul>
-					{order?.line_items?.map((item, index) => (
-						// <li key={index}>
-						// 	{item.price_data?.product_data?.name} (X
-						// 	{item?.quantity})
-						// </li>
-						<div
-							key={index}
-							className="flex flex-row gap-14 mb-3"
-						>
-							<div className="flex flex-row gap-3">
-								<p>{item.price_data?.product_data?.name}</p>
-								<p>X{item?.quantity}</p>
-							</div>
-							<div>
-								<p className="font-bold">
-									$
-									{(item.price_data?.unit_amount *
-										item?.quantity) /
-										100}
-								</p>
-							</div>
-						</div>
-					))}
-				</ul>
-				<div className="pt-5">
-					<p className="font-bold mb-2">
-						Customized Message{' '}
-					</p>
-					<p>{order?.customized_message}</p>
-				</div>
-			</div>
-			<div className="py-5">
-				<h1 className="font-bold text-xl mb-3">
-					Shipping Information
-				</h1>
-				<div className="flex flex-row gap-14 mb-3">
-					<div className="flex flex-col gap-1">
-						<p className="font-bold">Address</p>
-						<p>{order?.addresses?.address1},</p>
-						<p>{order?.addresses?.city}</p>
-						<p>{order?.addresses?.zip}</p>
-						<p>{order?.addresses?.country}</p>
-						<p className="font-bold">Contact Information</p>
-						<p>{order?.shipping_phone_number}</p>
-					</div>
+
+				<div className="overflow-x-auto">
+					<table className="min-w-full border-collapse border border-gray-300">
+						<thead>
+							<tr>
+								{/* <th className="border border-gray-300 px-4 py-2">
+									Date
+								</th> */}
+								<th className="border border-gray-300 px-4 py-2">
+									Item
+								</th>
+								<th className="border border-gray-300 px-4 py-2">
+									Customized Message
+								</th>
+								<th className="border border-gray-300 px-4 py-2">
+									Shipping Information
+								</th>
+								<th className="border border-gray-300 px-4 py-2">
+									Status
+								</th>
+								<th className="border border-gray-300 px-4 py-2">
+									Actions
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							{order?.line_items?.map(
+								(item, index) => (
+									<tr key={index}>
+									{/* <td className="border border-gray-300 px-4 py-2">
+										{order?.id?.split('-')[0]}...
+									</td> */}
+									{/* <td className="border border-gray-300 px-4 py-2">
+										{format(
+											new Date(order?.updatedAt),
+											'MMM d, yyyy',
+										)}
+									</td> */}
+									<td className="border border-gray-300 px-4 py-2">
+										<ul>
+											<li>
+												{
+													item.price_data
+														?.product_data?.name
+												}{' '}
+												(X{item?.quantity})
+											</li>	
+										</ul>
+									</td>
+									<td className="border border-gray-300 px-4 py-2">
+										{
+											item.product_data
+												?.customMessages
+												?.map((message, ind) => (
+													<div key={ind}>
+														{message}
+													</div>))
+										}
+									</td>
+									<td className="border border-gray-300 px-4 py-2">
+										<ul>
+											<li>Name: {item?.product_data?.shippingAddress?.name}</li>
+											<li>Address: {item?.product_data?.shippingAddress?.address}</li>
+											<li>State: {item?.product_data?.shippingAddress?.state}</li>
+											<li>Country: {item?.product_data?.shippingAddress?.country}</li>
+											<li>Zip: {item?.product_data?.shippingAddress?.zip}</li>
+										</ul>
+									</td>
+									<td className="border border-gray-300 px-4 py-2">
+										{order.paid ? 'Paid' : 'Not Paid'}
+									</td>
+									<td className="border border-gray-300 px-4 py-2">
+										<button
+											onClick={() =>
+												router.push(
+													`/admin/order/${order?.id}`,
+												)
+											}
+											className="bg-[#7b7c7c] hover:bg-[#005438ee] text-white py-1 px-2 rounded-md mr-2"
+										>
+											View
+										</button>
+										{/* {order.confirm_delivery ? (
+											<button
+												onClick={() =>
+													handleDelete(product.id)
+												}
+												className="bg-[#005438] hover:bg-[#005438] text-white py-1 px-2 rounded-md"
+											>
+												Delivered
+											</button>
+										) : (
+											<button
+												onClick={() =>
+													handleDelete(product.id)
+												}
+												className="bg-[#005438] hover:bg-[#005438] text-white py-1 px-2 rounded-md"
+											>
+												Mark as Delivered
+											</button>
+										)} */}
+									</td>
+								</tr>
+								))}
+						</tbody>
+					</table>
 				</div>
 			</div>
 			<div>

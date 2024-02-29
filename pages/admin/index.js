@@ -158,6 +158,79 @@ export default function AdminDashboard({ cards }) {
 								style={{ fontFamily: 'Lobster Two' }}
 								className=" text-2xl"
 							>
+								Products
+							</h1>
+							<Link
+								href="/admin/add-product"
+								className="bg-[#005438] hover:bg-[#005438ec] text-white py-1 px-2 rounded-md mr-2"
+							>
+								Add Product
+							</Link>
+						</div>
+						<div className="overflow-x-auto">
+							<table className="min-w-full border-collapse border border-gray-300">
+								<thead>
+									<tr>
+										{/* <th className="border border-gray-300 px-4 py-2">
+											ID
+										</th> */}
+										<th className="border border-gray-300 px-4 py-2">
+											Name
+										</th>
+										{/* <th className="border border-gray-300 px-4 py-2">
+											Description
+										</th> */}
+										<th className="border border-gray-300 px-4 py-2">
+											Price
+										</th>
+										<th className="border border-gray-300 px-4 py-2">
+											Actions
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									{cards?.map((product) => (
+										<tr key={product.id}>
+											{/* <td className="border border-gray-300 px-4 py-2">
+												{product.id}
+											</td> */}
+											<td className="border border-gray-300 px-4 py-2">
+												{product.title}
+											</td>
+											{/* <td className="border border-gray-300 px-4 py-2">
+												{product.description}
+											</td> */}
+											<td className="border border-gray-300 px-4 py-2">
+												{formatCurrencyString({
+													value: product.price,
+													currency: 'USD',
+												})}
+											</td>
+											<td className="border border-gray-300 px-4 py-2">
+												<button className="bg-[#005438] hover:bg-[#005438ee] text-white py-1 px-2 rounded-md mr-2">
+													Edit
+												</button>
+												<button
+													onClick={() =>
+														handleDelete(product.id)
+													}
+													className="bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded-md"
+												>
+													Delete
+												</button>
+											</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div className=" border-slate-200 rounded-lg p-6 border-2">
+						<div className="flex flex-row justify-between items-center mb-3">
+							<h1
+								style={{ fontFamily: 'Lobster Two' }}
+								className=" text-2xl"
+							>
 								Order History
 							</h1>
 						</div>
@@ -172,7 +245,7 @@ export default function AdminDashboard({ cards }) {
 											Date
 										</th>
 										<th className="border border-gray-300 px-4 py-2">
-											Items
+											Item(s)
 										</th>
 										{/* <th className="border border-gray-300 px-4 py-2">
 											Total
@@ -206,8 +279,8 @@ export default function AdminDashboard({ cards }) {
 														(item, index) => (
 															<li key={index}>
 																{
-																	item.price_data
-																		?.product_data?.name
+																	item?.price?.product_data
+																		?.name
 																}{' '}
 																(X{item?.quantity})
 															</li>
@@ -215,16 +288,32 @@ export default function AdminDashboard({ cards }) {
 													)}
 												</ul>
 											</td>
+											<td className="border border-gray-300 px-4 py-2">
+												<div>
+													{order?.line_items?.map(
+														(item, index) => (
+															<div key={index}>
+																<ul>
+																	{item?.product_data?.customMessages?.toString().split(',').map((message, index) => (
+																	<li key={index}>
+																		{message}
+																	</li>))}
+																</ul>
+															</div>
+														),
+													)}
+												</div>
+											</td>
 											{/* <td className="border border-gray-300 px-4 py-2">
 												${order.total}
 											</td> */}
-											<td className="border border-gray-300 px-4 py-2">
+											{/* <td className="border border-gray-300 px-4 py-2">
 												<ul>
-												{order?.customized_message.toString().split(',').map((message, index) => (
+												{order?.line_items?.product_data?.customMessages?.toString().split(',').map((message, index) => (
 												<li key={index}>
 													{message}
 												</li>))}</ul>
-											</td>
+											</td> */}
 											<td className="border border-gray-300 px-4 py-2">
 												{order.paid ? 'Paid' : 'Not Paid'}
 											</td>
@@ -258,79 +347,6 @@ export default function AdminDashboard({ cards }) {
 														Mark as Delivered
 													</button>
 												)} */}
-											</td>
-										</tr>
-									))}
-								</tbody>
-							</table>
-						</div>
-					</div>
-					<div className=" border-slate-200 rounded-lg p-6 border-2">
-						<div className="flex flex-row justify-between items-center mb-3">
-							<h1
-								style={{ fontFamily: 'Lobster Two' }}
-								className=" text-2xl"
-							>
-								Products
-							</h1>
-							<Link
-								href="/admin/add-product"
-								className="bg-[#005438] hover:bg-[#005438ec] text-white py-1 px-2 rounded-md mr-2"
-							>
-								Add Product
-							</Link>
-						</div>
-						<div className="overflow-x-auto">
-							<table className="min-w-full border-collapse border border-gray-300">
-								<thead>
-									<tr>
-										{/* <th className="border border-gray-300 px-4 py-2">
-											ID
-										</th> */}
-										<th className="border border-gray-300 px-4 py-2">
-											Name
-										</th>
-										<th className="border border-gray-300 px-4 py-2">
-											Description
-										</th>
-										<th className="border border-gray-300 px-4 py-2">
-											Price
-										</th>
-										<th className="border border-gray-300 px-4 py-2">
-											Actions
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									{cards?.map((product) => (
-										<tr key={product.id}>
-											{/* <td className="border border-gray-300 px-4 py-2">
-												{product.id}
-											</td> */}
-											<td className="border border-gray-300 px-4 py-2">
-												{product.title}
-											</td>
-											<td className="border border-gray-300 px-4 py-2">
-												{product.description}
-											</td>
-											<td className="border border-gray-300 px-4 py-2">
-												{formatCurrencyString({
-													value: product.price,
-													currency: 'USD',
-												})}
-											</td>
-											<td className="border border-gray-300 px-4 py-2">
-												<button className="bg-[#005438] hover:bg-[#005438ee] text-white py-1 px-2 rounded-md mr-2">
-													Edit
-												</button>
-												<button
-													onClick={() =>
-														handleDelete(product.id)
-													}
-													className="bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded-md"
-												>
-													Delete
-												</button>
 											</td>
 										</tr>
 									))}
