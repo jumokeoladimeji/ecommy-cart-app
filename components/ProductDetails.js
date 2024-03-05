@@ -64,9 +64,9 @@ export default function ProductDetails() {
 						</div>
 						<div className="text-left">
 							<h1>{title}</h1>
-							<p className="text-gray-500 text-sm pt-4 text-left line-clamp-3 block">
+							{/* <p className="text-gray-500 text-sm pt-4 text-left line-clamp-3 block">
 								{description}
-							</p>
+							</p> */}
 							<div className="pt-10">
 								{formatCurrencyString({
 									value: price,

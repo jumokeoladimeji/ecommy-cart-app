@@ -23,7 +23,7 @@ export default function CartItem({ item }) {
 					currency: 'USD',
 				})}
 			</div>
-			<button
+			{/* <button
 				onClick={() => removeItemFromCart()}
 				className="hover:bg-emerald-50 transition-colors rounded-full duration-500 p-1"
 			>
@@ -33,7 +33,7 @@ export default function CartItem({ item }) {
 					width={20}
 					height={20}
 				/>
-			</button>
+			</button> */}
 		</div>
 	);
 }

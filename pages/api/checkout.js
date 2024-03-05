@@ -62,8 +62,6 @@ export default async function handler(req, res) {
 			paid: false,
 		};
 
-		console.log(orderData);
-
 		const orderDoc = await createOrder(orderData, token);
 
 		const totalQuantity = line_items?.reduce(
@@ -71,11 +69,12 @@ export default async function handler(req, res) {
 			0,
 		);
 
+
 		const stripeObj = {
 			line_items,
 			mode: 'payment',
 			customer_email: email,
-			success_url: `${process.env.NEXT_PUBLIC_URL}/api/success?orderId=${orderDoc?.id}&token=${token}`,
+			success_url: `${process.env.NEXT_PUBLIC_URL}/api/success?orderId=${orderDoc?.id}`,
 			cancel_url: `${process.env.NEXT_PUBLIC_URL}`,
 			metadata: {
 				orderId: orderDoc?.id,
@@ -100,10 +99,10 @@ export default async function handler(req, res) {
 			});
 		} else {
 			const session = await stripe.checkout.sessions.create(stripeObj);
-
 			res.json({
 				url: session.url,
 			});
+
 		}
 	} catch(error) {
 		console.log('error with stripe', error)
