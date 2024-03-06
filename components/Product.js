@@ -24,8 +24,6 @@ export default function Product({ product }) {
 	const { register, handleSubmit, formState, resetField } =
 		useForm();
 
-	// console.log(product);
-
 	const {
 		name,
 		price,
@@ -168,7 +166,7 @@ export default function Product({ product }) {
 				{formatCurrencyString({
 					value: price,
 					currency: 'USD',
-				})}
+				})} (FREE SHIPPING)
 				<button
 					onClick={() => setIsModalOpen(true)}
 					className="bg-[#00543A] mx-auto hover:bg-[#f1f1f1] hover:text-[#00543A] transition-colors duration-500 text-[#fff] rounded-md px-5 py-2"

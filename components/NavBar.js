@@ -49,6 +49,13 @@ export default function NavBar() {
 		}, 1500);
 	};
 
+	const goToMarvAndBuck = () =>  {
+		router.push('/who\'s-Marv-&-Buck');
+		setTimeout(() => {
+			setNav(!nav);
+		}, 1500);
+	};
+
 	const goToProfile = () => {
 		router.push('/profile');
 		setTimeout(() => {
@@ -159,6 +166,18 @@ export default function NavBar() {
 							FAQ
 						</button>
 					</div>
+					<div>
+						<button
+							onClick={() => router.push('/who\'s-Marv-&-Buck')}
+							className={
+								router.pathname === '/who\'s-Marv-&-Buck'
+									? activeStyle
+									: inactiveStyle
+							}
+						>
+							MARV & BUCK
+						</button>
+					</div>
 				</ul>
 				<div className="flex flex-row">
 					<div
@@ -217,6 +236,14 @@ export default function NavBar() {
 										FAQ
 									</button>
 								</div>
+								<div>
+									<button
+										onClick={goToMarvAndBuck}
+										className="bg-[#fff] m-2 w-30 px-2 py-2 rounded-md text-[#02533C] font-bold text-md hover:underline hover:text-[#02533C] margin-top: 1em"
+									>
+										MARV & BUCK
+									</button>
+								</div>
 
 								{user ? (
 									<>
@@ -252,6 +279,17 @@ export default function NavBar() {
 					)}
 				</div>
 				<div className="flex items-center">
+					{/* <div> */}
+						<h1
+							style={{ fontFamily: 'Lobster Two' }}
+							className="text-xl leading-snug w-[90%] mx-3 lg:mx-0 lg:leading-snug"
+						>
+							It's More{' '}
+							<span className="text-[#01533B]">
+								Than A Card !
+							</span>
+						</h1>
+					{/* </div> */}
 					<button
 						className="relative"
 						onClick={() => handleCartClick()}

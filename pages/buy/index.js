@@ -387,6 +387,19 @@ export default function Buy() {
 					</div>
 				</Modal>
 
+				{/* Cards to Buy  */}
+				<div className="text-center">
+					{!categories || categories?.length === 0 ? (
+						<Spinner className="flex-1 justify-center align-middle text-center" />
+					) : (
+						categories?.map((category) => (
+							<Category
+								category={category}
+								key={category.id}
+							/>
+						))
+					)}
+				</div>
 				{/* Promo Banner */}
 				<div className="flex flex-col md:flex-row items-start mx-auto max-w-7xl pt-5 md:pt-5">
 					<div className="py-0 px-0 md:px-0 md:flex flex-col items-center gap-3 lg:gap-5 w-[100%] md:w-[50%] mr-5">
@@ -421,20 +434,6 @@ export default function Buy() {
 							Buy Now!
 						</button>
 					</div>
-				</div>
-
-				{/* Cards to Buy  */}
-				<div className="text-center">
-					{!categories || categories?.length === 0 ? (
-						<Spinner className="flex-1 justify-center align-middle text-center" />
-					) : (
-						categories?.map((category) => (
-							<Category
-								category={category}
-								key={category.id}
-							/>
-						))
-					)}
 				</div>
 			</div>
 		</div>
