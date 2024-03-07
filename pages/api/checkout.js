@@ -88,7 +88,7 @@ export default async function handler(req, res) {
 					...stripeObj,
 					discounts: [
 						{
-							coupon: `3MoIkOrK`,
+							coupon: `9ibBfIb6`,
 						},
 					],
 				},
@@ -102,7 +102,6 @@ export default async function handler(req, res) {
 			res.json({
 				url: session.url,
 			});
-
 		}
 	} catch(error) {
 		console.log('error with stripe', error)

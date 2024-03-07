@@ -4,6 +4,8 @@ import { formatCurrencyString } from 'use-shopping-cart';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 
 import { getCategories } from '@/pages/api/category';
 import Category from '@/components/Category';
@@ -24,7 +26,24 @@ export default function Buy() {
 		{ name: 'United States of Ameria', code: 'US' },
 	];
 
-	const { register, handleSubmit, formState } = useForm();
+
+		// form validation rules
+	const validationSchema = Yup.object().shape({
+		email: Yup.string().email('Invalid email address')
+		.required('Email is required'),
+		phoneNumber: Yup.string()
+		.matches(/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/, 'Invalid phone number')
+		.required('Phone number is required'),
+		zip: Yup.string().matches(/^\d{5}(?:-\d{4})?$/, 'Invalid ZIP code')
+		.required('ZIP code is required'),
+	});
+	const formOptions = {
+		resolver: yupResolver(validationSchema),
+	};
+
+	const { register, handleSubmit, formState } = useForm(formOptions);
+	const { errors } = formState;
+
 
 	const storedToken = localStorage.getItem('token');
 	const { user, token, loginUser, logoutUser } =
@@ -280,6 +299,9 @@ export default function Buy() {
 											{...register('email')}
 											placeholder="Your email address"
 										/>
+										<div className="invalid-feedback text-red-600 text-sm">
+											{errors.email?.message}
+										</div>
 									</div>
 									<div className="col-span-12">
 										<label className="mb-1 block text-sm font-medium text-text">
@@ -292,6 +314,9 @@ export default function Buy() {
 											{...register('phoneNumber')}
 											placeholder="Your phone number"
 										/>
+										<div className="invalid-feedback text-red-600 text-sm">
+											{errors.phoneNumber?.message}
+										</div>
 									</div>
 									<div className="col-span-12">
 										<label className="mb-1 block text-sm font-medium text-text">
@@ -371,6 +396,9 @@ export default function Buy() {
 											{...register('zip')}
 											required
 										/>
+										<div className="invalid-feedback text-red-600 text-sm">
+											{errors.zip?.message}
+										</div>
 									</div>
 									<div className="col-span-12 text-center w-full">
 										<button
