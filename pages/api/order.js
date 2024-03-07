@@ -5,16 +5,10 @@ export const createOrder = async (orderData, token) => {
 	try {
 		const response = await axios.post(
 			`${backendUrl}/api/v1/orders`,
-			orderData,
-			{
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			},
-		);
+			orderData);
 		return response.data.data;
 	} catch (error) {
-		console.log('error', error);
+		console.log('error in orders', error);
 	}
 };
 
