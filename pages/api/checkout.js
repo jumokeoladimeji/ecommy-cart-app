@@ -23,7 +23,7 @@ export default async function handler(req, res) {
 			country,
 			zip,
 			cartProducts,
-			phone_number,
+			phoneNumber,
 			token,
 			full_address,
 			buy_twelve_pay_for_ten,
@@ -39,11 +39,18 @@ export default async function handler(req, res) {
 
 		const prodForOrder = buy_twelve_pay_for_ten ? cartProducts : cartItems
 	
+
 		const order_line_items = Object.values(
 			prodForOrder,
 		).map((item) => ({
 			quantity: item.quantity,
-			product_data: item.product_data,
+			product_data: {
+				...item.product_data,
+				shippingAddress: {
+					...item.product_data.shippingAddress,
+					...{ email, name, phoneNumber}
+				}
+			},
 			price_data: item.price_data,
 			buy_twelve_pay_for_ten
 		}));
@@ -58,7 +65,7 @@ export default async function handler(req, res) {
 			zip,
 			full_address,
 			state,
-			shipping_phone_number: phone_number,
+			shipping_phone_number: phoneNumber,
 			paid: false,
 		};
 

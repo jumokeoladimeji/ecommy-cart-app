@@ -102,8 +102,6 @@ export default function Cart() {
 			return;
 		}
 
-		console.log(senderEmail, senderName, senderPhoneNumber);
-
 		const shippingAdd = cartItems.map(
 			(item) => item.product_data.shippingAddress,
 		);
@@ -114,7 +112,7 @@ export default function Cart() {
 			email: senderEmail,
 			name: senderName,
 			// user_id: user.data.id,
-			phone_number: senderPhoneNumber,
+			phoneNumber: senderPhoneNumber,
 			address: '',
 			country: 'US',
 			zip: 0,
@@ -203,7 +201,6 @@ export default function Cart() {
 	}
 
 	// if (user) {
-	console.log('cartItems', cartItems);
 	return (
 		<>
 			<section className="flex justify-between max-md:flex-col space-x-4 ">
@@ -278,7 +275,7 @@ export default function Cart() {
 																Name:{' '}
 																{
 																	item?.product_data
-																		?.shippingAddress?.name
+																		?.shippingAddress?.rname
 																}
 															</li>
 															<li>

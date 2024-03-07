@@ -153,7 +153,7 @@ export default function Product({ product }) {
 		setIsAddressModalOpen(false);
 		addToCart(address);
 		resetField('zip');
-		resetField('name');
+		resetField('rName');
 		resetField('address');
 		resetField('country');
 		resetField('state');
@@ -287,13 +287,13 @@ export default function Product({ product }) {
 								<div className="grid grid-cols-12 gap-5">
 									<div className="col-span-12">
 										<label className="mb-1 block text-sm font-medium text-text">
-											Full Name
+											Recipient's Full Name
 										</label>
 										<input
 											type="text"
-											name="name"
+											name="rName"
 											className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
-											{...register('name')}
+											{...register('rName')}
 											placeholder="Full name"
 										/>
 									</div>

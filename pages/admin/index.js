@@ -68,7 +68,6 @@ export default function AdminDashboard({ cards }) {
 		fetchOrders();
 	}, [user, token]);
 
-	console.log(orders);
 
 	const isAuth = user && token;
 
@@ -97,13 +96,11 @@ export default function AdminDashboard({ cards }) {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		// Implement logic to update user profile using formData
-		console.log('Form submitted with data:', formData);
 		// Add logic to update the user profile using API calls or other methods
 	};
 
 	const handleDelete = async (id) => {
 		const response = await deleteCard(id);
-		console.log(response);
 		// alert('Card deleted');
 		router.push('/admin');
 	};
@@ -296,7 +293,7 @@ export default function AdminDashboard({ cards }) {
 																<ul>
 																	{item?.product_data?.customMessages?.toString().split(',').map((message, index) => (
 																	<li key={index}>
-																		{message}
+																		{message ? `- ${message}`: ''}
 																	</li>))}
 																</ul>
 															</div>

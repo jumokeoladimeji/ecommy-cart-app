@@ -10,8 +10,6 @@ export default function Category({ category }) {
 		}),
 	);
 
-	// console.log(newCardsArr);
-
 	return (
 		<div className="text-center">
 			{/* <p

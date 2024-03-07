@@ -62,7 +62,7 @@ const index = () => {
 	if (loading) {
 		return <Loading />;
 	}
-	console.log('order::', order)
+
 	return (
 		<div className="pt-10 px-5">
 			<div>
@@ -85,18 +85,19 @@ const index = () => {
 								<th className="border border-gray-300 px-4 py-2">
 									Item
 								</th>
+								{!order?.line_items?.[0]?.buy_twelve_pay_for_ten ?
 								<th className="border border-gray-300 px-4 py-2">
 									Customized Message
-								</th>
+								</th>: ''}
 								<th className="border border-gray-300 px-4 py-2">
 									Shipping Information
 								</th>
 								<th className="border border-gray-300 px-4 py-2">
 									Status
 								</th>
-								<th className="border border-gray-300 px-4 py-2">
+								{/* <th className="border border-gray-300 px-4 py-2">
 									Actions
-								</th>
+								</th> */}
 							</tr>
 						</thead>
 						<tbody>
@@ -123,19 +124,25 @@ const index = () => {
 											</li>	
 										</ul>
 									</td>
+									{!item.buy_twelve_pay_for_ten ?
 									<td className="border border-gray-300 px-4 py-2">
 										{
 											item.product_data
 												?.customMessages
 												?.map((message, ind) => (
 													<div key={ind}>
-														{message}
+														{message ? `- ${message}`: ''}
 													</div>))
 										}
-									</td>
+									</td>: '' }
 									<td className="border border-gray-300 px-4 py-2">
 										<ul>
-											<li>Name: {item?.product_data?.shippingAddress?.name}</li>
+											<li>Sender's Name: {item?.product_data?.shippingAddress?.name}</li>
+											<li>Phone Number: {item?.product_data?.shippingAddress?.phoneNumber}</li>
+											<li>Email: {item?.product_data?.shippingAddress?.email}</li>
+
+											<li><b>RECIPIENT'S DETAILS</b></li>
+											<li>Recipient's Name: {item?.product_data?.shippingAddress?.rName}</li>
 											<li>Address: {item?.product_data?.shippingAddress?.address}</li>
 											<li>State: {item?.product_data?.shippingAddress?.state}</li>
 											<li>Country: {item?.product_data?.shippingAddress?.country}</li>
@@ -145,8 +152,8 @@ const index = () => {
 									<td className="border border-gray-300 px-4 py-2">
 										{order.paid ? 'Paid' : 'Not Paid'}
 									</td>
-									<td className="border border-gray-300 px-4 py-2">
-										<button
+									{/* <td className="border border-gray-300 px-4 py-2"> */}
+										{/* <button
 											onClick={() =>
 												router.push(
 													`/admin/order/${order?.id}`,
@@ -155,7 +162,7 @@ const index = () => {
 											className="bg-[#7b7c7c] hover:bg-[#005438ee] text-white py-1 px-2 rounded-md mr-2"
 										>
 											View
-										</button>
+										</button> */}
 										{/* {order.confirm_delivery ? (
 											<button
 												onClick={() =>
@@ -175,7 +182,7 @@ const index = () => {
 												Mark as Delivered
 											</button>
 										)} */}
-									</td>
+									{/* </td> */}
 								</tr>
 								))}
 						</tbody>
