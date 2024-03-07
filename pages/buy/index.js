@@ -148,7 +148,7 @@ export default function Buy() {
 			email: address.email,
 			name: address.name,
 			// user_id: user.data.id,
-			phone_number: address.phoneNumber,
+			phoneNumber: address.phoneNumber,
 			address: address.address,
 			state: address.state,
 			country: address.country,
