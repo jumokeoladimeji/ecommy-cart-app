@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import { MdKeyboardDoubleArrowDown } from 'react-icons/md';
 
 const about = () => {
 	const router = useRouter();
@@ -10,57 +11,47 @@ const about = () => {
 		<div className="">
 			{/* <CarouselList cards={imageUrls}/> */}
 
-			<div className="flex w-full flex-col justify-between max-w-5xl mx-auto md:flex-row gap-3 lg:gap-30 pt-10 px-5 md:px-10">
-				<div className="w-full lg:w-1/2 pt-15">
-					<img
-						src="https://res.cloudinary.com/dkhoomk9a/image/upload/v1706621835/yh1xvqz6xkposljzhvea.jpg"
-						className="h-auto w-full rounded-lg max-w-full"
-						alt=""
-					/>
-					<img
-						src="https://res.cloudinary.com/dkhoomk9a/image/upload/v1706621867/gfbeexajzzpzm125pdoh.jpg"
-						className="h-auto w-full rounded-lg max-w-full"
-						alt=""
-					/>
-					<div className="text-left">
-						<h1 className="font-bold text-2xl pt-5">
-							{/* Buy a dozen cards... only pay for 10!
-							 */}
-							Free Shipping
-						</h1>
-						{/* <p className="text-gray-500 text-xl pt-4 text-left leading-relaxed block">
-							Tell us how many of each…. “fish” and “golf”
-							rulers you need to make 12, we’ll ship them
-							and your envelopes to you FREE.
-						</p> */}
-
-						<button
-							onClick={goToBuy}
-							className="bg-[#02533C] mt-3 w-30 px-5 py-2 rounded-md text-white font-bold text-xl hover:underline hover:text-white "
-						>
-							Buy Now
-						</button>
-
-						<div className="my-32">
-							<img
-								src="/envelope.jpeg"
-								alt=""
-								className="border-2 border-[#02533C]"
-							/>
-						</div>
-					</div>
-				</div>
+			<div className="flex w-full flex-col lg:flex-row justify-between max-w-7xl mx-auto md:flex-row gap-10 lg:gap-30 pt-10 px-5 md:px-10">
 				<div className="text-justify w-full lg:w-2/3">
-					<h1 className="font-bold text-3xl pt-10">
+					<h1
+						className="font-bold text-4xl pt-2"
+						style={{ fontFamily: 'Lobster Two' }}
+					>
 						Finally, a greeting card you don’t throw away!
 					</h1>
 					<div>
-						<p className="text-gray-500 text-xl pt-4 text-left leading-relaxed block">
+						<p className="text-gray-500 text-xl py-4 text-left leading-relaxed block">
 							Stop going to the store and looking over
 							hundreds of cards just to pick one that will
 							get thrown away! MEASURES OF FUN laminated
 							cards are cards forever!
 						</p>
+						<div className="w-full block lg:hidden lg:w-1/2 pt-15">
+							<img
+								src="https://res.cloudinary.com/dkhoomk9a/image/upload/v1706621835/yh1xvqz6xkposljzhvea.jpg"
+								className="h-auto w-full rounded-lg max-w-full"
+								alt=""
+							/>
+							<img
+								src="https://res.cloudinary.com/dkhoomk9a/image/upload/v1706621867/gfbeexajzzpzm125pdoh.jpg"
+								className="h-auto w-full rounded-lg max-w-full"
+								alt=""
+							/>
+							<div className="text-left">
+								<h1 className="font-bold text-2xl pt-5">
+									{/* Buy a dozen cards... only pay for 10!
+									 */}
+									Free Shipping
+								</h1>
+
+								<button
+									onClick={goToBuy}
+									className="bg-[#02533C] mt-3 w-30 px-5 py-2 rounded-md text-white font-bold text-xl hover:underline hover:text-white "
+								>
+									Buy Now
+								</button>
+							</div>
+						</div>
 						<p className="text-gray-500 text-xl pt-4 text-left leading-relaxed block">
 							So if it’s for birthdays, anniversaries,
 							graduation, thank you, get well, I need a
@@ -78,6 +69,17 @@ const about = () => {
 							mail it to you, so you can fill it out
 							yourself.
 						</p>
+						<div className="flex justify-center">
+							<MdKeyboardDoubleArrowDown size={40} />
+						</div>
+						<div className="my-4 flex flex-col items-center">
+							<img
+								src="/envelope.jpeg"
+								alt=""
+								className="border-2 border-[#02533C]"
+							/>
+							<p>Mailing envelope</p>
+						</div>
 						<p className="text-gray-500 text-xl pt-4 text-left leading-relaxed block">
 							What is it? A new greeting card! But MORE! An
 							illustrated, laminated card with its own
@@ -111,6 +113,32 @@ const about = () => {
 							room for your message… plus choose from
 							numerous humorous sayings to check off.
 						</p>
+					</div>
+				</div>
+				<div className="w-full hidden lg:block lg:w-1/2 pt-15">
+					<img
+						src="https://res.cloudinary.com/dkhoomk9a/image/upload/v1706621835/yh1xvqz6xkposljzhvea.jpg"
+						className="h-auto w-full rounded-lg max-w-full"
+						alt=""
+					/>
+					<img
+						src="https://res.cloudinary.com/dkhoomk9a/image/upload/v1706621867/gfbeexajzzpzm125pdoh.jpg"
+						className="h-auto w-full rounded-lg max-w-full"
+						alt=""
+					/>
+					<div className="text-left">
+						<h1 className="font-bold text-2xl pt-5">
+							{/* Buy a dozen cards... only pay for 10!
+							 */}
+							Free Shipping
+						</h1>
+
+						<button
+							onClick={goToBuy}
+							className="bg-[#02533C] mt-3 w-30 px-5 py-2 rounded-md text-white font-bold text-xl hover:underline hover:text-white "
+						>
+							Buy Now
+						</button>
 					</div>
 				</div>
 			</div>

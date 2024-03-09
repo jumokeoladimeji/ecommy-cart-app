@@ -168,9 +168,11 @@ export default function NavBar() {
 					</div>
 					<div>
 						<button
-							onClick={() => router.push('/who\'s-Marv-&-Buck')}
+							onClick={() =>
+								router.push("/who's-Marv-&-Buck")
+							}
 							className={
-								router.pathname === '/who\'s-Marv-&-Buck'
+								router.pathname === "/who's-Marv-&-Buck"
 									? activeStyle
 									: inactiveStyle
 							}
@@ -189,7 +191,10 @@ export default function NavBar() {
 								<FaTimes className="z-20" size={30} />
 							</div>
 						) : (
-							<FaBars size={30} />
+							<div className="flex flex-col items-center">
+								<FaBars size={30} />
+								<p>Menu</p>
+							</div>
 						)}
 					</div>
 					{nav && (
@@ -280,15 +285,15 @@ export default function NavBar() {
 				</div>
 				<div className="flex items-center">
 					{/* <div> */}
-						<h1
-							style={{ fontFamily: 'Lobster Two' }}
-							className="text-xl leading-snug w-[90%] mx-3 lg:mx-0 lg:leading-snug"
-						>
-							It's More{' '}
-							<span className="text-[#01533B]">
-								Than A Card !
-							</span>
-						</h1>
+					<h1
+						style={{ fontFamily: 'Lobster Two' }}
+						className="text-2xl leading-snug w-[90%] font-bold mx-3 lg:mx-0 lg:leading-snug"
+					>
+						It's More{' '}
+						<span className="text-[#01533B]">
+							Than A Card !
+						</span>
+					</h1>
 					{/* </div> */}
 					<button
 						className="relative"
