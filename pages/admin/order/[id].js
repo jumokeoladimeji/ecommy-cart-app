@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import React, {
 	useContext,
 	useEffect,
+	useRef,
 	useState,
 } from 'react';
 import { formatCurrencyString } from 'use-shopping-cart';
@@ -33,7 +34,7 @@ const index = () => {
 	const options = {
 		overrides: {
 			canvas: {
-				onclone: function (document) {
+				onclone: (document) => {
 					document
 						.getElementById('elementId')
 						.classList.toggle('visible');
@@ -42,9 +43,9 @@ const index = () => {
 		},
 	};
 
-	const { toPDF, targetRef } = usePDF({
-		filename: `Order ${order?.id}.pdf`,
-	});
+	const targetRef = useRef();
+
+	const toPDF = usePDF(options);
 
 	useEffect(() => {
 		const fetchOrder = async () => {
@@ -65,7 +66,6 @@ const index = () => {
 
 		fetchOrder();
 	}, [user, token, id]);
-
 
 	const confirmDelivery = async () => {
 		const update = {
