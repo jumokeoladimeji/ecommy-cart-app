@@ -85,10 +85,14 @@ const index = () => {
 								<th className="border border-gray-300 px-4 py-2">
 									Item
 								</th>
-								{!order?.line_items?.[0]?.buy_twelve_pay_for_ten ?
-								<th className="border border-gray-300 px-4 py-2">
-									Customized Message
-								</th>: ''}
+								{!order?.line_items?.[0]
+									?.buy_twelve_pay_for_ten ? (
+									<th className="border border-gray-300 px-4 py-2">
+										Customized Message
+									</th>
+								) : (
+									''
+								)}
 								<th className="border border-gray-300 px-4 py-2">
 									Shipping Information
 								</th>
@@ -101,9 +105,8 @@ const index = () => {
 							</tr>
 						</thead>
 						<tbody>
-							{order?.line_items?.map(
-								(item, index) => (
-									<tr key={index}>
+							{order?.line_items?.map((item, index) => (
+								<tr key={index}>
 									{/* <td className="border border-gray-300 px-4 py-2">
 										{order?.id?.split('-')[0]}...
 									</td> */}
@@ -117,43 +120,95 @@ const index = () => {
 										<ul>
 											<li>
 												{
-													item.price_data
-														?.product_data?.name
+													item.price_data?.product_data
+														?.name
 												}{' '}
 												(X{item?.quantity})
-											</li>	
+											</li>
 										</ul>
 									</td>
-									{!item.buy_twelve_pay_for_ten ?
-									<td className="border border-gray-300 px-4 py-2">
-										{
-											item.product_data
-												?.customMessages
-												?.map((message, ind) => (
+									{!item.buy_twelve_pay_for_ten ? (
+										<td className="border border-gray-300 px-4 py-2">
+											{item.product_data?.customMessages?.map(
+												(message, ind) => (
 													<div key={ind}>
-														{message ? `- ${message}`: ''}
-													</div>))
-										}
-									</td>: '' }
+														{message ? `- ${message}` : ''}
+													</div>
+												),
+											)}
+										</td>
+									) : (
+										''
+									)}
 									<td className="border border-gray-300 px-4 py-2">
 										<ul>
-											<li>Sender's Name: {item?.product_data?.shippingAddress?.name}</li>
-											<li>Phone Number: {item?.product_data?.shippingAddress?.phoneNumber}</li>
-											<li>Email: {item?.product_data?.shippingAddress?.email}</li>
+											<li>
+												Sender's Name:{' '}
+												{
+													item?.product_data
+														?.shippingAddress?.name
+												}
+											</li>
+											<li>
+												Phone Number:{' '}
+												{
+													item?.product_data
+														?.shippingAddress?.phoneNumber
+												}
+											</li>
+											<li>
+												Email:{' '}
+												{
+													item?.product_data
+														?.shippingAddress?.email
+												}
+											</li>
 
-											<li><b>RECIPIENT'S DETAILS</b></li>
-											<li>Recipient's Name: {item?.product_data?.shippingAddress?.rName}</li>
-											<li>Address: {item?.product_data?.shippingAddress?.address}</li>
-											<li>State: {item?.product_data?.shippingAddress?.state}</li>
-											<li>Country: {item?.product_data?.shippingAddress?.country}</li>
-											<li>Zip: {item?.product_data?.shippingAddress?.zip}</li>
+											<li>
+												<b>RECIPIENT'S DETAILS</b>
+											</li>
+											<li>
+												Recipient's Name:{' '}
+												{
+													item?.product_data
+														?.shippingAddress?.rName
+												}
+											</li>
+											<li>
+												Address:{' '}
+												{
+													item?.product_data
+														?.shippingAddress?.address
+												}
+											</li>
+											<li>
+												State:{' '}
+												{
+													item?.product_data
+														?.shippingAddress?.state
+												}
+											</li>
+											<li>
+												Country:{' '}
+												{
+													item?.product_data
+														?.shippingAddress?.country
+												}
+											</li>
+											<li>
+												Zip:{' '}
+												{
+													item?.product_data
+														?.shippingAddress?.zip
+												}
+											</li>
 										</ul>
 									</td>
 									<td className="border border-gray-300 px-4 py-2">
 										{order.paid ? 'Paid' : 'Not Paid'}
 									</td>
 									{/* <td className="border border-gray-300 px-4 py-2"> */}
-										{/* <button
+									{/* <button
 											onClick={() =>
 												router.push(
 													`/admin/order/${order?.id}`,
@@ -163,7 +218,7 @@ const index = () => {
 										>
 											View
 										</button> */}
-										{/* {order.confirm_delivery ? (
+									{/* {order.confirm_delivery ? (
 											<button
 												onClick={() =>
 													handleDelete(product.id)
@@ -184,7 +239,7 @@ const index = () => {
 										)} */}
 									{/* </td> */}
 								</tr>
-								))}
+							))}
 						</tbody>
 					</table>
 				</div>
@@ -197,7 +252,7 @@ const index = () => {
 								onClick={() => confirmDelivery()}
 								className="bg-[#005438] w-34 text-white px-4 py-2 rounded-md hover:bg-[#005438] transition duration-300"
 							>
-								Confirm Delivery
+								Mailed
 							</button>
 						) : (
 							<button className="bg-[#005438] w-28 text-white px-4 py-2 rounded-md hover:bg-[#005438] transition duration-300">

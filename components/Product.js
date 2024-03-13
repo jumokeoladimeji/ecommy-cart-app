@@ -8,18 +8,22 @@ import Modal from './Modal';
 
 import { messages } from "@/data/messages";
 import states from "@/data/states";
+import { useRouter } from 'next/router';
 
 export default function Product({ product }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
+	const [isAddressModalOpen, setIsAddressModalOpen] =
+		useState(false);
 	const countries = [
 		{ name: 'United States of Ameria', code: 'US' },
 	];
+	const router = useRouter();
 
 	const [customMessage, setCustomMessage] = useState('');
 	const [customMessages, setCustomMessages] = useState([]);
 
-	const { addItem, cartDetails, cartCount } = useShoppingCart();
+	const { addItem, cartDetails, cartCount } =
+		useShoppingCart();
 
 	const { register, handleSubmit, formState, resetField } =
 		useForm();
@@ -157,6 +161,7 @@ export default function Product({ product }) {
 		resetField('address');
 		resetField('country');
 		resetField('state');
+		router.push('/cart');
 	}
 
 	return (
@@ -166,7 +171,8 @@ export default function Product({ product }) {
 				{formatCurrencyString({
 					value: price,
 					currency: 'USD',
-				})} (FREE SHIPPING)
+				})}{' '}
+				(FREE SHIPPING)
 				<button
 					onClick={() => setIsModalOpen(true)}
 					className="bg-[#00543A] mx-auto hover:bg-[#f1f1f1] hover:text-[#00543A] transition-colors duration-500 text-[#fff] rounded-md px-5 py-2"
@@ -181,15 +187,21 @@ export default function Product({ product }) {
 				>
 					<div className="border-none md:border-slate-200 rounded-none md:rounded-lg p-6 md:border-2 max-h-screen h-full pt-32 pb-48">
 						<div className="flex flex-row justify-between items-center pt-10 md:pt-0">
-							<h1
-								style={{ fontFamily: 'Lobster Two' }}
-								className=" text-2xl md:ml-20"
-							>
-								Add Custom Message{' '}
-								<span className="text-2xl font-bold">
-									(Optional)
-								</span>
-							</h1>
+							<div>
+								<h1
+									style={{ fontFamily: 'Lobster Two' }}
+									className=" text-2xl md:ml-20 text-left"
+								>
+									Add Custom Message{' '}
+									<span className="text-2xl font-bold">
+										(Optional)
+									</span>
+								</h1>
+								<p className=" text-md mt-3 md:ml-20 text-left">
+									If you choose to customize the card, we
+									can ship it to your recipient
+								</p>
+							</div>
 							<button
 								onClick={() => {
 									setIsModalOpen(false);

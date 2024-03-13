@@ -339,8 +339,19 @@ export default function Cart() {
 										</tbody>
 									</table>
 								</div>
+								<div>
+									<h1 className="text-right font-normal text-lg">
+										*Please note that your email will not be
+										used/sold for marketing
+									</h1>
+								</div>
 								<div className="mt-8 flex justify-end border-t border-gray-100 pt-8">
 									<div className=" max-w-md space-y-4">
+										<div>
+											<h1 className="text-right font-bold text-xl">
+												Free Shipping
+											</h1>
+										</div>
 										<dl className="space-y-0.5 text-md text-gray-700">
 											<div className="flex justify-between !text-base font-medium">
 												<dt>Total</dt>
