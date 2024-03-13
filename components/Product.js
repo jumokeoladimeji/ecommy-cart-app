@@ -156,12 +156,12 @@ export default function Product({ product }) {
 	async function onSubmit(address) {
 		setIsAddressModalOpen(false);
 		addToCart(address);
+		router.push('/cart');
 		resetField('zip');
 		resetField('rName');
 		resetField('address');
 		resetField('country');
 		resetField('state');
-		router.push('/cart');
 	}
 
 	return (
