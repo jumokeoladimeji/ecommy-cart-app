@@ -7,10 +7,12 @@ import { useRouter } from 'next/router';
 import React, {
 	useContext,
 	useEffect,
+	useRef,
 	useState,
 } from 'react';
 import { formatCurrencyString } from 'use-shopping-cart';
 import { add, format } from 'date-fns';
+import { Margin, usePDF, Options } from 'react-to-pdf';
 
 const Loading = () => {
 	return (
@@ -28,6 +30,22 @@ const index = () => {
 	const id = router.query.id;
 	const [order, setOrder] = useState([]);
 	const [loading, setLoading] = useState(false);
+
+	const options = {
+		overrides: {
+			canvas: {
+				onclone: (document) => {
+					document
+						.getElementById('elementId')
+						.classList.toggle('visible');
+				},
+			},
+		},
+	};
+
+	const { toPDF, targetRef } = usePDF({
+		filename: `order-${order?.id}.pdf`,
+	});
 
 	useEffect(() => {
 		const fetchOrder = async () => {
@@ -49,7 +67,6 @@ const index = () => {
 		fetchOrder();
 	}, [user, token, id]);
 
-
 	const confirmDelivery = async () => {
 		const update = {
 			confirm_delivery: '1',
@@ -66,11 +83,17 @@ const index = () => {
 	return (
 		<div className="pt-10 px-5">
 			<div>
+				<button
+					onClick={() => toPDF()}
+					className="bg-[#005633] text-white px-4 py-3 rounded-md"
+				>
+					Download Order (PDF)
+				</button>
+			</div>
+			<div className="py-10" ref={targetRef}>
 				<h1 className="font-bold text-3xl uppercase">
 					#Order {order?.id}
 				</h1>
-			</div>
-			<div className="py-10">
 				<h1 className="font-bold text-xl mb-3">
 					Purchased Items
 				</h1>
