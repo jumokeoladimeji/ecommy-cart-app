@@ -43,9 +43,9 @@ const index = () => {
 		},
 	};
 
-	const targetRef = useRef();
-
-	const toPDF = usePDF(options);
+	const { toPDF, targetRef } = usePDF({
+		filename: `order-${order?.id}.pdf`,
+	});
 
 	useEffect(() => {
 		const fetchOrder = async () => {
@@ -83,9 +83,12 @@ const index = () => {
 	return (
 		<div className="pt-10 px-5">
 			<div>
-				<Button onClick={toPDF}>
+				<button
+					onClick={() => toPDF()}
+					className="bg-[#005633] text-white px-4 py-3 rounded-md"
+				>
 					Download Order (PDF)
-				</Button>
+				</button>
 			</div>
 			<div className="py-10" ref={targetRef}>
 				<h1 className="font-bold text-3xl uppercase">
