@@ -4,6 +4,7 @@ import { UserContext } from '../context/UserContext';
 import { useContext } from 'react';
 import { useRouter } from 'next/router';
 import { FaAngleDoubleDown } from 'react-icons/fa';
+import Category from '@/components/Category';
 
 export default function Home() {
 	const { user, token, loginUser, logoutUser } =
@@ -98,7 +99,10 @@ export default function Home() {
 				</div>
 			</div>
 			<div className="px-5 md:px-10 mt-0 md:shadow-none md:rounded-none md:py-10 mb-10">
-				{/* <Category category={categories[0]} key={categories[0].id} /> */}
+				{/* <Category
+					category={categories[0]}
+					key={categories[0].id}
+				/> */}
 				{/* <div className="hidden md:flex flex-col w-full gap-3 bg-[#fff] p-0 md:p-2 rounded-lg shadow-md text-center mb-5">
 					<iframe
 						width="500"

@@ -72,13 +72,23 @@ const about = () => {
 						<div className="flex justify-center">
 							<MdKeyboardDoubleArrowDown size={40} />
 						</div>
-						<div className="my-4 flex flex-col items-center">
+						<div className="mt-4 flex flex-col items-center">
 							<img
 								src="/envelope.jpeg"
 								alt=""
 								className="border-2 border-[#02533C]"
 							/>
 							<p>Mailing envelope</p>
+						</div>
+						<div className="flex flex-col items-center justify-center">
+							<img
+								src="/leftarrow.png"
+								alt=""
+								className="h-20"
+							/>
+							<p className="text-lg w-1/2">
+								Zoom in to see message choices!
+							</p>
 						</div>
 						<p className="text-gray-500 text-xl pt-4 text-left leading-relaxed block">
 							What is it? A new greeting card! But MORE! An
@@ -91,16 +101,18 @@ const about = () => {
 							away!
 						</p>
 						<p className="text-gray-500 text-xl pt-4 text-left leading-relaxed block">
-							Two cards to choose from: Our Marv and Bucks
-							fish ruler! Do fishermen stretch the truth
-							about how big their fish was? Well maybe? This
-							laminated ruler gives two ________ (eye
-							popping) examples of how your friend or family
-							member… measures their fish! Our Marv and
-							Bucks golf ruler can let your golf buddies
-							know when that Gimme is due! And take a close
-							look at all the things going on around your
-							golf ball.
+							<span className="text-2xl font-bold text-[#000]">
+								Two cards to choose from:
+							</span>{' '}
+							Our Marv and Bucks fish ruler! Do fishermen
+							stretch the truth about how big their fish
+							was? Well maybe? This laminated ruler gives
+							two "eye popping" examples of how your friend
+							or family member… measures their fish! Our
+							Marv and Bucks golf ruler can let your golf
+							buddies know when that Gimme is due! And take
+							a close look at all the things going on around
+							your golf ball.
 						</p>
 
 						<p className="text-gray-500 text-xl pt-4 pb-4 text-left leading-relaxed block">
