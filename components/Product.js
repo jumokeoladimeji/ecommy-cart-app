@@ -51,7 +51,6 @@ export default function Product({ product }) {
 		const array1 = JSON.parse(stringifiedArray[0]);
 		const array2 = JSON.parse(stringifiedArray[1]);
 		const customMessageArray = [...array1, array2];
-
 		addItem(product, {
 			count: quantity,
 			price_metadata: {
@@ -156,12 +155,14 @@ export default function Product({ product }) {
 	async function onSubmit(address) {
 		setIsAddressModalOpen(false);
 		addToCart(address);
-		router.push('/cart');
 		resetField('zip');
 		resetField('rName');
 		resetField('address');
 		resetField('country');
 		resetField('state');
+		setTimeout(() => {
+			router.push('/cart');
+		}, 100);
 	}
 
 	return (
