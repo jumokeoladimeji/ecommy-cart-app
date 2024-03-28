@@ -13,11 +13,11 @@ export default function Home() {
 	const router = useRouter();
 	const fishSlideImages = [
 		{
-			text: 'Fishing Card (Front)',
+			text: 'Fish Card (Front)',
 			img: '/fishing1.jpeg',
 		},
 		{
-			text: 'Fishing Card (Back)',
+			text: 'Fish Card (Back)',
 			img: '/fishing2.jpeg',
 		},
 	];
