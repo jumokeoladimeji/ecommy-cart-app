@@ -275,7 +275,7 @@ export default function Cart() {
 																Name:{' '}
 																{
 																	item?.product_data
-																		?.shippingAddress?.rname
+																		?.shippingAddress?.rName
 																}
 															</li>
 															<li>
@@ -399,9 +399,9 @@ export default function Cart() {
 												setIsAddressModalOpen(false)
 											}
 										>
-											<div className="md:1/3 mt-16 md:mt-6 py-10">
-												<header className="text-start flex flex-col w-full">
-													<h1 className="text-xl text-center font-bold text-gray-900 sm:text-3xl">
+											<div className="md:1/3 mt-10 md:mt-6 py-5">
+												<header className="flex flex-row px-4 justify-between items-center w-full">
+													<h1 className="text-2xl text-center font-bold text-gray-900 sm:text-3xl">
 														Checkout Information
 													</h1>
 												</header>
@@ -553,9 +553,19 @@ export default function Cart() {
 															<div className="col-span-12 text-center w-full">
 																<button
 																	onClick={stripeCheckout}
-																	className="block rounded border border-[#00553A] bg-white p-2 px-5 py-3 text-md text-text transition hover:bg-[#00553A] hover:text-white w-full"
+																	className="block rounded border border-[#00553A] font-bold text-lg bg-green-900 text-white p-2 px-5 py-3 text-md text-text transition hover:bg-[#00553A] hover:text-white w-full"
 																>
 																	Checkout
+																</button>
+																<button
+																	onClick={() =>
+																		setIsAddressModalOpen(
+																			false,
+																		)
+																	}
+																	className=" bg-slate-400 w-full mt-2 rounded-md px-5 py-3 text-md text-white"
+																>
+																	Close
 																</button>
 															</div>
 														</div>
