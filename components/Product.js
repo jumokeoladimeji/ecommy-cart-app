@@ -13,7 +13,7 @@ import { messages } from '@/data/messages';
 import states from '@/data/states';
 import { useRouter } from 'next/router';
 
-const itemsPerPage = 5;
+const itemsPerPage = 4;
 
 export default function Product({ product }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -234,14 +234,6 @@ export default function Product({ product }) {
 											(Optional)
 										</span>
 									</h1>
-									<button
-										onClick={() => {
-											setIsModalOpen(false);
-										}}
-										className="cursor-pointer md:mr-0 bg-red-600 text-white px-4 py-2 rounded-md text-sm"
-									>
-										Close
-									</button>
 								</div>
 								<p className="text-md mt-3 md:ml-20 text-center">
 									If you choose to customize the card, we
@@ -253,7 +245,7 @@ export default function Product({ product }) {
 						<div className="mx-auto mt-8 sm:px-20 px-0">
 							<div className="space-y-4 -mb-1">
 								<div className="col-span-12 pt-5 pl-3 font-normal">
-									<label className="mb-1 block text-md font-medium text-text text-left">
+									<label className="mb-1 block text-lg font-medium text-text text-left">
 										Enter your handwritten message (up to 12
 										words)
 									</label>
@@ -319,13 +311,23 @@ export default function Product({ product }) {
 										),
 									)}
 								</div>
-								<button
-									type="submit"
-									className="bg-[#005438] text-white text-lg mb-10 px-4 py-4 rounded-md hover:bg-[#005438] transition duration-300"
-									onClick={handleCustomMessgSubmit}
-								>
-									Save and Add Shipping Details
-								</button>
+								<div className="flex flex-col gap-0">
+									<button
+										type="submit"
+										className="bg-[#005438] text-white text-lg mb-3 px-4 py-4 rounded-md hover:bg-[#005438] transition duration-300"
+										onClick={handleCustomMessgSubmit}
+									>
+										Save and Add Shipping Details
+									</button>
+									<button
+										onClick={() => {
+											setIsModalOpen(false);
+										}}
+										className="cursor-pointer md:mr-0 bg-slate-400 text-white px-4 py-3 rounded-md text-xl"
+									>
+										Close
+									</button>
+								</div>
 							</div>
 						</div>
 					</div>
