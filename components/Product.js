@@ -13,7 +13,7 @@ import { messages } from '@/data/messages';
 import states from '@/data/states';
 import { useRouter } from 'next/router';
 
-const itemsPerPage = 4;
+const itemsPerPage = 6;
 
 export default function Product({ product }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,6 +50,14 @@ export default function Product({ product }) {
 	// Function to handle page change
 	const handlePageChange = (page) => {
 		setCurrentPage(page);
+	};
+
+	const goToPrevPage = () => {
+		setCurrentPage((prev) => prev - 1);
+	};
+
+	const goToNextPage = () => {
+		setCurrentPage((prev) => prev + 1);
 	};
 
 	const {
@@ -194,7 +202,7 @@ export default function Product({ product }) {
 		<article className="flex flex-col gap-3 bg-[#fff] p-4 md:p-8 rounded-md shadow-xl text-center my-6">
 			<CarouselList cards={slideImages} />
 
-			<div className="flex flex-col gap-2 font-bold text-2xl">
+			<div className="flex flex-col gap-2 font-bold text-[18px]">
 				{formatCurrencyString({
 					value: price,
 					currency: 'USD',
@@ -203,13 +211,13 @@ export default function Product({ product }) {
 				<div className="flex flex-col sm:flex-col gap-3">
 					<button
 						onClick={() => setIsAddressModalOpen(true)}
-						className="bg-[#00543A] mx-auto text-lg hover:bg-[#f1f1f1] hover:text-[#00543A] transition-colors duration-500 text-[#fff] rounded-md px-5 py-2"
+						className="bg-[#00543A] mx-auto text-[18px] hover:bg-[#f1f1f1] hover:text-[#00543A] transition-colors duration-500 text-[#fff] rounded-md px-5 py-2"
 					>
 						Buy & Mail to yourself to fill it out
 					</button>
 					<button
 						onClick={() => setIsModalOpen(true)}
-						className="bg-[#00543A] mx-auto text-lg hover:bg-[#f1f1f1] hover:text-[#00543A] transition-colors duration-500 text-[#fff] rounded-md px-5 py-2"
+						className="bg-[#00543A] mx-auto text-[18px] leading-tight hover:bg-[#f1f1f1] hover:text-[#00543A] transition-colors duration-500 text-[#fff] rounded-md px-5 py-2"
 					>
 						Buy & Customize a message to be mailed to your
 						friend
@@ -221,13 +229,13 @@ export default function Product({ product }) {
 					// onClose={() => setIsModalOpen(false)}
 					// className="z-10"
 				>
-					<div className="border-none md:border-slate-200 rounded-none md:rounded-lg p-6 md:border-2 -mt-10 py-14 pb-10">
-						<div className="flex flex-row justify-between items-center pt-10 md:pt-0">
+					<div className="border-none md:border-slate-200 rounded-none md:rounded-lg p-2 md:border-2 -mt-10 py-8 pb-10">
+						<div className="flex flex-row justify-between items-center pt-1 md:pt-0">
 							<div>
 								<div className="flex flex-row justify-between items-center">
 									<h1
 										style={{ fontFamily: 'Lobster Two' }}
-										className=" text-2xl md:ml-20 text-left"
+										className=" text-3xl md:ml-20 text-left"
 									>
 										Add Custom Message{' '}
 										<span className="text-2xl font-bold">
@@ -235,27 +243,28 @@ export default function Product({ product }) {
 										</span>
 									</h1>
 								</div>
-								<p className="text-md mt-3 md:ml-20 text-center">
+								<p className="text-[18px] leading-tight mt-3 md:ml-20 text-left">
 									If you choose to customize the card, we
 									can ship it to your recipient
 								</p>
 							</div>
 						</div>
 
-						<div className="mx-auto mt-8 sm:px-20 px-0">
+						<div className="mx-auto mt-3 sm:px-20 px-0">
 							<div className="space-y-4 -mb-1">
 								<div className="col-span-12 pt-5 pl-3 font-normal">
 									<label className="mb-1 block text-lg font-medium text-text text-left">
 										Enter your handwritten message (up to 12
 										words)
 									</label>
-									<input
+									<textarea
 										type="text"
 										name="customMessage"
 										className="block w-full rounded-md p-3 text-sm border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
 										placeholder="Enter up to 12 words..."
 										value={customMessage}
 										onChange={handleInputChange}
+										rows={4}
 									/>
 									<p className="text-sm text-left">
 										Remaining words:{''}
@@ -263,6 +272,15 @@ export default function Product({ product }) {
 											customMessage.trim().split(/\s+/)
 												.length}
 									</p>
+									<div>
+										<span className="font-bold text-[20px]">
+											Or
+										</span>
+										<p className="text-[18px]">
+											{' '}
+											Select from the options below.
+										</p>
+									</div>
 									<div className="grid sm:grid-cols-3 grid-cols-1 gap-4 mt-5 text-xs text-left">
 										{messagesForPage.map(
 											(message, index) => (
@@ -291,27 +309,34 @@ export default function Product({ product }) {
 										)}
 									</div>
 								</div>
-								<div className="flex justify-center mt-4 mb-4">
-									{Array.from(
-										{ length: totalPages },
-										(_, i) => (
-											<button
-												key={i}
-												onClick={() =>
-													handlePageChange(i + 1)
-												}
-												className={`mx-1 px-3 py-1 rounded-md ${
-													currentPage === i + 1
-														? 'bg-green-900 text-white'
-														: 'bg-gray-200 text-gray-700'
-												}`}
-											>
-												{i + 1}
-											</button>
-										),
-									)}
+								<div className="flex justify-center mt-4 mb-5">
+									<button
+										onClick={goToPrevPage}
+										disabled={currentPage === 1}
+										className={`mx-1 px-3 py-1 rounded-md text-sm ${
+											currentPage === 1
+												? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+												: 'bg-[#005438] text-white'
+										}`}
+									>
+										{'< Prev'}
+									</button>
+									<div className="mx-3">
+										{currentPage} of {totalPages}
+									</div>
+									<button
+										onClick={goToNextPage}
+										disabled={currentPage === totalPages}
+										className={`mx-1 px-3 py-1 rounded-md text-sm ${
+											currentPage === totalPages
+												? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+												: 'bg-[#005438] text-white'
+										}`}
+									>
+										{'Next >'}
+									</button>
 								</div>
-								<div className="flex flex-col gap-0">
+								<div className="flex flex-col gap-0 pt-10">
 									<button
 										type="submit"
 										className="bg-[#005438] text-white text-lg mb-3 px-4 py-4 rounded-md hover:bg-[#005438] transition duration-300"
@@ -339,15 +364,6 @@ export default function Product({ product }) {
 					// className="lg:w-2/3"
 				>
 					<div className="py-10">
-						<button
-							onClick={() =>
-								setIsAddressModalOpen(false) &&
-								setIsModalOpen(true)
-							}
-							className="bg-red-600 text-sm flex justify-start text-center hover:bg-[#f1f1f1] hover:text-[#00543A] transition-colors duration-500 text-[#fff] rounded-md px-5 py-2"
-						>
-							Close
-						</button>
 						<header className="text-start flex flex-col w-full">
 							<h1 className="text-md font-bold text-gray-900 sm:text-3xl text-center">
 								Enter Shipping details
@@ -369,7 +385,7 @@ export default function Product({ product }) {
 										<input
 											type="text"
 											name="rName"
-											className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+											className="block w-full text-[18px] rounded-md py-1 px-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
 											{...register('rName')}
 											placeholder="Full name"
 										/>
@@ -381,20 +397,20 @@ export default function Product({ product }) {
 										<input
 											type="text"
 											name="address"
-											className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+											className="block w-full rounded-md py-1 px-3 text-[18px] border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
 											placeholder="1864 Main Street"
 											{...register('address')}
 											required
 										/>
 									</div>
-									<div className="col-span-6">
+									<div className="col-span-8">
 										<label className="mb-1 block text-sm font-medium text-text">
 											State
 										</label>
 										<select
 											id="stateSelect"
 											{...register('state')}
-											className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+											className="block w-full rounded-md p-1 text-[18px] border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
 										>
 											<option value="">
 												Select a state
@@ -416,7 +432,7 @@ export default function Product({ product }) {
 										<select
 											id="countrySelect"
 											{...register('country')}
-											className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+											className="block w-full rounded-md p-1 text-[18px] border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
 										>
 											{countries.map((country) => (
 												<option
@@ -435,7 +451,7 @@ export default function Product({ product }) {
 										<input
 											type="text"
 											name="zip"
-											className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+											className="block w-full rounded-md text-[18px] py-1 px-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
 											placeholder=""
 											{...register('zip')}
 											required
@@ -445,9 +461,18 @@ export default function Product({ product }) {
 										<button
 											type="submit"
 											// onClick={addToCart}
-											className="block rounded border border-[#00553A] bg-white p-2 px-5 py-3 text-md text-text transition hover:bg-[#00553A] hover:text-white w-full"
+											className="block rounded border text-[18px] border-[#00553A] bg-white  px-5 py-1 text-md text-text transition hover:bg-[#00553A] hover:text-white w-full"
 										>
 											Add to cart
+										</button>
+										<button
+											onClick={() =>
+												setIsAddressModalOpen(false) &&
+												setIsModalOpen(true)
+											}
+											className="bg-slate-600 block text-sm w-full mt-3 text-center hover:bg-[#f1f1f1] hover:text-[#00543A] transition-colors duration-500 text-[#fff] rounded-md px-5 py-2"
+										>
+											Close
 										</button>
 									</div>
 								</div>

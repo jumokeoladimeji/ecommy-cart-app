@@ -84,6 +84,7 @@ export default function Cart() {
 	}, []);
 
 	const storedToken = localStorage.getItem('token');
+	// console.log(storedToken);
 
 	let productSum = 0;
 	if (cartItems.length > 0) {
@@ -105,6 +106,8 @@ export default function Cart() {
 		const shippingAdd = cartItems.map(
 			(item) => item.product_data.shippingAddress,
 		);
+
+		console.log(senderEmail);
 
 		const response = await axios.post(`/api/checkout`, {
 			// email: cartItems[0].product_data?.shippingAddress?.email,
