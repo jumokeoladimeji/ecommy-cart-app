@@ -62,6 +62,10 @@ const about = () => {
 							edge or ruler and take to the golf course or
 							fishing!
 						</p>
+						<p className="text-gray-600 font-bold text-xl pt-4 text-left leading-relaxed block">
+							There's a hole in one end of the
+							card to hang it up!
+						</p>
 						<p className="text-gray-500 text-xl pt-4 text-left leading-relaxed block">
 							Our mailing envelope is YOUR MESSAGE BOARD!
 							You can fill out the form here online and
