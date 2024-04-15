@@ -199,7 +199,7 @@ export default function Product({ product }) {
 	}
 
 	return (
-		<article className="flex flex-col gap-3 bg-[#fff] p-4 md:p-8 rounded-md shadow-xl text-center my-6">
+		<article className="flex flex-col gap-3 bg-[#fff] p-2 md:p-8 rounded-md md:shadow-xl border-2 md:border-none text-center my-6">
 			<CarouselList cards={slideImages} />
 
 			<div className="flex flex-col gap-2 font-bold text-[18px]">

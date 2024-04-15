@@ -30,7 +30,7 @@ export default function CarouselList({ cards }) {
 		};
 	}, [activeImage]);
 	return (
-		<main className="grid place-items-center md:grid-cols-1 w-full mx-auto border border-1 pt-5 px-5 max-w-5xl shadow-none mb-5 rounded-2xl">
+		<main className="grid place-items-center md:grid-cols-1 w-full mx-auto border-b-2 md:border-b-2 md:border-1 pt-2 md:pt-5 px-2 md:px-5 max-w-5xl shadow-none mb-5 rounded-none">
 			<div
 				className={`w-full justify-center items-center transition-transform ease-in-out duration-300 md:rounded-2xl p-0 md:p-0`}
 			>
@@ -44,6 +44,9 @@ export default function CarouselList({ cards }) {
 						}`}
 					>
 						<div>
+							<p className="font-bold mb-1 text-lg">
+								The Big Card 4"X14"
+							</p>
 							<img
 								src={elem.img}
 								alt=""

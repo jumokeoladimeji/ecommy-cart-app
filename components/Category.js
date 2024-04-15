@@ -19,7 +19,7 @@ export default function Category({ category }) {
 			>
 				{name} card
 			</p> */}
-			<div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 justify-center mx-auto gap-4 place-center flex-wrap w-100 md:max-w-[1200px]">
+			<div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 justify-center mx-auto gap-2 place-center flex-wrap w-100 md:max-w-[1200px]">
 				{newCardsArr.map((product) => (
 					<Product product={product} key={product.id} />
 				))}
