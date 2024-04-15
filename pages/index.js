@@ -38,7 +38,7 @@ export default function Home() {
 				<div className="landing-text text-center w-[100%] md:w-[50%]">
 					<h1
 						style={{ fontFamily: 'Lobster Two' }}
-						className="text-4xl leading-snug w-[95%] font-normal text-left mx-3 lg:mx-0 lg:text-6xl lg:leading-snug"
+						className="text-4xl leading-snug w-[95%] mt-0 md:mt-5 font-normal text-left mx-3 lg:mx-0 lg:text-6xl lg:leading-snug"
 					>
 						Finally, a{' '}
 						<span className="text-[#01533B] font-extrabold">
