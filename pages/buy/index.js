@@ -14,6 +14,7 @@ import { CategoriesContext } from '@/context/CategoryContext';
 import Spinner from '@/components/Spinner';
 import Modal from '@/components/Modal';
 import states from '@/data/states';
+import { MdOutlineKeyboardDoubleArrowDown } from 'react-icons/md';
 
 export default function Buy() {
 	const router = useRouter();
@@ -26,24 +27,28 @@ export default function Buy() {
 		{ name: 'United States of Ameria', code: 'US' },
 	];
 
-
-		// form validation rules
+	// form validation rules
 	const validationSchema = Yup.object().shape({
-		email: Yup.string().email('Invalid email address')
-		.required('Email is required'),
+		email: Yup.string()
+			.email('Invalid email address')
+			.required('Email is required'),
 		phoneNumber: Yup.string()
-		.matches(/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/, 'Invalid phone number')
-		.required('Phone number is required'),
-		zip: Yup.string().matches(/^\d{5}(?:-\d{4})?$/, 'Invalid ZIP code')
-		.required('ZIP code is required'),
+			.matches(
+				/^\D?(\d{3})\D?\D?(\d{3})\D?(\d{4})$/,
+				'Invalid phone number',
+			)
+			.required('Phone number is required'),
+		zip: Yup.string()
+			.matches(/^\d{5}(?:-\d{4})?$/, 'Invalid ZIP code')
+			.required('ZIP code is required'),
 	});
 	const formOptions = {
 		resolver: yupResolver(validationSchema),
 	};
 
-	const { register, handleSubmit, formState } = useForm(formOptions);
+	const { register, handleSubmit, formState } =
+		useForm(formOptions);
 	const { errors } = formState;
-
 
 	const storedToken = localStorage.getItem('token');
 	const { user, token, loginUser, logoutUser } =
@@ -254,15 +259,17 @@ export default function Buy() {
 					// className="lg:w-2/3"
 				>
 					<div className="py-10">
-						<button
-							onClick={() =>
-								setIsAddressModalOpen(false) &&
-								setIsModalOpen(true)
-							}
-							className="bg-[#00543A] flex justify-start text-left hover:bg-[#f1f1f1] hover:text-[#00543A] transition-colors duration-500 text-[#fff] rounded-md px-5 py-2"
-						>
-							Close
-						</button>
+						<div className="flex flex-row justify-end">
+							<button
+								onClick={() =>
+									setIsAddressModalOpen(false) &&
+									setIsModalOpen(true)
+								}
+								className="bg-red-600 transition-colors duration-500 text-[#fff] rounded-md px-5 py-2"
+							>
+								X
+							</button>
+						</div>
 						<header className="text-start flex flex-col w-full">
 							<h1 className="text-xl font-bold text-gray-900 sm:text-3xl text-center">
 								Shipping details
@@ -319,7 +326,7 @@ export default function Buy() {
 											{errors.phoneNumber?.message}
 										</div>
 									</div>
-									<div className="col-span-12">
+									{/* <div className="col-span-12">
 										<label className="mb-1 block text-sm font-medium text-text">
 											Recipient's Name
 										</label>
@@ -330,10 +337,10 @@ export default function Buy() {
 											{...register('rName')}
 											placeholder="Recipient's name"
 										/>
-									</div>
+									</div> */}
 									<div className="col-span-12">
 										<label className="mb-1 block text-sm font-medium text-text">
-											Recipient's Address
+											Your Address
 										</label>
 										<input
 											type="text"
@@ -417,17 +424,68 @@ export default function Buy() {
 				</Modal>
 
 				{/* Cards to Buy  */}
-				<div className="text-center">
-					{!categories || categories?.length === 0 ? (
-						<Spinner className="flex-1 justify-center align-middle text-center" />
-					) : (
-						categories?.map((category) => (
-							<Category
-								category={category}
-								key={category.id}
-							/>
-						))
-					)}
+				<div className="flex flex-col md:flex-row gap-2 md:gap-10 items-start">
+					<div className="w-[100%] md:w-[60%] flex flex-col md:flex-col mt-1 md:mt-10 mb-3 md:mb-0 justify-center md:justify-start">
+						<div className="hidden md:block">
+							<h1
+								style={{ fontFamily: 'Lobster Two' }}
+								className="text-4xl text-center leading-snug w-[95%] font-normal  mx-3 lg:mx-0 lg:text-6xl lg:leading-snug"
+							>
+								The Big Card{' '}
+								<span className="text-[#01533B] font-extrabold">
+									4" x 14"
+								</span>{' '}
+							</h1>
+							<span className="text-lg italic text-center">
+								With Free Shipping
+							</span>
+							<p className="text-xl mt-8 px-5 md:px-0">
+								Watch the video to learn how to buy.
+							</p>
+							<div className="flex flex-row justify-center">
+								<MdOutlineKeyboardDoubleArrowDown
+									size={40}
+								/>
+							</div>
+						</div>
+
+						<div className="hidden md:flex flex-col w-[100%] gap-3 bg-[#fff] p-0 md:p-2 rounded-lg shadow-md text-center mb-5">
+							<iframe
+								width="500"
+								height="355"
+								src="https://www.youtube.com/embed/GENPXFaqy8o?si=0735NClaC6JdlaYh&amp;controls=0"
+								title="YouTube video player"
+								// frameBorder="0"
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+								allowFullScreen
+								className="w-full object-cover rounded-lg"
+							></iframe>
+						</div>
+						<div className="flex md:hidden flex-col w-[100%] bg-[#fff] p-0 md:p-2 rounded-lg shadow-md text-center mb-0">
+							<iframe
+								width="500"
+								height="215"
+								src="https://www.youtube.com/embed/GENPXFaqy8o?si=0735NClaC6JdlaYh&amp;controls=0"
+								title="YouTube video player"
+								// frameBorder="0"
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+								allowFullScreen
+								className="w-full object-cover rounded-lg"
+							></iframe>
+						</div>
+					</div>
+					<div className="">
+						{!categories || categories?.length === 0 ? (
+							<Spinner className="flex-1 justify-center align-middle text-center" />
+						) : (
+							categories?.map((category) => (
+								<Category
+									category={category}
+									key={category.id}
+								/>
+							))
+						)}
+					</div>
 				</div>
 				{/* Promo Banner */}
 				<div className="flex flex-col md:flex-row items-start mx-auto max-w-7xl pt-5 md:pt-5">
