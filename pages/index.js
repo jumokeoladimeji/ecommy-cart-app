@@ -55,6 +55,9 @@ export default function Home() {
 							forever!
 						</span>
 					</p>
+					<p className="text-left italic text-lg mt-2 px-5 md:px-0">
+						+ free shipping!
+					</p>
 					<div className="hidden md:flex flex-col md:flex-row items-center mt-5 md:mt-6 mb-3 md:mb-0 justify-center md:justify-start">
 						<div className="flex flex-col w-[90%] gap-3 bg-[#fff] p-0 md:p-2 rounded-lg shadow-md text-center mb-5">
 							<iframe
