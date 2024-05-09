@@ -237,7 +237,7 @@ export default function Product({ product }) {
 										style={{ fontFamily: 'Lobster Two' }}
 										className=" text-3xl md:ml-20 text-left"
 									>
-										Add Custom Message{' '}
+										Add Custom Message To Shipping Envelope {' '}
 										<span className="text-2xl font-bold">
 											(Optional)
 										</span>
@@ -245,7 +245,7 @@ export default function Product({ product }) {
 								</div>
 								<p className="text-[18px] leading-tight mt-3 md:ml-20 text-left">
 									If you choose to customize the card, we
-									can ship it to your recipient
+									can ship it to your family / friend
 								</p>
 							</div>
 						</div>
@@ -274,11 +274,12 @@ export default function Product({ product }) {
 									</p>
 									<div>
 										<span className="font-bold text-[20px]">
-											Or
+											And
 										</span>
 										<p className="text-[18px]">
 											{' '}
 											Select from the options below.
+											Check off up to 4 of the reasons you are sending it. (28 options)
 										</p>
 									</div>
 									<div className="grid sm:grid-cols-3 grid-cols-1 gap-4 mt-5 text-xs text-left">

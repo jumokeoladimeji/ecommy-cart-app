@@ -35,7 +35,7 @@ export default function Home() {
 	return (
 		<div className="bg-[#fff]">
 			<div className="flex flex-col md:flex-row items-start mx-auto max-w-7xl pt-10 md:pt-5">
-				<div className="landing-text text-center w-[100%] md:w-[50%]">
+				<div className="landing-text text-center w-[100%]">
 					<h1
 						style={{ fontFamily: 'Lobster Two' }}
 						className="text-4xl leading-snug w-[95%] mt-0 md:mt-5 font-normal text-left mx-3 lg:mx-0 lg:text-6xl lg:leading-snug"
@@ -55,11 +55,37 @@ export default function Home() {
 							forever!
 						</span>
 					</p>
-					<p className="text-left italic text-lg mt-2 px-5 md:px-0">
-						With <span className="text-[#005534] font-bold">free shipping!</span>
+					<p className="text-left italic text-xl mt-2 px-5 md:px-0">
+						With <span className="text-[#005534] font-bold">FREE SHIPPING!</span>
 					</p>
+					{/* desktop view */}
 					<div className="hidden md:flex flex-col md:flex-row items-center mt-5 md:mt-6 mb-3 md:mb-0 justify-center md:justify-start">
-						<div className="flex flex-col w-[90%] gap-3 bg-[#fff] p-0 md:p-2 rounded-lg shadow-md text-center mb-5">
+						<div className="flex flex-col w-[50%] md:w-[50%] gap-3 bg-[#fff] p-0 md:p-2 rounded-lg shadow-md text-center mb-5">
+							<iframe
+								width="500"
+								height="315"
+								src="https://www.youtube.com/embed/GENPXFaqy8o?si=0735NClaC6JdlaYh&amp;controls=0"
+								title="YouTube video player"
+								// frameBorder="0"
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+								allowFullScreen
+								className="w-full object-cover rounded-lg"
+							></iframe>
+						</div>
+						<div className="flex-col py-0 px-0 md:px-0 md:flex hidden flex-col items-center gap-3 lg:gap-5 w-[50%] md:w-[50%] ml-5">
+							<div className="w-full gap-3 bg-[#fff] p-2 md:p-2 rounded-lg shadow-md text-center mb-5">
+								<CarouselList cards={fishSlideImages} />
+								<CarouselList cards={golfSlideImages} />
+							</div>
+						</div>
+					</div>
+					{/* desktop view */}
+					{/* 
+						
+					</div> */}
+					{/* hidden on desktop */}
+					<div className="py-0 px-0 md:hidden md:px-0 flex flex-col items-center gap-3 lg:gap-5 w-[90%] md:w-[50%] ml-5">
+						<div className="flex flex-col w-full gap-3 bg-[#fff] p-0 md:p-2 rounded-lg shadow-md text-center mb-5">
 							<iframe
 								width="500"
 								height="315"
@@ -72,6 +98,7 @@ export default function Home() {
 							></iframe>
 						</div>
 					</div>
+					{/* hidden on desktop */}
 					<div className="py-0 px-0 md:px-0 md:hidden flex-col items-center gap-3 lg:gap-5 w-[90%] mt-5 mx-auto md:w-[50%] ml-5">
 						<div className="flex flex-col w-full gap-3 bg-none p-0 md:p-2 rounded-lg shadow-none text-center mb-5">
 							<CarouselList cards={fishSlideImages} />
@@ -79,47 +106,6 @@ export default function Home() {
 						</div>
 					</div>
 				</div>
-
-				<div className="py-0 px-0 md:px-0 md:flex hidden flex-col items-center gap-3 lg:gap-5 w-[90%] md:w-[50%] ml-5">
-					<div className="flex flex-col w-full gap-3 bg-[#fff] p-2 md:p-2 rounded-lg shadow-md text-center mb-5">
-						<CarouselList cards={fishSlideImages} />
-						<CarouselList cards={golfSlideImages} />
-					</div>
-				</div>
-				<div className="py-0 px-0 md:hidden md:px-0 flex flex-col items-center gap-3 lg:gap-5 w-[90%] md:w-[50%] ml-5">
-					<div className="flex flex-col w-full gap-3 bg-[#fff] p-0 md:p-2 rounded-lg shadow-md text-center mb-5">
-						<iframe
-							width="500"
-							height="315"
-							src="https://www.youtube.com/embed/GENPXFaqy8o?si=0735NClaC6JdlaYh&amp;controls=0"
-							title="YouTube video player"
-							// frameBorder="0"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-							allowFullScreen
-							className="w-full object-cover rounded-lg"
-						></iframe>
-					</div>
-				</div>
-			</div>
-			<div className="px-5 md:px-10 mt-0 md:shadow-none md:rounded-none md:py-10 mb-10">
-				{/* <Category
-					category={categories[0]}
-					key={categories[0].id}
-				/> */}
-				{/* <div className="hidden md:flex flex-col w-full gap-3 bg-[#fff] p-0 md:p-2 rounded-lg shadow-md text-center mb-5">
-					<iframe
-						width="500"
-						height="615"
-						src="https://www.youtube.com/embed/GENPXFaqy8o?si=0735NClaC6JdlaYh&amp;controls=0"
-						title="YouTube video player"
-						// frameBorder="0"
-						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-						allowFullScreen
-						className="w-full object-cover rounded-lg"
-					></iframe>
-				</div> */}
-
-				{/* <Category category={categories[1]} key={categories[1].id} /> */}
 			</div>
 		</div>
 	);

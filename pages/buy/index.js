@@ -431,7 +431,7 @@ export default function Buy() {
 								style={{ fontFamily: 'Lobster Two' }}
 								className="text-4xl text-center leading-snug w-[95%] font-normal  mx-3 lg:mx-0 lg:text-6xl lg:leading-snug"
 							>
-								The Big Card{' '}
+								The Big Card{' '} <br/>
 								<span className="text-[#01533B] font-extrabold">
 									4" x 14"
 								</span>{' '}
