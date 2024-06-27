@@ -451,25 +451,28 @@ export default function Buy() {
 
 						<div className="hidden md:flex flex-col w-[100%] gap-3 bg-[#fff] p-0 md:p-2 rounded-lg shadow-md text-center mb-5">
 							<iframe
-								width="500"
-								height="355"
-								src="https://www.youtube.com/embed/GENPXFaqy8o?si=0735NClaC6JdlaYh&amp;controls=0"
+								width="560"
+								height="315"
+								src="https://www.youtube.com/embed/F5uKJ7Kb-Xg?si=XK6zdQqfTW_4Ht18"
 								title="YouTube video player"
 								// frameBorder="0"
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 								allowFullScreen
 								className="w-full object-cover rounded-lg"
+								referrerpolicy="strict-origin-when-cross-origin" 
 							></iframe>
+							
 						</div>
 						<div className="flex md:hidden flex-col w-[100%] bg-[#fff] p-0 md:p-2 rounded-lg shadow-md text-center mb-0">
 							<iframe
-								width="500"
+								width="560"
 								height="215"
-								src="https://www.youtube.com/embed/GENPXFaqy8o?si=0735NClaC6JdlaYh&amp;controls=0"
+								src="https://www.youtube.com/embed/F5uKJ7Kb-Xg?si=XK6zdQqfTW_4Ht18"
 								title="YouTube video player"
 								// frameBorder="0"
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 								allowFullScreen
+								referrerpolicy="strict-origin-when-cross-origin" 
 								className="w-full object-cover rounded-lg"
 							></iframe>
 						</div>

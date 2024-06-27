@@ -64,7 +64,7 @@ export default function Home() {
 							<iframe
 								width="500"
 								height="315"
-								src="https://www.youtube.com/embed/GENPXFaqy8o?si=0735NClaC6JdlaYh&amp;controls=0"
+								src="https://www.youtube.com/embed/_n5yiYTQ9z8?si=pDzEmUWgKFrNV1F4"
 								title="YouTube video player"
 								// frameBorder="0"
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -89,7 +89,7 @@ export default function Home() {
 							<iframe
 								width="500"
 								height="315"
-								src="https://www.youtube.com/embed/GENPXFaqy8o?si=0735NClaC6JdlaYh&amp;controls=0"
+								src="https://www.youtube.com/embed/_n5yiYTQ9z8?si=pDzEmUWgKFrNV1F4"
 								title="YouTube video player"
 								// frameBorder="0"
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
