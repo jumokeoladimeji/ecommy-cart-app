@@ -36,7 +36,6 @@ export const getUserOrders = async (id, token) => {
 	return response.data;
 };
 export const getOneOrder = async (id, token) => {
-	console.log(id);
 	const response = await axios.get(
 		`${backendUrl}/api/v1/orders/${id}`,
 		{
