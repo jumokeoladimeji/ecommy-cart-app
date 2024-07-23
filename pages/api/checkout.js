@@ -1,8 +1,7 @@
-import { getOneCard } from './card';
 import { createOrder } from './order';
 
 const stripe = require('stripe')(
-	process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY,
+	process.env.STRIPE_SECRET_KEY,
 );
 
 export default async function handler(req, res) {
@@ -95,7 +94,7 @@ export default async function handler(req, res) {
 					...stripeObj,
 					discounts: [
 						{
-							coupon: `9ibBfIb6`,
+							coupon: `RTVGwxue`,
 						},
 					],
 				},
