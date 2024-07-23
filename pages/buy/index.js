@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { formatCurrencyString } from 'use-shopping-cart';
 import toast from 'react-hot-toast';
@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import { City }  from 'country-state-city';
 
 import { getCategories } from '@/pages/api/category';
 import Category from '@/components/Category';
@@ -20,12 +21,22 @@ export default function Buy() {
 	const router = useRouter();
 	const [golfingQuantity, setGolfingQuantity] = useState(0);
 	const [fishingQuantity, setFishingQuantity] = useState(0);
+	const [selectedState, setselectedState] = useState('');
+	const [cities, setCities] = useState([])
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isAddressModalOpen, setIsAddressModalOpen] =
 		useState(false);
 	const countries = [
 		{ name: 'United States of Ameria', code: 'US' },
 	];
+
+	useEffect(() => {
+		if (selectedState) {
+			let filteredState = states.find(state => state.name === selectedState);
+			const data = City.getCitiesOfState('US', filteredState.abbreviation);
+			setCities(data);
+		}
+	}, [selectedState])
 
 	// form validation rules
 	const validationSchema = Yup.object().shape({
@@ -107,6 +118,7 @@ export default function Buy() {
 	};
 
 	async function onSubmit(address) {
+		console.log('address', address)
 		setIsAddressModalOpen(false);
 
 		let quantity = 0;
@@ -358,6 +370,9 @@ export default function Buy() {
 										<select
 											id="stateSelect"
 											{...register('state')}
+											onChange={(e) => {
+												setselectedState(e.target.value)
+											}}
 											className="block w-full rounded-md p-3 border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
 										>
 											<option value="">
@@ -369,6 +384,28 @@ export default function Buy() {
 													value={state.name}
 												>
 													{state.name}
+												</option>
+											))}
+										</select>
+									</div>
+									<div className="col-span-8">
+										<label className="mb-1 block text-sm font-medium text-text">
+											City
+										</label>
+										<select
+											id="citySelect"
+											{...register('city')}
+											className="block w-full rounded-md p-1 text-[18px] border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+										>
+											<option value="">
+												Select a City
+											</option>
+											{cities.map((city) => (
+												<option
+													key={city.name}
+													value={city.name}
+												>
+													{city.name}
 												</option>
 											))}
 										</select>

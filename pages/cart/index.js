@@ -88,6 +88,7 @@ export default function Cart() {
 
 	let productSum = 0;
 	if (cartItems.length > 0) {
+		console.log('cartItems', cartItems)
 		cartItems.forEach((item, ind) => {
 			productSum += item.product.price;
 		});
@@ -287,6 +288,13 @@ export default function Cart() {
 																	item?.product_data
 																		?.shippingAddress
 																		?.address
+																}
+															</li>
+															<li>
+																City:{' '}
+																{
+																	item?.product_data
+																		?.shippingAddress?.city
 																}
 															</li>
 															<li>

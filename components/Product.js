@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	formatCurrencyString,
 	useShoppingCart,
 } from 'use-shopping-cart';
 import { useForm } from 'react-hook-form';
+import { City }  from 'country-state-city';
 
 import toast from 'react-hot-toast';
 import CarouselList from './Carousel';
@@ -19,6 +20,9 @@ export default function Product({ product }) {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 	const [isAddressModalOpen, setIsAddressModalOpen] =
 		useState(false);
+	const [selectedState, setselectedState] = useState('');
+	const [cities, setCities] = useState([])
+
 	const countries = [
 		{ name: 'United States of Ameria', code: 'US' },
 	];
@@ -184,8 +188,15 @@ export default function Product({ product }) {
 		}
 	};
 
+	useEffect(() => {
+		if (selectedState) {
+			let filteredState = states.find(state => state.name === selectedState);
+			const data = City.getCitiesOfState('US', filteredState.abbreviation);
+			setCities(data);
+		}
+	}, [selectedState])
+
 	async function onSubmit(address) {
-		console.log(address);
 		setIsAddressModalOpen(false);
 		addToCart(address);
 		resetField('zip');
@@ -411,6 +422,9 @@ export default function Product({ product }) {
 										<select
 											id="stateSelect"
 											{...register('state')}
+											onChange={(e) => {
+												setselectedState(e.target.value)
+											}}
 											className="block w-full rounded-md p-1 text-[18px] border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
 										>
 											<option value="">
@@ -422,6 +436,28 @@ export default function Product({ product }) {
 													value={state.name}
 												>
 													{state.name}
+												</option>
+											))}
+										</select>
+									</div>
+									<div className="col-span-8">
+										<label className="mb-1 block text-sm font-medium text-text">
+											City
+										</label>
+										<select
+											id="citySelect"
+											{...register('city')}
+											className="block w-full rounded-md p-1 text-[18px] border border-gray-300 shadow-sm focus:border-primary-400 focus:ring focus:ring-primary-200 focus:ring-opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50 disabled:text-gray-500"
+										>
+											<option value="">
+												Select a City
+											</option>
+											{cities.map((city) => (
+												<option
+													key={city.name}
+													value={city.name}
+												>
+													{city.name}
 												</option>
 											))}
 										</select>

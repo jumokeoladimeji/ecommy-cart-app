@@ -191,35 +191,30 @@ const index = () => {
 												<b>RECIPIENT'S DETAILS</b>
 											</li>
 											<li>
-												Recipient's Name:{' '}
 												{
 													item?.product_data
 														?.shippingAddress?.rName
 												}
 											</li>
 											<li>
-												Address:{' '}
 												{
 													item?.product_data
 														?.shippingAddress?.address
 												}
 											</li>
 											<li>
-												State:{' '}
 												{
 													item?.product_data
 														?.shippingAddress?.state
 												}
 											</li>
 											<li>
-												Country:{' '}
 												{
 													item?.product_data
 														?.shippingAddress?.country
 												}
 											</li>
 											<li>
-												Zip:{' '}
 												{
 													item?.product_data
 														?.shippingAddress?.zip
