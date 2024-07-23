@@ -118,7 +118,6 @@ export default function Buy() {
 	};
 
 	async function onSubmit(address) {
-		console.log('address', address)
 		setIsAddressModalOpen(false);
 
 		let quantity = 0;
@@ -451,7 +450,7 @@ export default function Buy() {
 											// onClick={addToCart}
 											className="block rounded border border-[#00553A] bg-white p-2 px-5 py-3 text-md text-text transition hover:bg-[#00553A] hover:text-white w-full"
 										>
-											Add to cart
+											Checkout
 										</button>
 									</div>
 								</div>
