@@ -39,16 +39,26 @@ export default function Login() {
 
 	return (
 		<div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
-			<div className="hidden sm:block">
+			<div className="hidden sm:block grid grid-cols-1 divide-y">
 				{/* <Image src='/login.jpeg' alt={''} width={24} height={24} /> */}
+				<div>
 				<Image
-					src={'/login.jpg'}
+					src={'/fishing2.jpeg'}
 					alt={''}
-					width={300}
-					height={400}
-					className="w-full h-full object-cover"
-					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-				/>
+					width={500}
+					height={800}
+					className="object-cover w-full h-full"
+					// sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+				/></div>
+				<div>
+				<Image
+					src={'/fishing1.jpeg'}
+					alt={''}
+					width={500}
+					height={800}
+					className="object-cover w-full h-full "
+					// sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+				/></div>
 				{/* <img className='w-full h-full object-cover' src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2620&q=80" alt="" /> */}
 			</div>
 

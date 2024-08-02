@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-
+import Image from 'next/image';
 import Link from "next/link";
 import { signup } from "@/pages/api/user";
 import toast from 'react-hot-toast';
@@ -49,12 +49,25 @@ function Register() {
 	return (
 		<div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full">
 			{/* <h4>Register</h4> */}
-			<div className="hidden sm:block">
-				<img
-					className="w-full h-full object-cover"
-					src="/register.jpg"
-					alt=""
-				/>
+			<div className="hidden sm:block grid grid-cols-1 divide-y">
+				<div>
+					<Image
+						className="w-full h-full object-cover"
+						src={"/golfing1.jpeg"}
+						alt=""
+						width={500}
+					height={1000}
+					/>
+				</div>
+				<div>
+					<Image
+						className="w-full h-full object-cover"
+						src={"/golfing2.jpeg"}
+						alt=""
+						width={500}
+					height={1000}
+					/>
+				</div>
 			</div>
 			<div className="bg-white flex flex-col justify-center">
 				<div className="text-center pb-4">
