@@ -7,10 +7,14 @@ export default function Layout({ children }) {
 		<>
 			<Head>
 				<title>Measures of Fun</title>
-				<meta name="description" content="" />
+				<meta name="description" content="Finally, a greeting card you don’t throw away!" />
 				<meta
 					name="viewport"
 					content="width=device-width, initial-scale=1"
+				/>
+				<meta
+					name="p:domain_verify"
+					content="a22f39306c4484dfcfdb43f59bd04800"
 				/>
 				<link rel="icon" href="#" />
 			</Head>
