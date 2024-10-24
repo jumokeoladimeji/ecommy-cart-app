@@ -5,7 +5,7 @@ import { UserProvider } from '../context/UserContext';
 import { CategoriesProvider } from '@/context/CategoryContext';
 import { CartContextProvider } from '../context/CartContext';
 import { Toaster } from 'react-hot-toast';
-import { GoogleAnalytics } from '@next/third-parties/google';
+// import { GoogleAnalytics } from '@next/third-parties/google';
 
 export default function App({ Component, pageProps }) {
 	return (
@@ -32,9 +32,9 @@ export default function App({ Component, pageProps }) {
 				>
 					<Layout>
 						<Component {...pageProps} />
-						<GoogleAnalytics
+						{/* <GoogleAnalytics
 							gaId={process.env.NEXT_PUBLIC_GA_ID}
-						/>
+						/> */}
 						<Toaster
 							position="top-center"
 							reverseOrder={false}

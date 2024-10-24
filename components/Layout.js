@@ -1,6 +1,7 @@
 import Head from "next/head";
 import NavBar from "./NavBar";
 import Footer from './Footer';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 export default function Layout({ children }) {
   return (
@@ -20,6 +21,9 @@ export default function Layout({ children }) {
 			</Head>
 			<NavBar />
 			<main className="bg-[#fff] min-h-[calc(100vh-76px)] px-0 pt-20 md:px-10 md:pt-28">
+				<GoogleAnalytics
+					gaId={process.env.NEXT_PUBLIC_GA_ID}
+				/>
 				<div className="container md:mx-auto md:max-w-[1250px]">
 					{children}
 				</div>
