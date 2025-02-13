@@ -182,7 +182,6 @@ export default function Buy() {
 			toast.error('An error occured!!');
 		}
 	}
-	console.log(categories);
 
 	return (
 		<div className="bg-[#fff] pt-10 md:pt-0">

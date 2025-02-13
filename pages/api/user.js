@@ -23,7 +23,6 @@ export const verifyUserToken = async (token) => {
 		);
 		return response.data;
 	} catch (error) {
-		console.log('error verying user', error.response.data);
 	}
 };
 

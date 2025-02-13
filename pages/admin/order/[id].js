@@ -211,7 +211,7 @@ const index = () => {
 											<li>
 												{
 													item?.product_data
-														?.shippingAddress?.country
+														?.shippingAddress?.city
 												}
 											</li>
 											<li>
@@ -225,37 +225,6 @@ const index = () => {
 									<td className="border border-gray-300 px-4 py-2">
 										{order.paid ? 'Paid' : 'Not Paid'}
 									</td>
-									{/* <td className="border border-gray-300 px-4 py-2"> */}
-									{/* <button
-											onClick={() =>
-												router.push(
-													`/admin/order/${order?.id}`,
-												)
-											}
-											className="bg-[#7b7c7c] hover:bg-[#005438ee] text-white py-1 px-2 rounded-md mr-2"
-										>
-											View
-										</button> */}
-									{/* {order.confirm_delivery ? (
-											<button
-												onClick={() =>
-													handleDelete(product.id)
-												}
-												className="bg-[#005438] hover:bg-[#005438] text-white py-1 px-2 rounded-md"
-											>
-												Delivered
-											</button>
-										) : (
-											<button
-												onClick={() =>
-													handleDelete(product.id)
-												}
-												className="bg-[#005438] hover:bg-[#005438] text-white py-1 px-2 rounded-md"
-											>
-												Mark as Delivered
-											</button>
-										)} */}
-									{/* </td> */}
 								</tr>
 							))}
 						</tbody>
@@ -273,7 +242,7 @@ const index = () => {
 								Mailed
 							</button>
 						) : (
-							<button className="bg-[#005438] w-28 text-white px-4 py-2 rounded-md hover:bg-[#005438] transition duration-300">
+							<button className="bg-[#005438] w-28 text-white px-4 py-2 rounded-md hover:bg-[#005438] transition duration-300 disabled">
 								Delivered
 							</button>
 						)}

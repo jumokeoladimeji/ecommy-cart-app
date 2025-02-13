@@ -26,7 +26,6 @@ const index = () => {
 	const id = router.query.id;
 	const [order, setOrder] = useState([]);
 	const [loading, setLoading] = useState(false);
-	// console.log(id);
 
 	useEffect(() => {
 		const fetchOrder = async () => {
@@ -38,19 +37,15 @@ const index = () => {
 					setOrder(res);
 					setLoading(false);
 				} else {
-					console.log('No user logged in');
 					setLoading(false);
 				}
 			} catch (error) {
-				console.log(error);
 				setLoading(false);
 			}
 		};
 
 		fetchOrder();
 	}, [user, token, id]);
-
-	console.log(order);
 
 	const confirmDelivery = async () => {
 		const update = {

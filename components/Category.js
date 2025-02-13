@@ -9,7 +9,6 @@ export default function Category({ category }) {
 			...rest,
 		}),
 	);
-	console.log(cards);
 
 	return (
 		<div className="text-center">

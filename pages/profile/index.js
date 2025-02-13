@@ -36,10 +36,8 @@ export default function Profile() {
 					);
 					setOrders(userOrders);
 				} else {
-					console.log('No user logged in');
 				}
 			} catch (error) {
-				console.log(error);
 			}
 		};
 

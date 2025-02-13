@@ -45,11 +45,7 @@ export default function Cart() {
 	];
 
 	const {
-		shouldDisplayCart,
-		cartCount,
 		cartDetails,
-		formattedTotalPrice,
-		totalPrice,
 	} = useShoppingCart();
 
 	const { user, token, loginUser, logoutUser } =
@@ -84,11 +80,9 @@ export default function Cart() {
 	}, []);
 
 	const storedToken = localStorage.getItem('token');
-	// console.log(storedToken);
 
 	let productSum = 0;
 	if (cartItems.length > 0) {
-		console.log('cartItems', cartItems)
 		cartItems.forEach((item, ind) => {
 			productSum += item.product.price;
 		});
@@ -108,14 +102,9 @@ export default function Cart() {
 			(item) => item.product_data.shippingAddress,
 		);
 
-		console.log(senderEmail);
-
 		const response = await axios.post(`/api/checkout`, {
-			// email: cartItems[0].product_data?.shippingAddress?.email,
-			// name: cartItems[0].product_data?.shippingAddress?.name,
 			email: senderEmail,
 			name: senderName,
-			// user_id: user.data.id,
 			phoneNumber: senderPhoneNumber,
 			address: '',
 			country: 'US',
@@ -600,39 +589,8 @@ export default function Cart() {
 						)}
 					</div>
 				</div>
-				{/* {!cartDetails ? (
-						''
-					) : (
-                        <div className="col-span-12 text-center w-full">
-                            <button
-                                onClick={stripeCheckout}
-                                className="block rounded border border-[#00553A] bg-white p-2 px-5 py-3 text-md text-text transition hover:bg-[#00553A] hover:text-white w-full"
-                            >
-                                Checkout
-                            </button>
-                        </div>
-					)} */}
 			</section>
 		</>
 	);
 }
 
-// 	return (
-// 		<>
-// 			<div className="grid h-screen px-4 bg-white place-content-center">
-// 				<div className="text-center">
-// 					<p className="mt-4 text-text text-2xl">
-// 						You should sign in to view cart items
-// 					</p>
-
-// 					<button
-// 						onClick={() => router.push('/login')}
-// 						className="inline-block px-5 py-3 bg-[#02533C] text-white mt-6 text-sm font-medium text-text bg-primary rounded hover:bg-primary focus:outline-none focus:ring"
-// 					>
-// 						Login / Register
-// 					</button>
-// 				</div>
-// 			</div>
-// 		</>
-// 	);
-// }

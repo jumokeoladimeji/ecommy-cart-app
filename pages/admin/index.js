@@ -38,10 +38,8 @@ export default function AdminDashboard({ cards }) {
 	getCheckoutSessions().then((sessions) => {
 		if (sessions) {
 			// Do something with the fetched sessions
-			console.log('Fetched sessions:', sessions);
 		} else {
 			// Handle the case where sessions couldn't be fetched
-			console.log('Failed to fetch sessions.');
 		}
 	});
 
@@ -57,11 +55,8 @@ export default function AdminDashboard({ cards }) {
 						return dateB - dateA; // Sort in descending order (latest first)
 					});
 					setOrders(sortedOrders);
-				} else {
-					console.log('No user logged in');
 				}
 			} catch (error) {
-				console.log(error);
 			}
 		};
 
@@ -301,16 +296,6 @@ export default function AdminDashboard({ cards }) {
 													)}
 												</div>
 											</td>
-											{/* <td className="border border-gray-300 px-4 py-2">
-												${order.total}
-											</td> */}
-											{/* <td className="border border-gray-300 px-4 py-2">
-												<ul>
-												{order?.line_items?.product_data?.customMessages?.toString().split(',').map((message, index) => (
-												<li key={index}>
-													{message}
-												</li>))}</ul>
-											</td> */}
 											<td className="border border-gray-300 px-4 py-2">
 												{order.paid ? 'Paid' : 'Not Paid'}
 											</td>
@@ -321,29 +306,10 @@ export default function AdminDashboard({ cards }) {
 															`/admin/order/${order?.id}`,
 														)
 													}
-													className="bg-[#7b7c7c] hover:bg-[#005438ee] text-white py-1 px-2 rounded-md mr-2"
+													className="bg-[#005438] hover:bg-[#005438ee] text-white py-1 px-2 rounded-md mr-2"
 												>
 													View
 												</button>
-												{/* {order.confirm_delivery ? (
-													<button
-														onClick={() =>
-															handleDelete(product.id)
-														}
-														className="bg-[#005438] hover:bg-[#005438] text-white py-1 px-2 rounded-md"
-													>
-														Delivered
-													</button>
-												) : (
-													<button
-														onClick={() =>
-															handleDelete(product.id)
-														}
-														className="bg-[#005438] hover:bg-[#005438] text-white py-1 px-2 rounded-md"
-													>
-														Mark as Delivered
-													</button>
-												)} */}
 											</td>
 										</tr>
 									))}

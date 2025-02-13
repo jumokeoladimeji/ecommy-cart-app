@@ -8,7 +8,6 @@ export const createOrder = async (orderData, token) => {
 			orderData);
 		return response.data.data;
 	} catch (error) {
-		console.log('error in orders', error);
 	}
 };
 
@@ -21,7 +20,6 @@ export const getOrders = async (token) => {
 			},
 		},
 	);
-	console.log(response);
 	return response.data;
 };
 export const getUserOrders = async (id, token) => {
@@ -62,10 +60,8 @@ export const updateOrder = async (
 				},
 			},
 		);
-		console.log(response);
 		return response.data;
 	} catch (error) {
-		console.log(error.response.data);
 	}
 };
 export const deleteOrder = async () => {

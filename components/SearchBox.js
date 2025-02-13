@@ -19,7 +19,6 @@ function searchOnChange(e){
 
 function searchOnKeyPress(e){
   if(e.key === 'Enter'){
-      console.log('enter press here! ')
       searchQuery(query)       
   }
 }
@@ -29,7 +28,6 @@ function searchIconOnClick(e){
 }
 
 async function searchQuery(query){
-  console.log("query: ", query)
   // const requestOptions = {
   //     method: 'POST',
   //     headers: { 'Content-Type': 'application/json' },
