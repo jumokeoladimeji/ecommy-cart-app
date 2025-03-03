@@ -17,10 +17,6 @@ export default function Layout({ children }) {
 					name="p:domain_verify"
 					content="a22f39306c4484dfcfdb43f59bd04800"
 				/>
-				<meta
-					name="google-site-verification"
-					content="UTBiuL_sIawTsaKP63AavH2jw-HAZFnO84IxuLB-Wco"
-				/>
 				<link rel="icon" href="#" />
 			</Head>
 			<NavBar />
