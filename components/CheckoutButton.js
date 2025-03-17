@@ -62,8 +62,8 @@ export default function CheckoutButton() {
 	return (
 		<article className="mt-3 flex flex-col">
 			<div className="text-red-700 text-xs mb-3 h-5 text-center">
-				{totalPrice && totalPrice < 9.95
-					? 'You must have at least $9.95 in your basket'
+				{totalPrice && totalPrice < 14.95
+					? 'You must have at least $14.95 in your basket'
 					: status === 'redirect-error'
 					? 'Unable to redirect to Stripe checkout page'
 					: status === 'no-items'
