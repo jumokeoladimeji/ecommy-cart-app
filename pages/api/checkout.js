@@ -93,12 +93,12 @@ export default async function handler(req, res) {
 				{
 					...stripeObj,
 					discounts: [
-						{
-							coupon: `jAhURFr0`,
-						},
 						// {
-						// 	coupon: `rVP1ztxT`,
+						// 	coupon: `jAhURFr0`,
 						// },
+						{
+							coupon: `rVP1ztxT`,
+						},
 					],
 				},
 			);
