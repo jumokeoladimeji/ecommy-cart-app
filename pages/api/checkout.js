@@ -97,7 +97,7 @@ export default async function handler(req, res) {
 						// 	coupon: `jAhURFr0`,
 						// },
 						{
-							coupon: `rVP1ztxT`,
+							coupon: `qYQ0fBwN`,
 						},
 					],
 				},
@@ -113,6 +113,7 @@ export default async function handler(req, res) {
 			});
 		}
 	} catch(error) {
+		console.error('Error creating session:', error);
 		res
 			.status(500)
 			.json({ error: 'Internal Server Error' });
