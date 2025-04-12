@@ -542,7 +542,7 @@ export default function Buy() {
 							<span className="text-[#01533B] font-extrabold">
 								12 greeting cards
 							</span>{' '}
-							for the price of 10 +30% off!
+							for the price of 10 
 						</h1>
 						<p className="text-left text-xl mt-2 md:px-0 px-0">
 							Tell us how many of each “fish” and “golf”
@@ -555,7 +555,7 @@ export default function Buy() {
 						<p className="text-left text-xl mt-2 md:px-0 px-0">
 						<span className="text-[#005534] font-bold text-2xl">
 							Best Deal Yet:{' '}
-						</span>Pay for 10, Get 12 + 30% OFF Instantly!
+						</span>Pay for 10, Get 12!
 						</p>
 						<button
 							onClick={() => setIsModalOpen(true)}
