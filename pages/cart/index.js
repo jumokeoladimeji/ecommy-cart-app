@@ -84,8 +84,7 @@ export default function Cart() {
 	let productSum = 0;
 	if (cartItems.length > 0) {
 		cartItems.forEach((item, ind) => {
-			// productSum += item.product.price;
-			productSum += 1047
+			productSum += item.product.price;
 		});
 	}
 
@@ -313,8 +312,7 @@ export default function Cart() {
 													</td>
 													<td className="border border-gray-300 px-4 py-2">
 														{formatCurrencyString({
-															// value: item?.product.price,
-															value: 1047,
+															value: item?.product.price,
 															currency: 'USD',
 														})}
 													</td>

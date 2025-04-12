@@ -104,14 +104,7 @@ export default async function handler(req, res) {
 				url: session.url,
 			});
 		} else {
-			const session = await stripe.checkout.sessions.create({
-				...stripeObj,
-				discounts: [
-					{
-						coupon: `entWmIWr`, // coupon for single card
-					},
-				]
-			});
+			const session = await stripe.checkout.sessions.create(stripeObj); // for single card
 			res.json({
 				url: session.url,
 			});
