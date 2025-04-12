@@ -214,10 +214,15 @@ export default function Product({ product }) {
 			<CarouselList cards={slideImages} />
 
 			<div className="flex flex-col gap-2 font-bold text-[18px]">
-				{formatCurrencyString({
+				{/* {formatCurrencyString({
 					value: price,
 					currency: 'USD',
-				})}{' '}
+				})}{' '} */}
+				Save 30%!
+				Now just {formatCurrencyString({
+					value: 1047,
+					currency: 'USD',
+				})}{' '} (was $14.95)
 				(FREE SHIPPING)
 				<div className="flex flex-col sm:flex-col gap-3">
 					<button

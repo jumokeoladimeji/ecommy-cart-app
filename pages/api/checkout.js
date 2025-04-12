@@ -93,21 +93,25 @@ export default async function handler(req, res) {
 				{
 					...stripeObj,
 					discounts: [
-						// {
-						// 	coupon: `jAhURFr0`,
-						// },
 						{
-							coupon: `qYQ0fBwN`,
+							coupon: `qYQ0fBwN`, // coupon for dozen cards
 						},
 					],
 				},
 			);
-
+			
 			res.json({
 				url: session.url,
 			});
 		} else {
-			const session = await stripe.checkout.sessions.create(stripeObj);
+			const session = await stripe.checkout.sessions.create({
+				...stripeObj,
+				discounts: [
+					{
+						coupon: `entWmIWr`, // coupon for single card
+					},
+				]
+			});
 			res.json({
 				url: session.url,
 			});
