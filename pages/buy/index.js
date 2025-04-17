@@ -488,7 +488,7 @@ export default function Buy() {
 							<iframe
 								width="560"
 								height="315"
-								src="https://www.youtube.com/embed/F5uKJ7Kb-Xg?si=XK6zdQqfTW_4Ht18"
+								src="https://www.youtube.com/embed/FSiP61dtdZQ?si=TcQiqmlwccLnh9UN"
 								title="YouTube video player"
 								// frameBorder="0"
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -502,7 +502,7 @@ export default function Buy() {
 							<iframe
 								width="560"
 								height="215"
-								src="https://www.youtube.com/embed/F5uKJ7Kb-Xg?si=XK6zdQqfTW_4Ht18"
+								src="https://www.youtube.com/embed/FSiP61dtdZQ?si=TcQiqmlwccLnh9UN"
 								title="YouTube video player"
 								// frameBorder="0"
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
