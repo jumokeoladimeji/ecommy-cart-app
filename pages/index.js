@@ -56,6 +56,7 @@ export default function Home() {
 						</span>
 					</p>
 					<p className="text-left italic text-xl mt-2 px-5 md:px-0">
+					Get <span className="text-[#005534] text-5xl font-extrabold">30% OFF </span>
 						With <span className="text-[#005534] font-bold">FREE SHIPPING!</span>
 					</p>
 					{/* desktop view */}
