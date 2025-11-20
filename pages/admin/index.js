@@ -253,9 +253,10 @@ export default function AdminDashboard({ cards }) {
 										</th>
 									</tr>
 								</thead>
+								
 								<tbody>
 									{orders.map((order) => (
-										<tr key={order.id}>
+										order.paid && <tr key={order.id}>
 											<td className="border border-gray-300 px-4 py-2">
 												{order.id.split('-')[0]}...
 											</td>
