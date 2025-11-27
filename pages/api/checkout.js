@@ -94,7 +94,7 @@ export default async function handler(req, res) {
 					...stripeObj,
 					discounts: [
 						{
-							coupon: `jfXJ0ZiR`, // coupon for dozen cards
+							coupon: `0eq9M1HS`, // coupon for dozen cards
 						},
 					],
 				},
