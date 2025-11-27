@@ -41,7 +41,7 @@ const about = () => {
 								<h1 className="font-bold text-2xl pt-5">
 									{/* Buy a dozen cards... only pay for 10!
 									 */}
-									Get 30% OFF With Free Shipping
+									Get 50% OFF With Free Shipping
 								</h1>
 
 								<button
@@ -146,7 +146,7 @@ const about = () => {
 						<h1 className="font-bold text-2xl pt-5">
 							{/* Buy a dozen cards... only pay for 10!
 							 */}
-							Get 30% OFF With Free Shipping
+							Get 50% OFF With Free Shipping
 						</h1>
 
 						<button

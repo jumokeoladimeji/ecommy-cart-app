@@ -214,7 +214,7 @@ export default function Product({ product }) {
 			<CarouselList cards={slideImages} />
 
 			<div className="flex flex-col gap-2 font-bold text-[18px]">
-				Save 30%!
+				Save 50%!
 				Now just {formatCurrencyString({
 					value: price,
 					currency: 'USD',

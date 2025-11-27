@@ -56,22 +56,25 @@ export default function Home() {
 						</span>
 					</p>
 					<p className="text-left italic text-xl mt-2 px-5 md:px-0">
-					Get <span className="text-[#005534] text-5xl font-extrabold">30% OFF </span>
+					Get <span className="text-[#005534] text-5xl font-extrabold">50% OFF </span>
 						With <span className="text-[#005534] font-bold">FREE SHIPPING!</span>
 					</p>
 					{/* desktop view */}
 					<div className="hidden md:flex flex-col md:flex-row items-center mt-5 md:mt-6 mb-3 md:mb-0 justify-center md:justify-start">
 						<div className="flex flex-col w-[50%] md:w-[50%] gap-3 bg-[#fff] p-0 md:p-2 rounded-lg shadow-md text-center mb-5">
-							<iframe
+
+							<iframe 
 								width="500"
 								height="315"
-								src="https://www.youtube.com/embed/EIHEXkbdnF4?si=IDeLWPZa-ySL4ivC"
-								title="YouTube video player"
-								// frameBorder="0"
+								src="https://www.youtube.com/embed/N2tg_O1RwRI"
+							    title="Measures Of Fun Xmas 50% OFF Promo"
+								frameborder="0"
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-								allowFullScreen
+								referrerpolicy="strict-origin-when-cross-origin"
+								allowfullscreen
 								className="w-full object-cover rounded-lg"
-							></iframe>
+								>
+							</iframe>
 						</div>
 						<div className="flex-col py-0 px-0 md:px-0 md:flex hidden flex-col items-center gap-3 lg:gap-5 w-[50%] md:w-[50%] ml-5">
 							<div className="w-full gap-3 bg-[#fff] p-2 md:p-2 rounded-lg shadow-md text-center mb-5">
