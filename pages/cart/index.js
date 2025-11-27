@@ -402,7 +402,7 @@ export default function Cart() {
 											<div className="md:1/3 mt-10 md:mt-6 py-5">
 												<header className="flex flex-row px-4 justify-between items-center w-full">
 													<h1 className="text-2xl text-center font-bold text-gray-900 sm:text-3xl">
-														Checkout Information
+														Billing Information
 													</h1>
 												</header>
 												<div className="mx-auto max-w-xl p-4 border shadow-xl my-3">
