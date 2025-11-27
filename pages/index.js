@@ -62,13 +62,23 @@ export default function Home() {
 					{/* desktop view */}
 					<div className="hidden md:flex flex-col md:flex-row items-center mt-5 md:mt-6 mb-3 md:mb-0 justify-center md:justify-start">
 						<div className="flex flex-col w-[50%] md:w-[50%] gap-3 bg-[#fff] p-0 md:p-2 rounded-lg shadow-md text-center mb-5">
+							{/* <iframe
+								width="500"
+								height="315"
+								src="https://www.youtube.com/embed/EIHEXkbdnF4?si=IDeLWPZa-ySL4ivC"
+								title="YouTube video player"
+								// frameBorder="0"
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+								allowFullScreen
+								className="w-full object-cover rounded-lg"
+							></iframe> */}
 
 							<iframe 
 								width="500"
 								height="315"
 								src="https://www.youtube.com/embed/N2tg_O1RwRI"
 							    title="Measures Of Fun Xmas 50% OFF Promo"
-								frameborder="0"
+								// frameborder="0"
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
 								referrerpolicy="strict-origin-when-cross-origin"
 								allowfullscreen
